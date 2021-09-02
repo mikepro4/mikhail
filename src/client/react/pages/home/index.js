@@ -3,13 +3,33 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
+import qs from "qs";
+import * as _ from "lodash"
+
+import { 
+    createShape, loadShape, searchShapes, deleteShape, updateShape 
+} from "../../../redux/actions/shapesActions"
+
+
 class HomePage extends Component {
 
 	componentDidMount() {
+        if (this.props.location.search) {
+            console.log(this.getQueryParams().shape)
+            this.props.loadShape(this.getQueryParams().shape, (data) => {
+                console.log(data)
+            })
+        }
 	}
 
 	componentDidUpdate(prevprops) {
+        
     }
+
+    getQueryParams = () => {
+		return qs.parse(this.props.location.search.substring(1));
+    };
+    
     
     renderHead = () => (
 		<Helmet>
@@ -38,5 +58,10 @@ function mapStateToProps(state) {
 
 export default {
 	component: withRouter(connect(mapStateToProps, {
+        createShape, 
+        loadShape, 
+        searchShapes, 
+        deleteShape, 
+        updateShape
 	})(HomePage))
 }

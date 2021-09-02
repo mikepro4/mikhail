@@ -13,7 +13,12 @@ class shapeView extends Component {
     render() {
         return(
             <div>
-               <div className="shape-title">{this.props.item.metadata.title} {this.props.item.metadata.createdBy}</div>
+               <div className="shape-title">
+                   
+                   {this.props.item.metadata.title} {this.props.item.metadata.createdBy} 
+
+                   <Link to={"/?shape=" + this.props.item._id}> View </Link>
+               </div>
             </div>
         )
         
