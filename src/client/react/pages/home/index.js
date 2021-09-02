@@ -10,6 +10,8 @@ import {
     createShape, loadShape, searchShapes, deleteShape, updateShape 
 } from "../../../redux/actions/shapesActions"
 
+import Viz from "../../components/viz"
+
 
 class HomePage extends Component {
 
@@ -43,7 +45,8 @@ class HomePage extends Component {
 		return (
      		<div>
                  {this.renderHead()}
-				<div className="placeholder">Mikhail</div>
+				Mikhail
+                <Viz/>
 			</div>
 				
 		);
