@@ -20,6 +20,11 @@
 @import "./imports/buttons";
 @import "./imports/switch";
 
+@import "../react/pages/auth/index.scss";
+
+// form
+@import "../react/components/form/BladeInput.scss";
+
 html {
 	// overflow: hidden;
 	// overflow-y: scroll;
