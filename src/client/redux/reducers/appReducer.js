@@ -8,7 +8,7 @@ import {
 } from "../actions/types";
 
 export const initialState = {
-	theme: "light",
+	theme: "dark",
 	menuOpen: false,
 };
 
