@@ -16,6 +16,9 @@ import {
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
+import { authUser, fetchCurrentUser, clearCurrentUser } from "../client/redux/actions/authActions"
+
+
 export let socket
 
 class App extends Component {
@@ -26,6 +29,8 @@ class App extends Component {
 	componentDidMount() {
         let socket = io()
 
+        this.auth()
+
 		const theme = localStorage.getItem('theme');
 		if (theme) {
 			this.props.toggleTheme(theme)
@@ -34,11 +39,48 @@ class App extends Component {
 			this.props.toggleTheme("dark")
 			document.body.classList.add("theme-dark");
 		}
+    }
+    
+    componentDidUpdate(prevprops) {
+		if(prevprops.user !== this.props.user) {
+			if(this.props.user && !this.props.user.avatar) {
+				
+				// this.props.assignAvatar(() => {
+				// 	this.loadUser()
+				// })
+			}
+		}
 	}
 
 	@keydown("ctrl + t")
 	toggleTheme() {
 		this.props.toggleTheme()
+    }
+    
+    auth() {
+		const token = localStorage.getItem('token');
+		if (token) {
+			this.props.authUser()
+			this.loadUser()
+		} else {
+			this.setState({
+				appVisible: true
+			})
+		}
+	}
+
+	loadUser() {
+		this.props.fetchCurrentUser(() => {
+			this.setState({
+				appVisible: true
+			})
+
+			// if(this.props.user && !this.props.user.username) {
+			// 	this.props.showUsername()
+			// } else {
+			// 	this.props.hideUsername()
+			// }
+		})
 	}
 
 	render() {
@@ -54,12 +96,16 @@ class App extends Component {
 function mapStateToProps(state) {
 	return {
 		appReducer: state.appReducer,
-		theme: state.app.theme,
+        theme: state.app.theme,
+        user: state.app.user
 	};
 }
 
 export default {
 	component: withRouter(connect(mapStateToProps, {
-		toggleTheme,
+        toggleTheme,
+        authUser, 
+		fetchCurrentUser, 
+		clearCurrentUser,
 	})(App))
 };
