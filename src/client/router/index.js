@@ -4,6 +4,7 @@ import Home from "../react/pages/home";
 import Login from "../react/pages/auth/login"
 import Signup from "../react/pages/auth/signup"
 import Logout from "../react/pages/auth/logout"
+import Shapes from "../react/pages/shapes";
 
 export default [
 	{
@@ -36,6 +37,13 @@ export default [
 				path: "/auth/logout",
 				params: {
 					name: "logout"
+				}
+			},
+			{
+				...Shapes,
+				path: "/shapes",
+				params: {
+					name: "shapes"
 				}
 			}
 		]
