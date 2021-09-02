@@ -49,12 +49,18 @@ export const loadShape = (id, success) => async (
 // ===========================================================================
 
 
-export const searchShapes = (offset, limit, query, success) => async (
+export const searchShapes = (type, identifier, offset, limit, query, success) => async (
     dispatch,
 	getState,
 	api
 ) => {
     let criteria 
+
+    if(type == "user") {
+        criteria = {
+            createdBy: identifier
+        }
+    }
 
     await api
         .post("/shapes/search", {

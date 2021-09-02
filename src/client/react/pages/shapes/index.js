@@ -9,6 +9,12 @@ import {
     createShape, loadShape, searchShapes, deleteShape, updateShape 
 } from "../../../redux/actions/shapesActions"
 
+import {
+    updateCollection
+} from "../../../redux/actions/appActions"
+
+import ListResults  from "../../components/list"
+
 class ShapesPage extends Component {
 
 	componentDidMount() {
@@ -29,7 +35,6 @@ class ShapesPage extends Component {
 		return (
      		<div>
                  {this.renderHead()}
-				<div className="placeholder">
                     
                     Shapes
 
@@ -41,16 +46,26 @@ class ShapesPage extends Component {
                         onClick={() =>  {
                             this.props.createShape({
                                 metadata: {
-                                    title: "Untitled"
-                                }
+                                    title: "Untitled",
+                                    createdBy: this.props.user._id
+                                },
+                            }, () => {
+                                this.props.updateCollection(true)
                             })
-                            console.log("create")
                             }
                         }
 
                     />
+
+                    {this.props.user && <ListResults
+                        type="user"
+                        identifier={this.props.user._id}
+                        resultType="shape"
+                        searchCollection={this.props.searchShapes}
+                    />}
+
                     
-                </div>
+                    
 
                
 			</div>
@@ -61,7 +76,8 @@ class ShapesPage extends Component {
 
 function mapStateToProps(state) {
 	return {
-        theme: state.app.theme
+        theme: state.app.theme,
+        user: state.app.user
 	};
 }
 
@@ -72,6 +88,7 @@ export default {
         loadShape, 
         searchShapes, 
         deleteShape, 
-        updateShape 
+        updateShape,
+        updateCollection
 	})(ShapesPage))
 }

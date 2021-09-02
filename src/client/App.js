@@ -18,6 +18,9 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 import { authUser, fetchCurrentUser, clearCurrentUser } from "../client/redux/actions/authActions"
 
+import Scroll from "./react/components/scroll"
+
+
 
 export let socket
 
@@ -89,6 +92,7 @@ class App extends Component {
 				<div className={"app-route-container theme-" + this.props.theme}>
 					{renderRoutes(this.props.route.routes)}
 				</div>
+                <Scroll />
 			</div>
 		)
 	}
