@@ -27,6 +27,9 @@
 
 @import "../react/components/viz/index.scss";
 
+@import "../react/components/header/index";
+
+
 html {
 	// overflow: hidden;
 	// overflow-y: scroll;
@@ -123,11 +126,10 @@ a {
 .theme-dark {
 
 	a {
-		color: $yellow;
+		color: $white;
 	}
 
 	a:hover {
-		color: $yellow;
 
 		@media only screen and (max-width: $mobile) {
             color: inherit !important;
@@ -136,7 +138,6 @@ a {
 	}
 
 	a:active {
-		color: $yellow;
 
 		@media only screen and (max-width: $mobile) {
             color: inherit !important;
@@ -164,4 +165,8 @@ a {
 
 .tab-content {
     min-height: 800px;
+}
+
+.route-content {
+    padding: 60px 0 0 0;
 }

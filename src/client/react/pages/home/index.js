@@ -43,10 +43,11 @@ class HomePage extends Component {
 	render() {
 
 		return (
-     		<div>
+     		<div className="route-content">
                  {this.renderHead()}
-				Mikhail
-                <Viz/>
+                 <div className="placeholder">
+                    Mikhail
+                 </div>
 			</div>
 				
 		);

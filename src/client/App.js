@@ -20,6 +20,8 @@ import { authUser, fetchCurrentUser, clearCurrentUser } from "../client/redux/ac
 
 import Scroll from "./react/components/scroll"
 
+import Header from "./react/components/header"
+
 
 
 export let socket
@@ -89,6 +91,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className={"app theme-"+ this.props.theme}>
+                <Header/>
 				<div className={"app-route-container theme-" + this.props.theme}>
 					{renderRoutes(this.props.route.routes)}
 				</div>
