@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import classNames from "classnames"
 import { Icon, Button, Classes, Intent, Position, Toaster  } from "@blueprintjs/core";
 
+import qs from "qs";
 import * as _ from "lodash"
 
 // import { 
@@ -15,7 +16,8 @@ import * as _ from "lodash"
 import VizSettingsForm from "./viz_settings_form"
 
 import {
-    updateShape
+    updateShape,
+    loadShape
 } from "../../../../redux/actions/shapesActions"
 
 class VizSettings extends Component {
@@ -36,8 +38,16 @@ class VizSettings extends Component {
             this.setState({
                 loading: false
             })
+
+            this.props.loadShape(this.getQueryParams().shape, (data) => {
+                console.log(data)
+            })
         })
     }
+
+    getQueryParams = () => {
+		return qs.parse(this.props.location.search.substring(1));
+    };
 
 
 	render() {
@@ -93,5 +103,6 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(connect(mapStateToProps, {
-    updateShape
+    updateShape,
+    loadShape
 })(VizSettings));
