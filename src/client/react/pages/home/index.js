@@ -14,6 +14,10 @@ import Viz from "../../components/viz"
 
 import SettingsIcon from "../../components/icons/settings"
 
+import {
+    showDrawer
+} from '../../../redux/actions/appActions'
+
 
 class HomePage extends Component {
 
@@ -58,7 +62,7 @@ class HomePage extends Component {
                     <Viz />
                 </div>
                 
-                <div className="main-settings">
+                <div className="main-settings" onClick={() =>  this.props.showDrawer("viz-settings")}>
                     <SettingsIcon />
                 </div>
 			</div>
@@ -79,6 +83,7 @@ export default {
         loadShape, 
         searchShapes, 
         deleteShape, 
-        updateShape
+        updateShape,
+        showDrawer
 	})(HomePage))
 }

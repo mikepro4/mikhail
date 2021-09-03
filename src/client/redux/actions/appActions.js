@@ -6,7 +6,9 @@ import {
 	UPDATE_TOTAL_SCROLLED_PIXELS,
 	SCROLL_TO,
     SCROLL_TO_RESET,
-    UPDATE_COLLECTION
+    UPDATE_COLLECTION,
+    SHOW_DRAWER,
+	HIDE_DRAWER,
 } from "./types";
 
 import moment from "moment";
@@ -143,4 +145,47 @@ export const resetScrollTo = (px) => async (dispatch) => {
 		type: SCROLL_TO_RESET
 	});
 }
+
+
+/////////////////////////////////////////////////
+
+export const showDrawer = (type, drawerData, success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+    if(drawerData) {
+        dispatch({
+            type: SHOW_DRAWER,
+            payload: type,
+            drawerData: drawerData
+        });
+    } else {
+        dispatch({
+            type: SHOW_DRAWER,
+            payload: type,
+        });
+    }
+    
+
+	if (success) {
+		success();
+	}
+	document.body.classList.add("no-scroll");
+};
+
+export const hideDrawer = (success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+    dispatch({
+        type: HIDE_DRAWER
+    });
+
+	if (success) {
+		success();
+	}
+	document.body.classList.remove("no-scroll");
+};
 

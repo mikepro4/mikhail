@@ -40,7 +40,9 @@
 
 .main-settings {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    padding: 20px;
+    z-index: 2;
+    bottom: 0;
+    right: 0;
     
 }

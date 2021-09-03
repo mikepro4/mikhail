@@ -23,8 +23,7 @@ import Scroll from "./react/components/scroll"
 import Header from "./react/components/header"
 
 import Player from "./react/components/player"
-
-
+import Drawer from "./react/components/drawer"
 
 
 export let socket
@@ -89,6 +88,7 @@ class App extends Component {
 		return (
 			<div className={"app theme-"+ this.props.theme}>
                 <div className="app-bg"></div>
+                {this.props.drawerOpen && <Drawer type={this.props.drawerType} />}
                 <Header/>
                 <div className="main-section">
                     <div className={"app-route-container theme-" + this.props.theme}>
@@ -107,7 +107,9 @@ function mapStateToProps(state) {
 	return {
 		appReducer: state.appReducer,
         theme: state.app.theme,
-        user: state.app.user
+        user: state.app.user,
+        drawerOpen: state.app.drawerOpen,
+        drawerType: state.app.drawerType
 	};
 }
 

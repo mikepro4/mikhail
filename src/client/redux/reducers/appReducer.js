@@ -11,7 +11,9 @@ import {
 	UPDATE_TOTAL_SCROLLED_PIXELS,
 	SCROLL_TO,
     SCROLL_TO_RESET,
-    UPDATE_COLLECTION
+    UPDATE_COLLECTION,
+    SHOW_DRAWER,
+	HIDE_DRAWER,
 } from "../actions/types";
 
 export const initialState = {
@@ -23,7 +25,10 @@ export const initialState = {
 	theme: "dark",
     menuOpen: false,
     user: null,
-    updateCollection: false
+    updateCollection: false,
+    drawerOpen: false,
+    drawerType: null,
+    drawerData: {},
 };
 
 export const appReducer = (state = initialState, action) => {
@@ -70,6 +75,28 @@ export const appReducer = (state = initialState, action) => {
                 ...state,
                 updateCollection: action.payload
             };
+        case SHOW_DRAWER:
+            let drawer
+
+            if(action.drawerData) {
+                drawer = action.drawerData
+            } else {
+                drawer = state.drawerData
+            }
+            return {
+                ...state,
+                drawerOpen: true,
+                drawerType: action.payload,
+                drawerData: drawer
+            }
+        case HIDE_DRAWER:
+            return {
+                ...state,
+                drawerOpen: false,
+                drawerType: null,
+                drawerData: null,
+                suggestions: []
+            }
 		default:
 			return state;
 	}

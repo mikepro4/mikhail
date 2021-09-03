@@ -34,5 +34,9 @@ export const UPDATE_COLLECTION = "app/UPDATE_COLLECTION"
 export const LOAD_SHAPE = "app/LOAD_SHAPE"
 export const CLEAR_SHAPE = "app/CLEAR_SHAPE"
 
+
+export const SHOW_DRAWER = "app/SHOW_DRAWER"
+export const HIDE_DRAWER = "app/HIDE_DRAWER"
+
 // =============================================================================
 
