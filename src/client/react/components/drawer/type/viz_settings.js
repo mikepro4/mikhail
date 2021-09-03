@@ -6,10 +6,48 @@ import { Icon, Button, Classes, Intent, Position, Toaster  } from "@blueprintjs/
 
 import * as _ from "lodash"
 
-class Followers extends Component {
+// import { 
+//     updateCover,
+//     updateCoverGradient,
+//     updateProfile
+// } from "../../../../redux/actions/profileActions"
+
+import VizSettingsForm from "./viz_settings_form"
+
+class VizSettings extends Component {
 
     state = {
+        loading: false
     }
+
+    handleFormSubmit({ username, bio, url }) {
+        // console.log(username, bio, url)
+
+		// this.setState({
+		// 	loading: true
+        // })
+
+        // this.props.updateProfile(this.props.user._id, username, bio, url, this.props.profileUser.username, this.props.history, () => {
+        //     this.props.hideDrawer()
+        //     this.setState({
+        //         loading: false
+        //     })
+        // }, () => {
+        //     this.showFailToast("Username already exists")
+        //     this.setState({
+        //         loading: false
+        //     })
+        // })
+    }
+
+    showFailToast = (message, id) => {
+		this.refs.toaster.show({
+			message: message,
+			intent: Intent.DANGER,
+			iconName: "cross"
+		});
+	};
+
 
 	render() {
             return (
@@ -18,11 +56,33 @@ class Followers extends Component {
                     <div className={"details-container theme-" + this.props.theme}>
                         <div className="drawer-header">
                             <div className="drawer-title">
-                                Shape settings
+                                Shape Settings
                             </div>
 
-                            <div className="placeholder">Settings</div>
-                            
+                            <Button 
+                                minimal="true"
+                                icon="cross"
+                                className={"control button-close theme-"+ this.props.theme}
+                                onClick={() =>  {
+                                    this.props.hideDrawer()
+                                    }
+                                }
+                            />
+
+                            <VizSettingsForm 
+                                enableReinitialize="true"
+                                initialValues={
+                                    {
+                                        title: this.props.shape.metadata.title
+                                    }
+                                }
+                                loading={this.state.loading}
+                                onSubmit={this.handleFormSubmit.bind(this)}
+                                theme={this.props.theme}
+                            />
+
+                            <Toaster position={Position.TOP_CENTER} ref="toaster" />
+
                         </div>
                     </div>
                 </div>
@@ -36,9 +96,11 @@ class Followers extends Component {
 function mapStateToProps(state) {
 	return {
         theme: state.app.theme,
-        authenticated: state.auth.authenticated
+        user: state.app.user,
+        authenticated: state.auth.authenticated,
+        shape: state.shape.currentShape
 	};
 }
 
 export default withRouter(connect(mapStateToProps, {
-})(Followers));
+})(VizSettings));
