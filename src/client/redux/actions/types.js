@@ -32,6 +32,7 @@ export const SCROLL_TO_RESET = "app/SCROLL_TO_RESET";
 export const UPDATE_COLLECTION = "app/UPDATE_COLLECTION"
 
 export const LOAD_SHAPE = "app/LOAD_SHAPE"
+export const LOAD_NEW_SHAPE = "app/LOAD_NEW_SHAPE"
 export const CLEAR_SHAPE = "app/CLEAR_SHAPE"
 
 

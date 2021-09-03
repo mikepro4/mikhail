@@ -17,7 +17,8 @@ import VizSettingsForm from "./viz_settings_form"
 
 import {
     updateShape,
-    loadShape
+    loadShape,
+    loadNewShape
 } from "../../../../redux/actions/shapesActions"
 
 class VizSettings extends Component {
@@ -74,12 +75,22 @@ class VizSettings extends Component {
                                 enableReinitialize="true"
                                 initialValues={
                                     {
-                                        title: this.props.shape.metadata.title
+                                        title: this.props.shape.metadata.title,
+                                        shape: this.props.shape.defaultViz.shape,
+                                        point: this.props.shape.defaultViz.point,
                                     }
                                 }
                                 loading={this.state.loading}
                                 onSubmit={this.handleFormSubmit.bind(this)}
                                 theme={this.props.theme}
+                                onChange={values => {
+                                    this.props.loadNewShape({
+                                        defaultViz: {
+                                            shape: values.shape,
+                                            point: values.point
+                                        }
+                                    })
+                                }}
                             />
 
 
@@ -104,5 +115,6 @@ function mapStateToProps(state) {
 
 export default withRouter(connect(mapStateToProps, {
     updateShape,
-    loadShape
+    loadShape,
+    loadNewShape
 })(VizSettings));

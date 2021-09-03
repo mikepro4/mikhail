@@ -4,7 +4,8 @@ import qs from "qs";
 import axios from "axios";
 
 import {
-	LOAD_SHAPE
+    LOAD_SHAPE,
+    LOAD_NEW_SHAPE
 } from "./types";
 
 export const createShape = (shapeItem, success) => async (
@@ -54,6 +55,20 @@ export const loadShape = (id, success) => async (
         });
 }
 
+// ===========================================================================
+
+
+export const loadNewShape = (data, success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+
+    dispatch({
+        type: LOAD_NEW_SHAPE,
+        payload: data
+    });
+}
 
 // ===========================================================================
 
@@ -120,9 +135,16 @@ export const updateShape = (shape, data, success) => async (
         title: data.title
     })
 
+    let newSHape = _.merge({}, shape.defaultViz.shape, data.shape)
+    let newPoint = _.merge({}, shape.defaultViz.point, data.point)
+
     let newShape = {
         ...shape,
-        metadata: newMetadata
+        metadata: newMetadata,
+        defaultViz: {
+            shape: newSHape,
+            point: newPoint
+        }
     }
 
 
