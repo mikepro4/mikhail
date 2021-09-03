@@ -1,0 +1,46 @@
+.home-route {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+
+    @media only screen and (max-width: $mobile) {
+        bottom: 170px;
+    }
+}
+
+.headline-container {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: 0.34px;
+    z-index: 2;
+
+    .underline {
+        width: 58px;
+        height: 5px;
+        background: $white;
+        margin: 20px 0 0 0;
+        position: relative;
+        left: 3px;
+    }
+}
+
+.main-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.main-settings {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2;
+}

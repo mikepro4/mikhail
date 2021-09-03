@@ -4,7 +4,8 @@ import {
 } from '../actions/types';
 
 export const initialState = {
-    currentShape: null
+    currentShape: {},
+    newShape: {}
 };
 
   

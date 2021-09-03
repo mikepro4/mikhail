@@ -70,6 +70,20 @@ class Player extends Component {
                             12:00
                         </div>
                     </div>
+
+                    <div className="player-controls">
+                        <div className="player-controls-left">
+                            <ShuffleIcon/>
+                        </div>
+                        <div className="player-controls-center">
+                            <div className="skip-left-button"><SkipLeftIcon/></div>
+                            <div className="play-button"><PlayIcon/></div>
+                            <div className="skip-right-button"> <SkipRightIcon/></div>
+                        </div>
+                        <div className="player-controls-right">
+                            <RepeatIcon/>
+                        </div>
+                    </div>
                 </div>
                 <div className="player-section-3">Section 2</div>
             </div>

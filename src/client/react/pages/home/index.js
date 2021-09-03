@@ -54,7 +54,10 @@ class HomePage extends Component {
                     <div className="underline"></div>
                 </div>
 
-                <div className="main-shape"></div>
+                <div className="main-shape">
+                    <Viz />
+                </div>
+                
                 <div className="main-settings">
                     <SettingsIcon />
                 </div>

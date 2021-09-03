@@ -27,7 +27,7 @@
                 height: 34px;
                 background: white;
                 opacity: 0.1;
-                margin: 20px 10px 20px 20px;
+                margin: 20px 13px 20px 20px;
             }
 
             .track-detail {
@@ -79,7 +79,7 @@
                 position: absolute;
                 display: flex;
                 justify-content: space-between;
-                font-size: 10px;
+                font-size: 8px;
                 padding: 5px;
                 color: rgba(255,255,255,0.3);
 
@@ -97,8 +97,42 @@
                     left: 0;
                     top: 0;
                     height: 1px;
-                    width: 35%;
+                    width: 0%;
                     background: $white;
+                }
+            }
+
+            .player-controls {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 13px 0 0 0;
+                max-width: 280px;
+                margin: 0 auto;
+
+                .player-controls-left, .player-controls-right {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .skip-left-button, .skip-right-button {
+                    svg {
+                        width:18px;
+                        height: 19px;
+                    }
+                }
+
+                .player-controls-center {
+                    display: flex;
+                    align-items: center;
+
+                    .play-button {
+                        svg {
+                            width: 50px;
+                            height: 50px
+                        }
+                    }
                 }
             }
         }
