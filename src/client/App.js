@@ -79,23 +79,19 @@ class App extends Component {
 			this.setState({
 				appVisible: true
 			})
-
-			// if(this.props.user && !this.props.user.username) {
-			// 	this.props.showUsername()
-			// } else {
-			// 	this.props.hideUsername()
-			// }
 		})
 	}
 
 	render() {
 		return (
 			<div className={"app theme-"+ this.props.theme}>
+                <div className="app-bg"></div>
                 <Header/>
 				<div className={"app-route-container theme-" + this.props.theme}>
 					{renderRoutes(this.props.route.routes)}
 				</div>
                 <Scroll />
+                <div className="app-player"></div>
 			</div>
 		)
 	}

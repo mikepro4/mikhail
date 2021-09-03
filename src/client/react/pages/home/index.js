@@ -43,11 +43,16 @@ class HomePage extends Component {
 	render() {
 
 		return (
-     		<div className="route-content">
-                 {this.renderHead()}
-                 <div className="placeholder">
-                    Mikhail
-                 </div>
+     		<div className="route-content home-route">
+                {this.renderHead()}
+
+                <div className="headline-container">
+                    <div className="headline-single-line">Design, Tech</div>
+                    <div className="headline-single-line">& Techno</div>
+                    <div className="underline"></div>
+                </div>
+
+                <div className="main-shape"></div>
 			</div>
 				
 		);

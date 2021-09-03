@@ -1,0 +1,70 @@
+.app-bg {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    top: -10%;
+    left: -10%;
+    right: -10%;
+    bottom: -15%;
+    background: linear-gradient(179.8deg, #000000 -10.46%, #323232 166.84%);
+    transition: all 0.2s ease;
+}
+
+.app-route-container {
+    position: relative;
+    z-index: 2;
+    padding: 60px 20px 0 20px;
+}
+
+.app-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background:#0E0E0E;
+    z-index: 10;
+
+    @media only screen and (max-width: $mobile) {
+        height: 170px;
+    }
+}
+
+.home-route {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+
+    @media only screen and (max-width: $mobile) {
+        bottom: 170px;
+    }
+}
+
+.headline-container {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: 0.34px;
+
+    .underline {
+        width: 58px;
+        height: 5px;
+        background: $white;
+        margin: 20px 0 0 0;
+        position: relative;
+        left: 3px;
+    }
+}
+
+.main-shape {
+    background: $white;
+    opacity: 0.1;
+    border-radius: 100%;
+    position: absolute;
+    top: -5%;
+    right: -20%;
+}

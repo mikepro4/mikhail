@@ -29,6 +29,8 @@
 
 @import "../react/components/header/index";
 
+@import "../App.scss";
+
 
 html {
 	// overflow: hidden;
@@ -168,5 +170,4 @@ a {
 }
 
 .route-content {
-    padding: 60px 0 0 0;
 }
