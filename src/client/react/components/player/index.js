@@ -55,7 +55,22 @@ class Player extends Component {
                         <PlaylistIcon/>
                     </div>
                 </div>
-                <div className="player-section-2">Section 2</div>
+                <div className="player-section-2">
+
+                    <div className="timeline-container">
+                        <div className="timeline-bar-container">
+                            <div className="timeline-bar"></div>
+                        </div>
+
+                        <div className="timeline-start-time">
+                            0:00
+                        </div>
+
+                        <div className="timeline-end-time">
+                            12:00
+                        </div>
+                    </div>
+                </div>
                 <div className="player-section-3">Section 2</div>
             </div>
 		);
