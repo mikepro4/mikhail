@@ -22,6 +22,9 @@ import Scroll from "./react/components/scroll"
 
 import Header from "./react/components/header"
 
+import Player from "./react/components/player"
+
+
 
 
 export let socket
@@ -91,7 +94,7 @@ class App extends Component {
 					{renderRoutes(this.props.route.routes)}
 				</div>
                 <Scroll />
-                <div className="app-player"></div>
+                <Player/>
 			</div>
 		)
 	}

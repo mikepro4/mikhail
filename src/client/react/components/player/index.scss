@@ -1,0 +1,18 @@
+.app-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background:#0E0E0E;
+    z-index: 10;
+    display: flex;
+
+    @media only screen and (max-width: $mobile) {
+        height: 170px;
+    }
+
+    .svg-wrapper {
+        margin: 10px;
+    }
+}

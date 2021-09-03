@@ -16,19 +16,7 @@
     padding: 60px 20px 0 20px;
 }
 
-.app-player {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    background:#0E0E0E;
-    z-index: 10;
 
-    @media only screen and (max-width: $mobile) {
-        height: 170px;
-    }
-}
 
 .home-route {
     position: fixed;
@@ -44,8 +32,8 @@
 
 .headline-container {
     position: absolute;
-    bottom: 40px;
-    left: 40px;
+    bottom: 50px;
+    left: 50px;
     font-size: 34px;
     font-weight: 600;
     letter-spacing: 0.34px;
@@ -67,4 +55,10 @@
     position: absolute;
     top: -5%;
     right: -20%;
+}
+
+.main-settings {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 }

@@ -12,6 +12,8 @@ import {
 
 import Viz from "../../components/viz"
 
+import SettingsIcon from "../../components/icons/settings"
+
 
 class HomePage extends Component {
 
@@ -53,6 +55,9 @@ class HomePage extends Component {
                 </div>
 
                 <div className="main-shape"></div>
+                <div className="main-settings">
+                    <SettingsIcon />
+                </div>
 			</div>
 				
 		);
