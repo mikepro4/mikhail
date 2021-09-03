@@ -110,15 +110,28 @@ export const deleteShape = (shapeId, shapeItem, success) => async (
 // ===========================================================================
 
 
-export const updateShape = (shapeId, shapeItem, success) => async (
+export const updateShape = (shape, data, success) => async (
     dispatch,
 	getState,
 	api
 ) => {
 
+    let newMetadata = _.merge({}, shape.metadata, {
+        title: data.title
+    })
+
+    let newShape = {
+        ...shape,
+        metadata: newMetadata
+    }
+
+
     await api
         .post("/shape/update", { 
-            postId, 
+            shapeId: newShape._id, 
+            metadata: newShape.metadata,
+            defaultViz: newShape.defaultViz,
+            status: newShape.status
         })
         .then(response => {
             if (success) {

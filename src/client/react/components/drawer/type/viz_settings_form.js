@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Intent, Spinner } from "@blueprintjs/core";
 
-import Input from "../../form/BladeInput";
+// import Input from "../../form/BladeInput";
 import Textarea from "../../form/BladeTextarea";
 
 

@@ -53,8 +53,12 @@ class HomePage extends Component {
                 {this.renderHead()}
 
                 <div className="headline-container">
-                    <div className="headline-single-line">Design, Tech</div>
-                    <div className="headline-single-line">& Techno</div>
+
+                    {this.props.shape && this.props.shape.currentShape && this.props.shape.currentShape.metadata && <div>
+                        <div className="headline-single-line">{this.props.shape.currentShape.metadata.title}</div>
+                    </div>
+                    }
+                    
                     <div className="underline"></div>
                 </div>
 
@@ -73,6 +77,7 @@ class HomePage extends Component {
 
 function mapStateToProps(state) {
 	return {
+        shape: state.shape
 	};
 }
 

@@ -14,39 +14,30 @@ import * as _ from "lodash"
 
 import VizSettingsForm from "./viz_settings_form"
 
+import {
+    updateShape
+} from "../../../../redux/actions/shapesActions"
+
 class VizSettings extends Component {
 
     state = {
         loading: false
     }
 
-    handleFormSubmit({ username, bio, url }) {
-        // console.log(username, bio, url)
+    handleFormSubmit(data) {
+        console.log(data)
 
-		// this.setState({
-		// 	loading: true
-        // })
+        this.setState({
+			loading: true
+        })
 
-        // this.props.updateProfile(this.props.user._id, username, bio, url, this.props.profileUser.username, this.props.history, () => {
-        //     this.props.hideDrawer()
-        //     this.setState({
-        //         loading: false
-        //     })
-        // }, () => {
-        //     this.showFailToast("Username already exists")
-        //     this.setState({
-        //         loading: false
-        //     })
-        // })
+        this.props.updateShape(this.props.shape, data, () => {
+            this.props.hideDrawer()
+            this.setState({
+                loading: false
+            })
+        })
     }
-
-    showFailToast = (message, id) => {
-		this.refs.toaster.show({
-			message: message,
-			intent: Intent.DANGER,
-			iconName: "cross"
-		});
-	};
 
 
 	render() {
@@ -81,7 +72,6 @@ class VizSettings extends Component {
                                 theme={this.props.theme}
                             />
 
-                            <Toaster position={Position.TOP_CENTER} ref="toaster" />
 
                         </div>
                     </div>
@@ -103,4 +93,5 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(connect(mapStateToProps, {
+    updateShape
 })(VizSettings));
