@@ -7,12 +7,75 @@
     background:#0E0E0E;
     z-index: 10;
     display: flex;
-
-    @media only screen and (max-width: $mobile) {
-        height: 170px;
-    }
+    justify-content: space-between;
 
     .svg-wrapper {
         margin: 10px;
+    }
+
+    .player-section-1 {
+        height: 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .section-left {
+            display: flex;
+
+            .video-thumbnail {
+                width: 60px;
+                height: 34px;
+                background: white;
+                opacity: 0.1;
+                margin: 20px 10px 20px 20px;
+            }
+
+            .track-detail {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                .track-title {
+                    font-size: 14px;
+                    letter-spacing: 0.34px;
+                    margin: 0 0 0 0;
+                    font-weight: 600;
+                }
+
+                .track-subtitle{
+                    font-size: 10px;
+                    letter-spacing: 0.34px;
+                    opacity: 0.5;
+                }
+            }
+        }
+
+        .section-right {
+            display: none;
+            padding-right: 9px;
+        }
+    }
+
+    @media only screen and (max-width: $mobile) {
+        display: block;
+        height: 170px;
+
+        .player-section-1 {
+            height: 70px;
+
+            .section-right {
+                display: block;
+            }
+        }
+
+        .player-section-2 {
+            
+        }
+
+        .player-section-3 {
+            display: none;
+        }
+
+       
     }
 }

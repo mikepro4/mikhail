@@ -20,7 +20,7 @@ class Player extends Component {
 	render() {
 		return (
 			<div className="app-player">
-                <div>
+                {/* <div>
                     <PlaylistIcon/>
                     <ShuffleIcon/>
                     <RepeatIcon/>
@@ -37,7 +37,26 @@ class Player extends Component {
                     <VolumeDisabledIcon/>
                 </div>
 
-                <FullscreenIcon/>
+                <FullscreenIcon/> */}
+
+                <div className="player-section-1">
+                    <div className="section-left">
+                        <div className="video-thumbnail"></div>
+                        <div className="track-detail">
+                            <div className="track-title">
+                                Iteration 1
+                            </div>
+                            <div className="track-subtitle">
+                                Octatrack, Digitakt, Digotne, Analog Heat
+                            </div>
+                        </div>
+                    </div>
+                    <div className="section-right">
+                        <PlaylistIcon/>
+                    </div>
+                </div>
+                <div className="player-section-2">Section 2</div>
+                <div className="player-section-3">Section 2</div>
             </div>
 		);
 	}
