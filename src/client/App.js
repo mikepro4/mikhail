@@ -90,11 +90,15 @@ class App extends Component {
 			<div className={"app theme-"+ this.props.theme}>
                 <div className="app-bg"></div>
                 <Header/>
-				<div className={"app-route-container theme-" + this.props.theme}>
-					{renderRoutes(this.props.route.routes)}
-				</div>
+                <div className="main-section">
+                    <div className={"app-route-container theme-" + this.props.theme}>
+                        {renderRoutes(this.props.route.routes)}
+                    </div>
+                    <Player/>
+                </div>
+				
                 <Scroll />
-                <Player/>
+
 			</div>
 		)
 	}

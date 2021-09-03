@@ -74,9 +74,9 @@ class Viz extends Component {
              this.setState({
                 width: rect.width * 2,
                 height: rect.height * 2,
-                radius: (rect.width * 2) / 1.6,
-                x: (rect.width * 2) / 2 + rect.width,
-                y: (rect.height * 2) / 2 - rect.height / 1.5
+                radius: (rect.width * 2) / 4,
+                x: (rect.width * 2) / 2,
+                y: (rect.height * 2) / 2
             }, () => {
                 if(callback) {
                     callback()
