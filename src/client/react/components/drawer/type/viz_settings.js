@@ -114,8 +114,8 @@ class VizSettings extends Component {
                                 }, (data) => {
                                     console.log(data)
                                     this.props.history.push("/?shape="+data._id)
-
-                                    this.props.updateCollection(true)
+                                    this.props.hideDrawer()
+                                    // this.props.updateCollection(true)
                                 })
                                 }
                             }
