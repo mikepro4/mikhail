@@ -1,7 +1,8 @@
 import {
     LOAD_SHAPE,
     CLEAR_SHAPE,
-    LOAD_NEW_SHAPE
+    LOAD_NEW_SHAPE,
+    CLEAR_NEW_SHAPE
 } from '../actions/types';
 
 export const initialState = {
@@ -22,7 +23,11 @@ export const shapeReducer = function(state = initialState, action) {
             };
         case CLEAR_SHAPE:
             return { ...state,
-                currentShape: null
+                currentShape: {}
+            };
+        case CLEAR_NEW_SHAPE:
+            return { ...state,
+                newShape: {}
             };
         }
 

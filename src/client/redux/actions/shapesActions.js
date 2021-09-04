@@ -5,7 +5,8 @@ import axios from "axios";
 
 import {
     LOAD_SHAPE,
-    LOAD_NEW_SHAPE
+    LOAD_NEW_SHAPE,
+    CLEAR_NEW_SHAPE
 } from "./types";
 
 export const createShape = (shapeItem, success) => async (
@@ -69,6 +70,18 @@ export const loadNewShape = (data, success) => async (
         payload: data
     });
 }
+
+export const clearNewShape = (success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+
+    dispatch({
+        type: CLEAR_NEW_SHAPE
+    });
+}
+
 
 // ===========================================================================
 
