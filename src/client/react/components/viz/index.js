@@ -47,7 +47,12 @@ class Viz extends Component {
                 this.startViz() 
             }
         }
-	}
+
+        if(!_.isEqual(prevprops.shape.newShape.defaultViz, this.props.shape.newShape.defaultViz)) {
+            this.updateViz()
+        }
+    }
+
 
 	startViz = () => {
 		this.updateDimensions(this.updateViz)

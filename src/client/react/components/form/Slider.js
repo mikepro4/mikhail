@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { change } from "redux-form";
+import { H5, Slider, Switch } from "@blueprintjs/core";
 
-class Slider extends Component {
+class SliderComponent extends Component {
   state = {
     inputFocused: false,
     sliderMin: 0,
@@ -118,22 +119,34 @@ class Slider extends Component {
 
         <div className="input-right">
           <div className="control-container">
-            <div
-              className="control-slider-container"
-              ref="slider"
-              onClick={(e) => this.calculateWidth(e)}
-              onMouseLeave={this.onMouseLeave.bind(this)}
-              onMouseMove={this.onMouseMove.bind(this)}
-              onMouseDown={this.onMouseDown.bind(this)}
-              onMouseUp={this.onMouseUp.bind(this)}
-            >
-              <div className="control-slider-bar" style={{
-                width: this.getBarWidth()
-              }}/>
-            </div>
+            
 
             <div className="control-input">
-              <input {...this.props.input}   />
+                <div style={{display: "none"}}>
+                    <input {...this.props.input}   />
+                </div>
+
+              <Slider
+                    min={0}
+                    max={this.props.sliderMax}
+                    stepSize={0.1}
+                    labelStepSize={10}
+                    value={Number(this.props.input.value)}
+                    onChange={(value) => this.changeValue(value)}
+                />
+
+            <div className="action-container">
+            <ul className="action-list">
+             
+              <li className="action-item">
+                <a className="input-action-button" onClick={() => this.add()}>+</a>
+              </li>
+
+              <li className="action-item">
+                <a className="input-action-button" onClick={() => this.subtract()}>-</a>
+              </li>
+            </ul>
+          </div>
             </div>
           </div>
 
@@ -185,4 +198,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, {})(Slider);
+export default connect(mapStateToProps, {})(SliderComponent);

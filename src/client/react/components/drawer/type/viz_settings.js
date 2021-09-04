@@ -52,53 +52,55 @@ class VizSettings extends Component {
 
 
 	render() {
-            return (
-                <div className={"app-drawer-content-container standard-drawer viz-settings-drawer theme-" + this.props.theme}>
-                   
-                    <div className={"details-container theme-" + this.props.theme}>
-                        <div className="drawer-header">
-                            <div className="drawer-title">
-                                Shape Settings
-                            </div>
-
-                            <Button 
-                                minimal="true"
-                                icon="cross"
-                                className={"control button-close theme-"+ this.props.theme}
-                                onClick={() =>  {
-                                    this.props.hideDrawer()
-                                    }
-                                }
-                            />
-
-                            <VizSettingsForm 
-                                enableReinitialize="true"
-                                initialValues={
-                                    {
-                                        title: this.props.shape.metadata.title,
-                                        shape: this.props.shape.defaultViz.shape,
-                                        point: this.props.shape.defaultViz.point,
-                                    }
-                                }
-                                loading={this.state.loading}
-                                onSubmit={this.handleFormSubmit.bind(this)}
-                                theme={this.props.theme}
-                                onChange={values => {
-                                    this.props.loadNewShape({
-                                        defaultViz: {
-                                            shape: values.shape,
-                                            point: values.point
-                                        }
-                                    })
-                                }}
-                            />
-
-
+        let shape = this.props.newShape && this.props.newShape.defaultViz ? this.props.newShape.defaultViz.shape : this.props.shape.defaultViz.shape
+        let point = this.props.newShape && this.props.newShape.defaultViz ? this.props.newShape.defaultViz.point : this.props.shape.defaultViz.point
+        return (
+            <div className={"app-drawer-content-container standard-drawer viz-settings-drawer theme-" + this.props.theme}>
+                
+                <div className={"details-container theme-" + this.props.theme}>
+                    <div className="drawer-header">
+                        <div className="drawer-title">
+                            Shape Settings
                         </div>
+
+                        <Button 
+                            minimal="true"
+                            icon="cross"
+                            className={"control button-close theme-"+ this.props.theme}
+                            onClick={() =>  {
+                                this.props.hideDrawer()
+                                }
+                            }
+                        />
+
+                        <VizSettingsForm 
+                            enableReinitialize="true"
+                            initialValues={
+                                {
+                                    title: this.props.shape.metadata.title,
+                                    shape: shape,
+                                    point: point,
+                                }
+                            }
+                            loading={this.state.loading}
+                            onSubmit={this.handleFormSubmit.bind(this)}
+                            theme={this.props.theme}
+                            onChange={values => {
+                                this.props.loadNewShape({
+                                    defaultViz: {
+                                        shape: values.shape,
+                                        point: values.point
+                                    }
+                                })
+                            }}
+                        />
+
+
                     </div>
                 </div>
-    
-            )
+            </div>
+
+        )
  
 		
 	}
@@ -109,7 +111,8 @@ function mapStateToProps(state) {
         theme: state.app.theme,
         user: state.app.user,
         authenticated: state.auth.authenticated,
-        shape: state.shape.currentShape
+        shape: state.shape.currentShape,
+        newShape: state.shape.newShape
 	};
 }
 

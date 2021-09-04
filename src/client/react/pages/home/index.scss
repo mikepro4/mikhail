@@ -4,6 +4,7 @@
     left: 0;
     right: 0;
     bottom: 100px;
+    user-select: none;
 
     @media only screen and (max-width: $mobile) {
         bottom: 170px;
@@ -19,6 +20,7 @@
     letter-spacing: 0.34px;
     z-index: 2;
     white-space: pre-line;
+    user-select: none;
 
     .underline {
         width: 58px;

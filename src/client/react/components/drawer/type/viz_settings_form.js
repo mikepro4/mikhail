@@ -68,7 +68,7 @@ class VizSettingsForm extends Component {
                     name="shape.rotateSpeed"
                     component={Slider}
                     label="rotateSpeed"
-                    sliderMax={20}
+                    sliderMax={5}
                 />
 
                 <Field
@@ -117,7 +117,6 @@ class VizSettingsForm extends Component {
                 </div>
 
                 <Button
-                    disabled={this.props.pristine}
                     className={"submit-button theme-" + this.props.theme}
                     loading={this.props.loading}
                     type="submit"

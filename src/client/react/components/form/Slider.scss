@@ -1,7 +1,7 @@
 .slider-container {
   display: flex;
-  width: 300px;
-  margin: 0 0 2px 0;
+  margin: 10px 0 15px 0;
+  flex-direction: column;
 
   .input-label {
     display: flex;
@@ -18,21 +18,20 @@
   }
 
   .control-container {
-    display: flex;
     flex-grow: 1;
     flex-shrink: 1;
-    height: 30px;
+    width: 100%;
 
     .control-slider-container {
       display: flex;
       position: relative;
-      height: 30px;
       flex-grow: 1;
       flex-shrink: 1;
       background: #505050;
       margin: 0 2px 0 0;
       overflow: hidden;
       cursor: ew-resize;
+      width: 100%;
 
       .control-slider-bar {
         position: absolute;
@@ -45,13 +44,13 @@
     }
 
     .control-input {
-      width: 70px;
+      width: 100%;
       flex-grow: 0;
       flex-shrink: 0;
       display: flex;
 
       input {
-        width: 70px;
+        width: 100%;
         background: #000000;
         border: 1px solid #505050;
         color: $white;
@@ -98,4 +97,27 @@
        }
      }
   }
+}
+
+.bp3-slider-progress.bp3-intent-primary {
+    background-color: $white
+}
+
+.bp3-slider-label {
+    font-size: 10px;
+    opacity: 0.5;
+}
+
+.bp3-slider-handle .bp3-slider-label {
+    background: rgba($black,1);
+    opacity: 1;
+}
+
+.bp3-slider-handle {
+    border-radius: 100%;
+}
+
+.bp3-slider-track, .bp3-slider-progress {
+    height: 2px;
+    top: 7px;
 }
