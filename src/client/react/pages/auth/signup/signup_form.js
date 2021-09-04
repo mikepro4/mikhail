@@ -53,9 +53,7 @@ class SignupForm extends Component {
 		                    large="true"
 						/>
 
-						<div className="login-form-footer-text transition-element">
-							By signing up, you agree to Blade's <a>Terms of Service</a> and updated <a>Privacy Policy</a>
-						</div>
+			
 					</Form>
 				</div>
 		);

@@ -13,7 +13,9 @@ class Header extends Component {
 		this.state = {
 			menuOpen: false,
             menuClosing: false,
-            showMenuBars: false
+            showMenuBars: false,
+            showContent: false,
+            showWord:false
 		}
 	}
 
@@ -21,7 +23,7 @@ class Header extends Component {
 	componentDidMount() {
         setTimeout(() => {
             this.setState({
-                showMenuBars: true
+                showMenuBars: true,
             })
         }, 500)
 
@@ -255,22 +257,29 @@ class Header extends Component {
 	handleClick() {
 		if(!this.state.menuOpen && !this.state.menuClosing) {
 			this.setState({
-				menuOpen: true
-			})
-			document.body.classList.add("no-scroll")
+                menuOpen: true,
+                showContent: true,
+            })
+            setTimeout(() => {
+				this.setState({
+                    showWord: true,
+				})
+			}, 100)
+            document.body.classList.add("no-scroll")
 		}
 		
 		if(this.state.menuOpen) {
 			this.setState({
-				menuOpen: false,
-				menuClosing: true
+                menuOpen: false,
+                menuClosing: true,
+                showContent: false
 			})
 
-			document.body.classList.remove("no-scroll")
-
+            document.body.classList.remove("no-scroll")
+            
 			setTimeout(() => {
 				this.setState({
-					menuClosing: false
+                    menuClosing: false,
 				})
 			}, 1000)
 		}
@@ -283,7 +292,34 @@ class Header extends Component {
 
         // return colors[Math.floor(Math.random() * colors.length)];
         return "#FFFFFF"
-	}
+    }
+    
+    renderBottom() {
+        if(this.props.user && this.props.user.email) {
+            return(
+                <div className="auth-links-container">Logged in as {this.props.user.email} 
+                    <Link 
+                        to="/auth/logout"
+                        className="logout-link"
+                        onClick={() => {
+                            this.handleClick()
+                        }}
+                    >Logout</Link>
+                </div>
+            )
+        } else {
+            return(
+                <div className="auth-links-container">
+                    <ul className="auth-links" onClick={() => {
+                            this.handleClick()
+                        }}>
+                        <li className="single-auth-link"><Link to="/auth/login">Login</Link></li>
+                        <li className="single-auth-link"><Link to="/auth/signup">Signup</Link></li>
+                    </ul>
+                </div>
+            )
+        }
+    }
 
 	renderMenu() {
 		const menuContainer = {
@@ -326,6 +362,23 @@ class Header extends Component {
 					duration: 0.2
 				}
 			})
+        }
+        
+        const wordItem = {
+			open: (custom) => ({
+                opacity: 1,
+				transition: { 
+					delay: 0.1 + custom,
+					duration: 0.4, 
+				}
+			}),
+			closed: (custom) => ({
+                opacity: 0,
+				transition: { 
+					delay: 0,
+					duration: 0.4
+				}
+			})
 		}
 
 		return (
@@ -353,9 +406,58 @@ class Header extends Component {
 					variants={menuContainer}
 					className="menu_container"
 				>
-						<div className="menu_content">
-                            test
-						</div>
+
+                    {this.state.showContent && <div className="menu_content">
+                        <ul className="menu-links" onClick={() => {
+                            this.handleClick()
+                        }}>
+                            <li className="menu-link">
+                                
+                                <motion.div
+                                    animate={this.state.showWord ? "open" : "closed"}
+                                    variants={wordItem}
+                                    custom={0.1}
+                                    className="menu-word-container"
+                                >
+                                    <Link to="/shapes">Shapes</Link>
+                                </motion.div>
+                            </li>
+                            <li className="menu-link">
+                                <motion.div
+                                    animate={this.state.showWord ? "open" : "closed"}
+                                    variants={wordItem}
+                                    custom={0.2}
+                                    className="menu-word-container"
+                                >
+                                    <Link to="/music">Music</Link>
+                                </motion.div>
+                            </li>
+                            <li className="menu-link">
+                                <motion.div
+                                    animate={this.state.showWord ? "open" : "closed"}
+                                    variants={wordItem}
+                                    custom={0.3}
+                                    className="menu-word-container"
+                                >
+                                    <Link to="/work">Work</Link>
+                                </motion.div>
+                            </li>
+                            <li className="menu-link">
+                                <motion.div
+                                    animate={this.state.showWord ? "open" : "closed"}
+                                    variants={wordItem}
+                                    custom={0.4}
+                                    className="menu-word-container"
+                                >
+                                    <Link to="/about">About</Link>
+
+                                </motion.div>
+                            </li>
+                        </ul>
+
+                        {this.renderBottom()}
+                    </div>}
+						
 				</motion.div>
 
 				
@@ -412,10 +514,13 @@ class Header extends Component {
 								
 							{this.renderLines()}
 	
-							{this.renderMenu()}
 							
 						</div>
+
+
 					</div>
+                    {this.renderMenu()}
+
 			  </div>
 			);
 		}

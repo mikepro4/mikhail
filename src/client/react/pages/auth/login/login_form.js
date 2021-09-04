@@ -52,10 +52,6 @@ class LoginForm extends Component {
 							text="Login"
 		          large="true"
 						/>
-
-						<div className="login-form-footer-text transition-element">
-							By logging in, you agree to Blade's <a>Terms of Service</a> and updated <a>Privacy Policy</a>
-						</div>
 					</Form>
 				</div>
 		);
