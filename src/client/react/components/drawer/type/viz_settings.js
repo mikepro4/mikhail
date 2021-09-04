@@ -18,7 +18,8 @@ import VizSettingsForm from "./viz_settings_form"
 import {
     updateShape,
     loadShape,
-    loadNewShape
+    loadNewShape,
+    createShape
 } from "../../../../redux/actions/shapesActions"
 
 class VizSettings extends Component {
@@ -97,6 +98,28 @@ class VizSettings extends Component {
 
 
                     </div>
+
+                    <Button 
+                            className={"control button-close theme-"+ this.props.theme}
+                            onClick={() =>  {
+                                this.props.createShape({
+                                    metadata: {
+                                        title: this.props.shape.metadata.title,
+                                        createdBy: this.props.user._id
+                                    },
+                                    defaultViz: {
+                                        shape: shape,
+                                        point: point
+                                    }
+                                }, (data) => {
+                                    console.log(data)
+                                    this.props.history.push("/?shape="+data._id)
+
+                                    this.props.updateCollection(true)
+                                })
+                                }
+                            }
+                        >Save new</Button>
                 </div>
             </div>
 
@@ -119,5 +142,6 @@ function mapStateToProps(state) {
 export default withRouter(connect(mapStateToProps, {
     updateShape,
     loadShape,
-    loadNewShape
+    loadNewShape,
+    createShape
 })(VizSettings));

@@ -64,7 +64,8 @@ body {
 	overflow-y: auto;
 	overflow-x: hidden;
 	opacity: 0;
-	transition: opacity 1s;
+    transition: opacity 1s;
+    user-select: none;
 
 	&.theme-light {
         opacity: 1;

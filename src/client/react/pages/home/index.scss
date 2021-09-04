@@ -49,3 +49,47 @@
     right: 0;
     
 }
+
+.touched {
+    position: relative;
+    z-index: 1000;
+    background: red;
+}
+
+.touch-zones {
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+
+    .touch-zones-row {
+        height: 30%;
+        display: flex;
+        margin-bottom: 20px;
+
+        .touch-zone {
+            background: rgba($white, 0.00);
+            height: 100%;
+            flex-grow: 1;
+            flex-shrink: 1;
+            transition: all 1.5s;
+
+            &.touch-zone-active {
+                // background: rgba($white, 0.02);
+            }
+
+             &:first-child {
+                margin-right: 10px;
+         }
+
+            &:last-child {
+                margin-left: 10px;
+            }
+        }
+
+       
+    }
+}
