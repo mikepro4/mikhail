@@ -25,6 +25,7 @@ import Header from "./react/components/header"
 import Player from "./react/components/player"
 import Drawer from "./react/components/drawer"
 
+import Play from "./react/components/icons/play"
 
 export let socket
 
@@ -95,6 +96,9 @@ class App extends Component {
                         {renderRoutes(this.props.route.routes)}
                     </div>
                     <Player/>
+                    <div className="new-player">
+                        <Play />
+                    </div>
                 </div>
 				
                 <Scroll />

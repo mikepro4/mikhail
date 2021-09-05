@@ -32,6 +32,7 @@ class HomePage extends Component {
 
 	componentDidMount() {
         if (this.props.location.search) {
+            console.log("here")
             console.log(this.getQueryParams().shape)
             this.props.loadShape(this.getQueryParams().shape, (data) => {
                 console.log(data)
