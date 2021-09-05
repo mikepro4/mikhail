@@ -20,21 +20,44 @@ class Viz extends Component {
         pointSize: 0,
         pointOpacity: 0,
         x: 0,
-        y: 0
+        y: 0,
+        paused: false,
+        visible: false
     };
 
 	componentDidMount = () => {
-        if(this.props.shape.defaultViz) {
+        if(this.props.shape.defaultViz || this.props.defaultViz) {
             this.startViz()
         }
         window.addEventListener("resize", this.handleResize);
+
+        if(this.props.defaultViz) {
+            this.setState({
+                paused: true
+            })
+        }
+
+        // if(this.props.defaultViz) {
+        //     setTimeout(() => {
+        //         this.setState({
+        //             paused: true
+        //         });
+        //     },10000)
+        // }
+       
+
+        // if(this.props.defaultViz) {
+        //     console.log("here")
+        // }
 
         
     }
 
 	componentWillUnmount = () => {
 		window.removeEventListener("resize", this.handleResize);
-		window.cancelAnimationFrame(this.state.requestAnimationFrame);
+        window.cancelAnimationFrame(this.state.requestAnimationFrame);
+        
+        
     }
     
     handleResize = () => {
@@ -51,22 +74,126 @@ class Viz extends Component {
         if(!_.isEqual(prevprops.shape.newShape.defaultViz, this.props.shape.newShape.defaultViz)) {
             this.updateViz()
         }
+
+        let rect = this.refs.viz_container.getBoundingClientRect();
+
+        // if(this.props.app.totalScrolledPixels > rect.y - 500 && !this.state.visible) {
+        //     this.setState({
+        //         visible: true
+        //     })
+        // } 
+
+        if(this.props.defaultViz) {
+            console.log(this.props.app.totalScrolledPixels, rect.y, rect.height)
+            if((rect.y + rect.height) < 700) {
+                console.log("paused")
+                if(!this.state.visible) {
+                    this.setState({
+                        visible: true,
+                        paused: false
+                    }, () => {
+                        this.update()
+                    })
+                }
+            }
+    
+            if(rect.y < 0) {
+                  if(!this.state.paused) {
+                    this.setState({
+                        paused: true
+                    })
+                }
+            }
+        }
+
+        
+        // if((rect.y + rect.height) < 400) {
+        //     // if(!this.state.paused) {
+        //     //     this.setState({
+        //     //         paused: true
+        //     //     })
+        //     // }
+        //     if(!this.state.visible) {
+        //         this.setState({
+        //             visible: true,
+        //             paused: false
+        //         }, () => {
+        //             this.update()
+        //         })
+        //     }
+            
+        // } else {
+        //     // if(this.state.paused) {
+        //     //     this.setState({
+        //     //         paused: false
+        //     //     }, () => {
+        //     //         this.update()
+        //     //     })
+        //     // }
+        //     if(this.state.visible) {
+        //         this.setState({
+        //             visible: false,
+        //             paused: false
+        //         })
+        //     }
+        // }
+        // if((this.props.app.totalScrolledPixels + this.props.app.clientHeight) < rect.y) {
+        //     console.log("visible")
+        //     // this.setState({
+        //     //     visible: true
+        //     // })
+        //     if(this.state.paused) {
+        //         this.setState({
+        //             paused: false
+        //         })
+        //         this.startViz()
+        //         // this.updateViz()
+        //         // this.update()
+        //     }
+        // } else {
+        //     console.log("hidden")
+        //     if(!this.state.paused) {
+        //         this.setState({
+        //             paused: true
+        //         })
+        //     }
+            
+        // }
+
+        // if(this.props.app.totalScrolledPixels > rect.y + 300 && this.state.visible) {
+        //     this.setState({
+        //         visible: false
+        //     })
+        // } 
+
+        // if(this.props.app.totalScrolledPixels > rect.y + 1000 && !this.state.visible) {
+        //     this.setState({
+        //         visible: false
+        //     })
+        // } 
+
     }
 
 
 	startViz = () => {
-		this.updateDimensions(this.updateViz)
+        this.updateDimensions(this.updateViz)
     }
 
     
     updateDimensions = (callback) => {
+        console.log("updateDimensions")
         let rect = this.refs.viz_container.getBoundingClientRect();
-        
+
+        let scale = 1
+
+        if(this.props.defaultViz) {
+            scale = 0.6
+        }
         if(this.props.app.clientWidth > 1000) {
             this.setState({
                 width: rect.width * 2,
                 height: rect.height * 2,
-                radius: (rect.width * 2) / 7,
+                radius: (rect.width * 2) / 7 * scale,
                 x: (rect.width * 2) / 2,
                 y: (rect.height * 2) / 2
             }, () => {
@@ -76,10 +203,10 @@ class Viz extends Component {
             })
         } else {
 
-             this.setState({
+                this.setState({
                 width: rect.width * 2,
                 height: rect.height * 2,
-                radius: (rect.width * 2) / 4,
+                radius: (rect.width * 2) / 4 * scale,
                 x: (rect.width * 2) / 2,
                 y: (rect.height * 2) / 2
             }, () => {
@@ -87,74 +214,167 @@ class Viz extends Component {
                     callback()
                 }
             })
-
-            // SAFE
-
-            // this.setState({
-            //     width: rect.width * 2,
-            //     height: rect.height * 2,
-            //     radius: (rect.width * 2) / 1.1,
-            //     x: (rect.width * 2) / 2 + rect.width,
-            //     y: (rect.height * 2) / 2 - rect.height / 2
-            // }, () => {
-            //     if(callback) {
-            //         callback()
-            //     }
-            // })
         }
-
+    
+        
 		
     }
 
     updateViz = (callback) => {
-        let rect = this.refs.viz_container.getBoundingClientRect();
-    
-        let vizSource
 
-        if (this.props.shape.newShape.defaultViz) {
-            vizSource = 'newShape'
+        let rect = this.refs.viz_container.getBoundingClientRect();
+
+        let finalViz = {}
+
+        // if(this.props.defaultViz) {
+        //     finalViz = this.props.defaultViz
+        // } else {
+        //      if (this.props.shape.newShape.defaultViz) {
+        //         vizSource = 'newShape'
+        //     } else {
+        //         vizSource = 'currentShape'
+        //     }
+        // }
+
+        if(this.props.defaultViz) {
+            finalViz = this.props.defaultViz
+
+            const {
+                rotateSpeed,
+                friction,
+                rotatePointSpeed,
+                step,
+                frequency,
+                boldRate,
+                math
+            } = finalViz.shape
+            
+            const {
+                pointSize,
+                pointOpacity,
+                pointCount,
+                pointColor
+            } = finalViz.point
+
+            this.setState({
+                rotate_speed: rotateSpeed * 0.1 + 0.001,
+                friction: friction * 0.8 + 0.1,
+                rotate_point_speed: rotatePointSpeed * 0.2 + 0.03,
+                step: step * 0.5 + 0.0001,
+                freq: frequency * 0.09 + 0.01,
+                bold_rate: boldRate * 0.3 + 0.1,
+                math: math,
+                pointSize: pointSize,
+                pointCount: pointCount,
+                pointOpacity: pointOpacity,
+                pointColor: "#ffffff",
+                backgroundColor: "",
+                backgroundEnabled: false,
+                backgroundOpacity: 1
+            }, () => {
+                    if(!this.state.requestAnimationFrame) {
+                        this.paint()
+                        console.log("Initial state: ", this.state)
+                    }
+            })
         } else {
-            vizSource = 'currentShape'
+
+            let vizSource
+
+            if (this.props.shape.newShape.defaultViz) {
+                vizSource = 'newShape'
+            } else {
+                vizSource = 'currentShape'
+            }
+            const {
+                rotateSpeed,
+                friction,
+                rotatePointSpeed,
+                step,
+                frequency,
+                boldRate,
+                math
+            } = this.props.shape[vizSource].defaultViz.shape
+            
+            const {
+                pointSize,
+                pointOpacity,
+                pointCount,
+                pointColor
+            } = this.props.shape[vizSource].defaultViz.point
+            
+            this.setState({
+                rotate_speed: rotateSpeed * 0.1 + 0.001,
+                friction: friction * 0.8 + 0.1,
+                rotate_point_speed: rotatePointSpeed * 0.2 + 0.03,
+                step: step * 0.5 + 0.0001,
+                freq: frequency * 0.09 + 0.01,
+                bold_rate: boldRate * 0.3 + 0.1,
+                math: math,
+                pointSize: pointSize,
+                pointCount: pointCount,
+                pointOpacity: pointOpacity,
+                pointColor: "#ffffff",
+                backgroundColor: "",
+                backgroundEnabled: false,
+                backgroundOpacity: 1
+            }, () => {
+                    if(!this.state.requestAnimationFrame) {
+                        this.paint()
+                        console.log("Initial state: ", this.state)
+                    }
+            })
         }
 
-        const {
-          rotateSpeed,
-          friction,
-          rotatePointSpeed,
-          step,
-          frequency,
-          boldRate,
-          math
-        } = this.props.shape[vizSource].defaultViz.shape
+        console.log(finalViz)
     
-        const {
-          pointSize,
-          pointOpacity,
-          pointCount,
-          pointColor
-        } = this.props.shape[vizSource].defaultViz.point
+        // let vizSource
+
+        // if (this.props.shape.newShape.defaultViz) {
+        //     vizSource = 'newShape'
+        // } else {
+        //     vizSource = 'currentShape'
+        // }
+
+
+        // const {
+        //   rotateSpeed,
+        //   friction,
+        //   rotatePointSpeed,
+        //   step,
+        //   frequency,
+        //   boldRate,
+        //   math
+        // } = this.props.shape[vizSource].defaultViz.shape
     
-        this.setState({
-            rotate_speed: rotateSpeed * 0.1 + 0.001,
-            friction: friction * 0.8 + 0.1,
-            rotate_point_speed: rotatePointSpeed * 0.2 + 0.03,
-            step: step * 0.5 + 0.0001,
-            freq: frequency * 0.09 + 0.01,
-            bold_rate: boldRate * 0.3 + 0.1,
-            math: math,
-            pointSize: pointSize,
-            pointCount: pointCount,
-            pointOpacity: pointOpacity,
-            pointColor: "#ffffff",
-            backgroundColor: "",
-            backgroundEnabled: false,
-            backgroundOpacity: 1
-        }, () => {
-                if(!this.state.requestAnimationFrame) {
-                    this.paint()
-                    console.log("Initial state: ", this.state)
-                }
-        })
+        // const {
+        //   pointSize,
+        //   pointOpacity,
+        //   pointCount,
+        //   pointColor
+        // } = this.props.shape[vizSource].defaultViz.point
+    
+        // this.setState({
+        //     rotate_speed: rotateSpeed * 0.1 + 0.001,
+        //     friction: friction * 0.8 + 0.1,
+        //     rotate_point_speed: rotatePointSpeed * 0.2 + 0.03,
+        //     step: step * 0.5 + 0.0001,
+        //     freq: frequency * 0.09 + 0.01,
+        //     bold_rate: boldRate * 0.3 + 0.1,
+        //     math: math,
+        //     pointSize: pointSize,
+        //     pointCount: pointCount,
+        //     pointOpacity: pointOpacity,
+        //     pointColor: "#ffffff",
+        //     backgroundColor: "",
+        //     backgroundEnabled: false,
+        //     backgroundOpacity: 1
+        // }, () => {
+        //         if(!this.state.requestAnimationFrame) {
+        //             this.paint()
+        //             console.log("Initial state: ", this.state)
+        //         }
+        // })
     }
 
     paint = () => {
@@ -277,10 +497,12 @@ class Viz extends Component {
     }
 
     renderFrame = (ctx, points) => {
-        this.renderOnce(ctx, points);
-        this.setState({
-            requestAnimationFrame: requestAnimationFrame(() => this.renderFrame(ctx, points))
-        });
+        if(!this.state.paused ) {
+            this.renderOnce(ctx, points);
+            this.setState({
+                requestAnimationFrame: requestAnimationFrame(() => this.renderFrame(ctx, points))
+            });
+        }
     }
 
     setupSVGCanvas = (points) => {
@@ -314,6 +536,7 @@ class Viz extends Component {
                     height={this.state.height}
                 />
                 <div id="centered" style={{display: "none"}}></div>
+                {/* {this.state.visible ? <div>visible</div> : <div>hidden</div>} */}
             </div>
 		);
 	}

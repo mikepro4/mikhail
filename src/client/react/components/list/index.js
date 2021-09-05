@@ -18,7 +18,7 @@ class ListResults extends Component {
         collection: [],
         loading: false,
         offset: 0,
-        limit: 20,
+        limit: 5,
         count: null,
         updateCollection: false,
         horizontalScroll: 0
@@ -62,7 +62,7 @@ class ListResults extends Component {
                     if(this.refs.loadMore) {
                         if((this.props.app.totalScrolledPixels + 200)  > (this.refs.loadMore.offsetTop - this.props.app.totalPixels)) {
                             if( !this.props.updateCollectionValue) {
-                                this.searchCollection(20)
+                                this.searchCollection(5)
                             }
                         }
                     }
@@ -72,7 +72,7 @@ class ListResults extends Component {
                 if(loadMore && !this.state.loading) {
                     if(this.state.horizontalScroll + 100 > loadMore.getBoundingClientRect().x) {
                         if( !this.props.updateCollectionValue) {
-                            this.searchCollection(20)
+                            this.searchCollection(5)
                         }
                     }
                 } 
@@ -144,7 +144,7 @@ class ListResults extends Component {
 			this.state.offset 
 		) {
 			return (
-				<a className="anchor-button" id="loadmore" ref="loadMore"onClick={() => this.searchCollection(20)}>
+				<a className="anchor-button" id="loadmore" ref="loadMore"onClick={() => this.searchCollection(5)}>
 				</a>
 			);
 		}

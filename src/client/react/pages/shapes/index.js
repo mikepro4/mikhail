@@ -10,17 +10,41 @@ import {
 } from "../../../redux/actions/shapesActions"
 
 import {
+    updateQueryString,
     updateCollection
 } from "../../../redux/actions/appActions"
 
 import ListResults  from "../../components/list"
 
+import TabBar  from "../../components/tab_bar"
+
+import qs from "qs";
+
+import moment from 'moment'
+import * as _ from "lodash"
+
 class ShapesPage extends Component {
+
+    state = {
+        selectedTabId: "1",
+        tabs: [
+            "Featured",
+            "Recent",
+            "My shapes"
+        ],
+    }
 
 	componentDidMount() {
 	}
 
-	componentDidUpdate(prevprops) {
+	componentDidUpdate(prevprops, prevparams) {
+        if (this.props.location.search) {
+			if (prevparams.selectedTabId !== this.getQueryParams().selectedTabId) {
+				this.setState({
+					selectedTabId: this.getQueryParams().selectedTabId
+				});
+			}
+        }
     }
     
     renderHead = () => (
@@ -30,43 +54,101 @@ class ShapesPage extends Component {
 		</Helmet>
     )
 
+    getQueryParams = () => {
+		return qs.parse(this.props.location.search.substring(1));
+    };
+
+    handleTabChange = value => {
+		this.setState({
+			selectedTabId: value
+		});
+
+		this.props.updateQueryString(
+			{ selectedTabId: value },
+			this.props.location,
+			this.props.history
+        );
+
+        if(this.props.totalScrolledPixels > document.getElementById("shape-tabs").offsetTop) {
+            document.getElementById("body").scrollTop = document.getElementById("ticker-tabs").offsetTop - 110
+        }
+    };
+
+    renderTab = () => {
+		switch (this.state.selectedTabId) {
+			case "1":
+				return(
+                    <div className="placeholder">
+                        <div>
+                            {this.props.user && <ListResults
+                                type="user"
+                                identifier={this.props.user._id}
+                                resultType="shape"
+                                searchCollection={this.props.searchShapes}
+                            />}
+                        </div>
+                    </div>
+                    )
+			case "2":
+				return(
+					<div className="placeholder">2</div>
+				)
+			case "3":
+				return(
+					<div className="placeholder">
+                        {this.props.user ? (
+                            <Button 
+                            minimal="true"
+                            icon="plus"
+                            text="Create"
+                            className={"control theme-"+ this.props.theme}
+                            onClick={() =>  {
+                                this.props.createShape({
+                                    metadata: {
+                                        title: "Untitled",
+                                        createdBy: this.props.user._id
+                                    },
+                                }, () => {
+                                    this.props.updateCollection(true)
+                                })
+                                }
+                            }
+
+                        />
+                        ) : <div>Please login</div>}
+                        
+                    </div>
+				)
+			case "4":
+				return(
+					<div className="placeholder">4</div>
+				)
+			default:
+				return ;
+		}
+    }
+    
+
 	render() {
 
 		return (
      		<div>
                  {this.renderHead()}
                     
-                    Shapes
-
-                    <Button 
-                        minimal="true"
-                        icon="plus"
-                        text="Create"
-                        className={"control theme-"+ this.props.theme}
-                        onClick={() =>  {
-                            this.props.createShape({
-                                metadata: {
-                                    title: "Untitled",
-                                    createdBy: this.props.user._id
-                                },
-                            }, () => {
-                                this.props.updateCollection(true)
-                            })
-                            }
-                        }
-
-                    />
-
-                    {this.props.user && <ListResults
-                        type="user"
-                        identifier={this.props.user._id}
-                        resultType="shape"
-                        searchCollection={this.props.searchShapes}
-                    />}
+                    <div className="page-title">Shapes</div>
 
                     
-                    
 
+                    <div id="shape-tabs">
+                        <TabBar
+                            tabs={this.state.tabs}
+                            activeTab={this.state.selectedTabId}
+                            onTabChange={(tab) => this.handleTabChange(tab)}
+                            sticky={this.state.selectedTabId !== "1"}
+                        />
+
+                        {this.renderTab()}
+                    </div>
                
 			</div>
 				
@@ -89,6 +171,7 @@ export default {
         searchShapes, 
         deleteShape, 
         updateShape,
-        updateCollection
+        updateCollection,
+        updateQueryString
 	})(ShapesPage))
 }

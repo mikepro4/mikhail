@@ -7,18 +7,24 @@ import * as _ from "lodash"
 import moment from "moment"
 import {updateLocale } from "moment"
 
+import Viz from "../../viz"
+
 
 class shapeView extends Component {
 
     render() {
         return(
-            <div>
+            <div className="shape-view">
                <div className="shape-title">
                    
-                   {this.props.item.metadata.title} {this.props.item.metadata.createdBy} 
+                   {/* {this.props.item.metadata.title} {this.props.item.metadata.createdBy}  */}
 
-                   <Link to={"/?shape=" + this.props.item._id}> View </Link>
                </div>
+               <Link to={"/?shape=" + this.props.item._id}>
+                <Viz 
+                    defaultViz={this.props.item.defaultViz}
+                />
+               </Link>
             </div>
         )
         
