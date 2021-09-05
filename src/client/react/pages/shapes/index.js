@@ -28,9 +28,9 @@ class ShapesPage extends Component {
     state = {
         selectedTabId: "1",
         tabs: [
-            "Featured",
+            "My shapes",
             "Recent",
-            "My shapes"
+            "Featrued"
         ],
     }
 
@@ -78,7 +78,8 @@ class ShapesPage extends Component {
 		switch (this.state.selectedTabId) {
 			case "1":
 				return(
-                    <div className="placeholder">
+                    <div>
+                        
                         <div>
                             {this.props.user && <ListResults
                                 type="user"
@@ -87,6 +88,25 @@ class ShapesPage extends Component {
                                 searchCollection={this.props.searchShapes}
                             />}
                         </div>
+
+                        <Button 
+                            minimal="true"
+                            icon="plus"
+                            text="Create"
+                            className={"control theme-"+ this.props.theme}
+                            onClick={() =>  {
+                                this.props.createShape({
+                                    metadata: {
+                                        title: "Untitled",
+                                        createdBy: this.props.user._id
+                                    },
+                                }, () => {
+                                    this.props.updateCollection(true)
+                                })
+                                }
+                            }
+
+                        />
                     </div>
                     )
 			case "2":

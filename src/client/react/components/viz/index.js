@@ -84,9 +84,9 @@ class Viz extends Component {
         // } 
 
         if(this.props.defaultViz) {
-            console.log(this.props.app.totalScrolledPixels, rect.y, rect.height)
+            // console.log(this.props.app.totalScrolledPixels, rect.y, rect.height)
             if((rect.y + rect.height) < 700) {
-                console.log("paused")
+                // console.log("paused")
                 if(!this.state.visible) {
                     this.setState({
                         visible: true,
