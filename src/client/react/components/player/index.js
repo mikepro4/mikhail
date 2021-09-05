@@ -47,7 +47,7 @@ class Player extends Component {
                                 Iteration 1
                             </div>
                             <div className="track-subtitle">
-                                Octatrack, Digitakt, Digotne, Analog Heat
+                                Octatrack, Digitakt, Digitone, Analog Heat
                             </div>
                         </div>
                     </div>
