@@ -81,6 +81,7 @@ class VizSettings extends Component {
                                     title: this.props.shape.metadata.title,
                                     shape: shape,
                                     point: point,
+                                    main: this.props.shape.metadata.main
                                 }
                             }
                             loading={this.state.loading}

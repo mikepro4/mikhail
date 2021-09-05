@@ -10,6 +10,7 @@ import { Button, Intent, Spinner } from "@blueprintjs/core";
 import Textarea from "../../form/BladeTextarea";
 import Slider from "../../form/Slider";
 import TabGroup from "../../form/TabGroup";
+import Checkbox from "../../form/Checkbox";
 
 
 class VizSettingsForm extends Component {
@@ -115,6 +116,14 @@ class VizSettingsForm extends Component {
                         title="Title"
                     />
                 </div>
+
+                <Field
+                    name="main"
+                    type="checkbox"
+                    component={Checkbox}
+                    label="Main"
+                    inline={true}
+                />
 
                 <Button
                     className={"submit-button theme-" + this.props.theme}

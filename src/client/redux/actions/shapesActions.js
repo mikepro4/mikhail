@@ -9,6 +9,32 @@ import {
     CLEAR_NEW_SHAPE
 } from "./types";
 
+export const getMainShape = (success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+
+    await api
+        .post("/shapes/main")
+        .then(response => {
+
+            dispatch({
+                type: LOAD_SHAPE,
+                payload: response.data[0]
+            });
+
+            if (success) {
+                success(response.data);
+            }
+        })
+        .catch(() => {
+            
+        });
+}
+
+// ===========================================================================
+
 export const createShape = (shapeItem, success) => async (
     dispatch,
 	getState,
@@ -16,7 +42,7 @@ export const createShape = (shapeItem, success) => async (
 ) => {
 
     await api
-        .post("/shapes/create", shapeItem)
+        .post("/shape/create", shapeItem)
         .then(response => {
             if (success) {
                 success(response.data);
@@ -145,7 +171,9 @@ export const updateShape = (shape, data, success) => async (
 ) => {
 
     let newMetadata = _.merge({}, shape.metadata, {
-        title: data.title
+        title: data.title,
+        main: data.main,
+        mainDate: new Date()
     })
 
     let newSHape = _.merge({}, shape.defaultViz.shape, data.shape)

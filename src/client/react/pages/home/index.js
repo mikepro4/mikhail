@@ -8,7 +8,7 @@ import qs from "qs";
 import * as _ from "lodash"
 
 import { 
-    createShape, loadShape, searchShapes, deleteShape, updateShape, loadNewShape, clearNewShape
+    createShape, loadShape, searchShapes, deleteShape, updateShape, loadNewShape, clearNewShape, getMainShape
 } from "../../../redux/actions/shapesActions"
 
 import Viz from "../../components/viz"
@@ -36,6 +36,9 @@ class HomePage extends Component {
             this.props.loadShape(this.getQueryParams().shape, (data) => {
                 console.log(data)
             })
+        } else {
+            this.props.getMainShape()
+
         }
 	}
 
@@ -535,6 +538,7 @@ export default {
         updateShape,
         showDrawer,
         loadNewShape,
-        clearNewShape
+        clearNewShape,
+        getMainShape
 	})(HomePage))
 }
