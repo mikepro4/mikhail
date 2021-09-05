@@ -97,7 +97,6 @@ class ShapesPage extends Component {
                             onClick={() =>  {
                                 this.props.createShape({
                                     metadata: {
-                                        title: "Untitled",
                                         createdBy: this.props.user._id
                                     },
                                 }, () => {
