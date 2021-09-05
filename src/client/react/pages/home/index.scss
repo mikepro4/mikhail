@@ -3,12 +3,14 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 100px;
+    // bottom: 100px;
     user-select: none;
 
-    @media only screen and (max-width: $mobile) {
-        bottom: 170px;
-    }
+    // @media only screen and (max-width: $mobile) {
+    //     bottom: 170px;
+    // }
+
+    bottom: 0px;
 }
 
 .headline-container {
