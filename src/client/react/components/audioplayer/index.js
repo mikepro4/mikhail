@@ -84,6 +84,12 @@ class AudioPlayer extends Component {
         
     // }, 100)
 
+    // this.refs.audio.play()
+
+    // setTimeout(() => {
+    //     this.refs.audio.pause()
+    // }, 100)
+
    
    
    
@@ -134,7 +140,7 @@ class AudioPlayer extends Component {
             var AudioContext = window.AudioContext
             || window.webkitAudioContext
             || false;
-            let context = new AudioContext({ latencyHint: 0, sampleRate: 48000});
+            let context = new AudioContext();
             let analyser = context.createAnalyser();
             let audio = this.refs.audio
             
