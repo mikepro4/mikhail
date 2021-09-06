@@ -117,11 +117,17 @@ export const searchShapes = (type, identifier, offset, limit, query, success) =>
 	getState,
 	api
 ) => {
-    let criteria 
+    let criteria = {}
 
     if(type == "user") {
         criteria = {
             createdBy: identifier
+        }
+    }
+
+    if(type == "featured_shapes") {
+        criteria = {
+            createdBy: "613422fe0ee5bd00212cd0a4"
         }
     }
 

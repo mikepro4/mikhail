@@ -265,7 +265,7 @@ class Viz extends Component {
                 bold_rate: boldRate * 0.3 + 0.1,
                 math: math,
                 pointSize: pointSize,
-                pointCount: pointCount,
+                pointCount: 2048,
                 pointOpacity: pointOpacity,
                 pointColor: "#ffffff",
                 backgroundColor: "",
@@ -312,7 +312,7 @@ class Viz extends Component {
                 bold_rate: boldRate * 0.3 + 0.1,
                 math: math,
                 pointSize: pointSize,
-                pointCount: pointCount,
+                pointCount: 2048,
                 pointOpacity: pointOpacity,
                 pointColor: "#ffffff",
                 backgroundColor: "",
@@ -426,22 +426,32 @@ class Viz extends Component {
         let freqData = []
         let soundModifier = 1
 
-        // if(this.props.player.analyser) {
-        // freqData = new Uint8Array(this.props.player.analyser.frequencyBinCount)
-        // this.props.player.analyser.getByteFrequencyData(freqData)
-        // }
+        if(this.props.player.analyser) {
+            freqData = new Uint8Array(this.props.player.analyser.frequencyBinCount)
+            this.props.player.analyser.getByteFrequencyData(freqData)
+        }
+
+        
 
         for (let i = 0; i < points.length; i++) {
+
+            if(this.props.player.analyser && soundModifier) {
+                soundModifier = freqData[this.getPointIterator(i)]/1000
+        
+                if(soundModifier == 0) {
+                  soundModifier = 1
+                }
+            }
 
             let point = points[i];
 
             let t_radius = this.calculateRadius(soundModifier, i)
 
-            let tx = this.state.x + Math.cos(this.state.rotate + this.state.step * i) * t_radius;
-            let ty = this.state.y + Math.sin(this.state.rotate + this.state.step * i) * t_radius;
+            let tx = this.state.x + Math.cos(this.state.rotate + this.state.step * i  + soundModifier) * t_radius;
+            let ty = this.state.y + Math.sin(this.state.rotate + this.state.step * i  + soundModifier) * t_radius;
 
-            point.vx += (tx - point.x) * this.state.rotate_point_speed;
-            point.vy += (ty - point.y) * this.state.rotate_point_speed;
+            point.vx += (tx - point.x) * this.state.rotate_point_speed  ;
+            point.vy += (ty - point.y) * this.state.rotate_point_speed ;
 
             point.x += point.vx;
             point.y += point.vy;
@@ -474,17 +484,17 @@ class Viz extends Component {
     }
 
     calculateRadius = (soundModifier, i) => {
-        let radius = Math[this.state.math](this.state.rotate * soundModifier + this.state.freq * i) * this.state.radius * this.state.bold_rate +
+        let radius = Math[this.state.math](this.state.rotate + this.state.freq * i ) * this.state.radius * this.state.bold_rate  +
                 this.state.radius;
 
         return radius
     }
 
     getPointIterator = (i) => {
-        if (i <= 1024) {
+        if (i <= this.state.pointCount) {
             return i
         } else {
-            return i-1024
+            return i-this.state.pointCount
         }
     }
 
@@ -547,7 +557,7 @@ function mapStateToProps(state) {
 		location: state.router.location,
         app: state.app,
         shape: state.shape,
-        player: null
+        player: state.player
 	};
 }
 

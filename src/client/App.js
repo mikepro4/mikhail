@@ -99,14 +99,6 @@ class App extends Component {
                     </div>
                     <Player/>
                     <div className="new-player">
-                        {/* <div className="player-controls">
-                            <Play />
-                        </div>
-
-                        <div className="player-details">
-                            <div className="track-title">Iteration 1</div>
-                            <div className="track-subtitle">Octatrack, Digitakt, Digitone, Analog Rytm</div>
-                        </div> */}
                         <Timeline/>
                         <AudioPlayer/>
                         

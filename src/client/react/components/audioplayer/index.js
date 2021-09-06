@@ -10,35 +10,99 @@ import {
 
 class AudioPlayer extends Component {
   state = {
-    status: null
+    status: null,
+    loaded: false,
+    connected: false
   }
 
-  componentDidUpdate = (prevprops) => {
-    if(prevprops.player.trackId !== this.props.player.trackId) {
-			this.refs.audio.currentTime = 0
+  componentDidMount = () => {
+    // if(!this.props.player.analyser) {
 
-			if(!this.props.player.analyser) {
+    //     var AudioContext = window.AudioContext
+    //     || window.webkitAudioContext
+    //     || false;
+    //     let context = new AudioContext();
+    //     let analyser = context.createAnalyser();
+    //     let audio = this.refs.audio
+    //     audio.crossOrigin = "anonymous";
+    //     let audioSrc = context.createMediaElementSource(audio);
+    //     audioSrc.connect(analyser);
+    //     audioSrc.connect(context.destination);
+    //     this.props.setAnalyser(analyser)
+    // }
 
-				var AudioContext = window.AudioContext
-				|| window.webkitAudioContext
-				|| false;
-				let context = new AudioContext();
-				let analyser = context.createAnalyser();
-				let audio = this.refs.audio
-				audio.crossOrigin = "anonymous";
-				let audioSrc = context.createMediaElementSource(audio);
-				audioSrc.connect(analyser);
-				audioSrc.connect(context.destination);
-				this.props.setAnalyser(analyser)
-			}
-    }
+    // document.body.addEventListener("touchstart", () => {
+        // this.refs.audio.currentTime = 0
+        // var AudioContext = window.AudioContext
+        // || window.webkitAudioContext
+        // || false;
+        // let context = new AudioContext();
+        // let analyser = context.createAnalyser();
+        // let audio = this.refs.audio
+        
+    
+        // audio.addEventListener("canplay",  (event) => { console.log(event.type);
+        //     let audioSrc = context.createMediaElementSource(audio);
+        //     audioSrc.connect(analyser);
+        //     audioSrc.connect(context.destination);
+        //     analyser.connect(context.destination); 
+        //     this.props.setAnalyser(analyser)
+        // });
+    // });
+
+    // document.body.addEventListener("mousedown", () => {
+    //     this.setState({
+    //         playable: true
+    //     })
+
+    //     if(!this.state.playable) {
+    //         this.refs.audio.currentTime = 0
+    //         var AudioContext = window.AudioContext
+    //         || window.webkitAudioContext
+    //         || false;
+    //         let context = new AudioContext();
+    //         let analyser = context.createAnalyser();
+    //         let audio = this.refs.audio
+            
+        
+    //         audio.addEventListener("canplay",  (event) => { console.log(event.type);
+    //             let audioSrc = context.createMediaElementSource(audio);
+    //             audioSrc.connect(analyser);
+    //             audioSrc.connect(context.destination);
+    //             analyser.connect(context.destination); 
+    //             this.props.setAnalyser(analyser)
+    //         });
+    //     }
+        
+    // });
+
+    // setTimeout(() => {
+    //     this.setState({
+    //         loaded: true
+    //     })
+
+        
+    // }, 100)
+
+   
+   
+   
+  }
+
+  componentDidUpdate = (prevprops, prevparams) => {
+    // if(prevparams.loaded !== this.state.loaded) {
+    //     if(!this.props.player.analyser) {
+            
+    //     }
+       
+    // }
 
     if(
       prevprops.player.seekToSeconds !== this.props.player.seekToSeconds
       && this.props.player.seekToSeconds > 0
     ) {
       this.refs.audio.currentTime = this.props.player.seekToSeconds
-      this.play()
+      this.play() 
     }
 
     if(prevprops.player.status !== this.props.player.status) {
@@ -47,6 +111,7 @@ class AudioPlayer extends Component {
   }
 
   changeStatus = (status) => {
+      
     switch (status) {
       case "play":
   			return this.play()
@@ -61,6 +126,29 @@ class AudioPlayer extends Component {
 
   play = () => {
     console.log("play audio")
+    if(!this.state.connected) {
+        this.setState({
+            connected: true
+        }, () => {
+            this.refs.audio.currentTime = 0
+            var AudioContext = window.AudioContext
+            || window.webkitAudioContext
+            || false;
+            let context = new AudioContext({ latencyHint: 0, sampleRate: 48000});
+            let analyser = context.createAnalyser();
+            let audio = this.refs.audio
+            
+        
+            audio.addEventListener("canplay",  (event) => { console.log(event.type);
+                let audioSrc = context.createMediaElementSource(audio);
+                audioSrc.connect(analyser);
+                audioSrc.connect(context.destination);
+                this.props.setAnalyser(analyser)
+
+            });
+        })
+    }
+    
 
     this.refs.audio.play()
   }
@@ -85,13 +173,15 @@ class AudioPlayer extends Component {
   }
 
 	render() {
+        // style={{display: "none"}}
 		return (
-            <div style={{display: "none"}}>
+            <div style={{display: "none"}}> 
                 {this.props.player.trackId ? (
                     <audio
                         id="audio"
                         ref="audio"
                         controls={true}
+                        crossOrigin="anonymous" 
                         src={this.props.player.trackMetadata._id ? this.props.player.trackMetadata.audioUrl : ""}
                         onTimeUpdate={() => {
                             this.playing()

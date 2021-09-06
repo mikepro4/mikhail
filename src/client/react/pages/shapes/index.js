@@ -28,9 +28,9 @@ class ShapesPage extends Component {
     state = {
         selectedTabId: "1",
         tabs: [
-            "My shapes",
+            "Featured",
             "Recent",
-            "Featrued"
+            "My shapes"
         ],
     }
 
@@ -79,7 +79,27 @@ class ShapesPage extends Component {
 			case "1":
 				return(
                     <div>
-                        
+                        <ListResults
+                            type="featured_shapes"
+                            resultType="shape"
+                            searchCollection={this.props.searchShapes}
+                        />
+                    </div>
+                    )
+			case "2":
+				return(
+					<div>
+                        <ListResults
+                            type="recent_shapes"
+                            resultType="shape"
+                            searchCollection={this.props.searchShapes}
+                        />
+                    </div>
+				)
+			case "3":
+				return(
+                    <div>
+                                            
                         <div>
                             {this.props.user && <ListResults
                                 type="user"
@@ -89,32 +109,6 @@ class ShapesPage extends Component {
                             />}
                         </div>
 
-                        <Button 
-                            minimal="true"
-                            icon="plus"
-                            text="Create"
-                            className={"control theme-"+ this.props.theme}
-                            onClick={() =>  {
-                                this.props.createShape({
-                                    metadata: {
-                                        createdBy: this.props.user._id
-                                    },
-                                }, () => {
-                                    this.props.updateCollection(true)
-                                })
-                                }
-                            }
-
-                        />
-                    </div>
-                    )
-			case "2":
-				return(
-					<div className="placeholder">2</div>
-				)
-			case "3":
-				return(
-					<div className="placeholder">
                         {this.props.user ? (
                             <Button 
                             minimal="true"
@@ -134,8 +128,7 @@ class ShapesPage extends Component {
                             }
 
                         />
-                        ) : <div>Please login</div>}
-                        
+                        ) : <div>Please <Link to="/auth/login">login</Link></div>}
                     </div>
 				)
 			case "4":
