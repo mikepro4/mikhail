@@ -11,7 +11,7 @@ import {
 } from '../../../redux/actions/playerActions'
 
 import Play from "../icons/play"
-import Pause from "../icons/Pause"
+import Pause from "../icons/pause"
 
 class Timeline extends Component {
 
