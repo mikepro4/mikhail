@@ -22,7 +22,8 @@ class Viz extends Component {
         x: 0,
         y: 0,
         paused: false,
-        visible: false
+        visible: false,
+        timeInterval: null
     };
 
 	componentDidMount = () => {
@@ -50,9 +51,15 @@ class Viz extends Component {
         //     console.log("here")
         // }
 
-        setInterval(() => {
-		    window.dispatchEvent(new Event('resize'));
-        }, 1000)
+        if(this.props.location.pathname !== "shapes") {
+
+            const timeInterval = setInterval(() => {
+                window.dispatchEvent(new Event('resize'));
+                 
+            }, 1000);
+    
+            this.setState({ timeInterval });
+        }
 
         
     }
@@ -60,7 +67,7 @@ class Viz extends Component {
 	componentWillUnmount = () => {
 		window.removeEventListener("resize", this.handleResize);
         window.cancelAnimationFrame(this.state.requestAnimationFrame);
-        
+        clearInterval(this.state.timeInterval);
         
     }
     
