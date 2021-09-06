@@ -51,7 +51,7 @@ class Viz extends Component {
         //     console.log("here")
         // }
 
-        if(this.props.location.pathname !== "shapes") {
+        if(this.props.location.pathname == "/") {
 
             const timeInterval = setInterval(() => {
                 window.dispatchEvent(new Event('resize'));
@@ -68,7 +68,6 @@ class Viz extends Component {
 		window.removeEventListener("resize", this.handleResize);
         window.cancelAnimationFrame(this.state.requestAnimationFrame);
         clearInterval(this.state.timeInterval);
-        
     }
     
     handleResize = () => {
@@ -276,7 +275,7 @@ class Viz extends Component {
                 bold_rate: boldRate * 0.3 + 0.1,
                 math: math,
                 pointSize: pointSize,
-                pointCount: 2048,
+                pointCount: 1024,
                 pointOpacity: pointOpacity,
                 pointColor: "#ffffff",
                 backgroundColor: "",
@@ -323,7 +322,7 @@ class Viz extends Component {
                 bold_rate: boldRate * 0.3 + 0.1,
                 math: math,
                 pointSize: pointSize,
-                pointCount: 2048,
+                pointCount: 1024,
                 pointOpacity: pointOpacity,
                 pointColor: "#ffffff",
                 backgroundColor: "",
