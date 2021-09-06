@@ -84,13 +84,13 @@ class AudioPlayer extends Component {
         
     // }, 100)
 
-    // this.refs.audio.play()
+        // this.play()
 
-    // setTimeout(() => {
-    //     this.refs.audio.pause()
-    // }, 100)
+        // setTimeout(() => {
+        //     this.pause()
+        // }, 1000)
 
-   
+        // this.play()
    
    
   }
@@ -182,6 +182,7 @@ class AudioPlayer extends Component {
                     <audio
                         id="audio"
                         ref="audio"
+                        preload="true"
                         controls={true}
                         crossOrigin="anonymous" 
                         src={this.props.player.trackMetadata._id ? this.props.player.trackMetadata.audioUrl : ""}
