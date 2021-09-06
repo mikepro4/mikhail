@@ -42,3 +42,14 @@ export const HIDE_DRAWER = "app/HIDE_DRAWER"
 
 // =============================================================================
 
+
+
+// App
+
+export const TRACK_LOAD = "app/TRACK_LOAD"
+export const TRACK_PLAY = "app/TRACK_PLAY"
+export const TRACK_PAUSE = "app/TRACK_PAUSE"
+export const TRACK_STOP = "app/TRACK_STOP"
+export const TRACK_SEEK = "app/TRACK_SEEK"
+export const TRACK_PLAYING = "app/TRACK_PLAYING"
+export const SET_ANALYSER = "app/SET_ANALYSER"

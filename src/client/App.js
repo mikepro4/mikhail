@@ -26,6 +26,8 @@ import Player from "./react/components/player"
 import Drawer from "./react/components/drawer"
 
 import Play from "./react/components/icons/play"
+import Timeline from "./react/components/timeline"
+import AudioPlayer from "./react/components/audioplayer"
 
 export let socket
 
@@ -97,15 +99,19 @@ class App extends Component {
                     </div>
                     <Player/>
                     <div className="new-player">
-                        <div className="player-controls">
+                        {/* <div className="player-controls">
                             <Play />
                         </div>
 
                         <div className="player-details">
                             <div className="track-title">Iteration 1</div>
                             <div className="track-subtitle">Octatrack, Digitakt, Digitone, Analog Rytm</div>
-                        </div>
+                        </div> */}
+                        <Timeline/>
+                        <AudioPlayer/>
+                        
                     </div>
+
                 </div>
 				
                 <Scroll />
