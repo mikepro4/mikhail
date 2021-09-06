@@ -143,15 +143,11 @@ class AudioPlayer extends Component {
             let context = new AudioContext();
             let analyser = context.createAnalyser();
             let audio = this.refs.audio
-            
-        
-            audio.addEventListener("canplay",  (event) => { console.log(event.type);
-                let audioSrc = context.createMediaElementSource(audio);
-                audioSrc.connect(analyser);
-                audioSrc.connect(context.destination);
-                this.props.setAnalyser(analyser)
+            let audioSrc = context.createMediaElementSource(audio);
+            audioSrc.connect(analyser);
+            audioSrc.connect(context.destination);
+            this.props.setAnalyser(analyser)
 
-            });
         })
     }
     
