@@ -19,7 +19,7 @@ class Timeline extends Component {
 
         let track = {
             _id: 1,
-            audioUrl: "https://res.cloudinary.com/dcdnt/video/upload/v1630889295/Demo_1.mp3",
+            audioUrl: "https://res.cloudinary.com/dcdnt/video/upload/v1630895059/Demo_2.mp3",
             title: "Iteration 1",
             subtitle: "Octatrack, Digitakt, Digitone, Analog Rytm",
             duration: 700
