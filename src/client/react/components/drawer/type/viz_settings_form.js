@@ -125,13 +125,15 @@ class VizSettingsForm extends Component {
                     inline={true}
                 />
 
-                <Button
+                {this.props.user &&  <Button
                     className={"submit-button theme-" + this.props.theme}
                     loading={this.props.loading}
                     type="submit"
                     text="Update"
                     large="true"
-                />
+                />}
+
+               
             </Form>
 		);
 	}
@@ -153,6 +155,7 @@ VizSettingsForm = reduxForm({
 })(VizSettingsForm);
 
 const mapStateToProps = state => ({
+    user: state.app.user
 });
 
 export default connect(mapStateToProps, {

@@ -101,12 +101,20 @@ class VizSettings extends Component {
                     </div>
 
                     <Button 
-                            className={"control button-close theme-"+ this.props.theme}
+                            className={"control button-update theme-"+ this.props.theme}
                             onClick={() =>  {
+
+                                let user
+
+                                if(this.props.user && this.props.user._id ) {
+                                    user = this.props.user._id
+                                } else {
+                                    user = "anon"
+                                }
                                 this.props.createShape({
                                     metadata: {
                                         title: this.props.shape.metadata.title,
-                                        createdBy: this.props.user._id
+                                        createdBy: user
                                     },
                                     defaultViz: {
                                         shape: shape,
@@ -116,7 +124,6 @@ class VizSettings extends Component {
                                     console.log(data)
                                     this.props.history.push("/?shape="+data._id)
                                     this.props.hideDrawer()
-                                    // this.props.updateCollection(true)
                                 })
                                 }
                             }
