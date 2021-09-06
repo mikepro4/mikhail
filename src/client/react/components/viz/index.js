@@ -50,6 +50,10 @@ class Viz extends Component {
         //     console.log("here")
         // }
 
+        setInterval(() => {
+		    window.dispatchEvent(new Event('resize'));
+        }, 1000)
+
         
     }
 
@@ -61,7 +65,7 @@ class Viz extends Component {
     }
     
     handleResize = () => {
-		this.updateDimensions()
+		    this.updateDimensions()
     }
 
     componentDidUpdate = (prevprops) => {

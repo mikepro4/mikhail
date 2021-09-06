@@ -62,7 +62,7 @@ export default (
         ${helmetInstance.title.toString()}
         ${helmetInstance.meta.toString()}
         <link rel="stylesheet" href="/${buildAssets.bundle.css}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0;"/>
         <script type="text/javascript" src="/MochiKit/Base.js"></script>
         <script type="text/javascript" src="/MochiKit/Iter.js"></script>
         <script type="text/javascript" src="/MochiKit/Logging.js"></script>
