@@ -18,7 +18,7 @@ import {
         _id: 1,
         audioUrl: "https://res.cloudinary.com/dcdnt/video/upload/v1630957881/demo_2_48000.mp3",
         title: "Iteration 1",
-        subtitle: "Octatrack, Digitakt, Digitone, Analog Rytm",
+        subtitle: "Octatrack, DFAM, Digitakt, Digitone, Analog Rytm",
         duration: 700
     },
     analyser: null
