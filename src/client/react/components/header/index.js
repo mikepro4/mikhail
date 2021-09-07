@@ -6,6 +6,10 @@ import classNames from "classnames"
 import Anime from 'react-anime';
 import { motion } from "framer-motion"
 
+import { 
+    getMainShape
+} from "../../../redux/actions/shapesActions"
+
 class Header extends Component {
 
 	constructor(props){
@@ -489,24 +493,34 @@ class Header extends Component {
 				<div className="app-header">
 					<div className="app-header-wrapper">
 	
-						<div className="header-left">
-								<Link to="/"  onClick={() => {
-								if(this.state.menuOpen) {
-									this.setState({
-										menuOpen: false,
-										menuClosing: true
-									})
-	
-									document.body.classList.remove("no-scroll")
-						
-									setTimeout(() => {
-										this.setState({
-											menuClosing: false
-										})
-									}, 1000)
-								}
-							}}>Mikhail Proniushkin</Link>
-							</div>
+                        <div 
+                            className="header-left"
+                        >
+                                <Link 
+                                    to="/"  
+                                    onClick={() => {
+                                            if(this.state.menuOpen) {
+                                                this.setState({
+                                                    menuOpen: false,
+                                                    menuClosing: true
+                                                })
+                
+                                                document.body.classList.remove("no-scroll")
+                                    
+                                                setTimeout(() => {
+                                                    this.setState({
+                                                        menuClosing: false
+                                                    })
+                                                }, 1000)
+
+                                                this.props.getMainShape()
+                                            }
+
+                                            this.props.getMainShape()
+                                        }}>
+                                        Mikhail Proniushkin
+                                </Link>
+                                </div>
 	
 							<div className="menu_icon" onClick={() => {
 								this.handleClick()
@@ -534,4 +548,6 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, {})(withRouter(Header));
+export default connect(mapStateToProps, {
+    getMainShape
+})(withRouter(Header));
