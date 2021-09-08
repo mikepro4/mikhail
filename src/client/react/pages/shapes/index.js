@@ -49,7 +49,7 @@ class ShapesPage extends Component {
     
     renderHead = () => (
 		<Helmet>
-			<title>Mikhail - Shapes</title>
+			<title>Shapes</title>
 			<meta property="og:title" content="Homepage" />
 		</Helmet>
     )
