@@ -71,12 +71,11 @@ export default (
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#0000000">
 
-        <meta property="og:url"                content="https://www.mikhail.co />
-        <meta property="og:type"               content="website" />
-        <meta property="og:title"              content="Mikhail Proniushkin" />
-        <meta property="og:description"        content="Design, Tech & Techno" />
-        <meta property="og:image"              content="https://res.cloudinary.com/dcdnt/image/upload/v1631067755/mikhail.png" />
-
+        <meta property="og:url" content="https://www.mikhail.co />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Mikhail Proniushkin" />
+        <meta property="og:description" content="Design, Tech & Techno" />
+        <meta property="og:image" content="https://res.cloudinary.com/dcdnt/image/upload/v1631067755/mikhail.png" />
 
         <meta name="viewport" content="width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0;"/>
         <script type="text/javascript" src="/MochiKit/Base.js"></script>

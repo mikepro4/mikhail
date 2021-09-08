@@ -90,7 +90,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className={"app theme-"+ this.props.theme}>
-                <div className="app-bg"></div>
+                {/* <div className="app-bg"></div> */}
                 {this.props.drawerOpen && <Drawer type={this.props.drawerType} />}
                 <Header/>
                 <div className="main-section">
