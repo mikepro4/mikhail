@@ -64,7 +64,7 @@ class TabGroup extends Component {
                       onClick={() => this.changeValue(tabOption.value)}
                       key={tabOption.value}
                     >
-                      {tabOption.name}
+                      <div className="tab-option-label">{tabOption.name}</div>
                     </li>
                   )
                 })}

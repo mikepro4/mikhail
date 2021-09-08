@@ -47,8 +47,7 @@ class VizSettingsForm extends Component {
                     name="shape.math"
                     component={TabGroup}
                     tabOptions={mathTabOptions}
-                    label="Math"
-                    sliderMax={20}
+                    label="Algorithm math"
                 />
 
                 <Field
@@ -56,6 +55,7 @@ class VizSettingsForm extends Component {
                     component={Slider}
                     label="Bold rate"
                     sliderMax={20}
+                    sliderMin={-20}
                 />
 
                 <Field

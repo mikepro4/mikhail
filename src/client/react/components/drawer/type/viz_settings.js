@@ -60,19 +60,6 @@ class VizSettings extends Component {
                 
                 <div className={"details-container theme-" + this.props.theme}>
                     <div className="drawer-header">
-                        <div className="drawer-title">
-                            Shape Settings
-                        </div>
-
-                        <Button 
-                            minimal="true"
-                            icon="cross"
-                            className={"control button-close theme-"+ this.props.theme}
-                            onClick={() =>  {
-                                this.props.hideDrawer()
-                                }
-                            }
-                        />
 
                         <VizSettingsForm 
                             enableReinitialize="true"
