@@ -58,7 +58,7 @@ class HomePage extends Component {
     
     renderHead = () => (
 		<Helmet>
-			<title>Mikhail Proniushkin</title>
+			<title>Mikhail Proniushkin | Design, Tech & Techno</title>
 			<meta property="og:title" content="Homepage" />
 		</Helmet>
     )
