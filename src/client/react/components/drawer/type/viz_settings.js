@@ -114,7 +114,7 @@ class VizSettings extends Component {
                                 })
                                 }
                             }
-                        >Save new</Button>
+                        >Save new shape</Button>
                 </div>
             </div>
 

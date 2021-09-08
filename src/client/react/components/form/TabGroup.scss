@@ -26,7 +26,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 1s cubic-bezier(.12,.77,.28,.86);
+            transition: all 1s $animation_easing2;
             cursor: pointer;
 
             .tab-option-label {

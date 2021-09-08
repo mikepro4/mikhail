@@ -51,63 +51,77 @@ class VizSettingsForm extends Component {
                 />
 
                 <Field
-                    name="shape.boldRate"
+                    name="shape.frequency"
                     component={Slider}
-                    label="Bold rate"
+                    label="Frequency"
                     sliderMax={20}
                     sliderMin={-20}
+                    labelStepSize={10}
                 />
 
                 <Field
                     name="shape.step"
                     component={Slider}
-                    label="step"
+                    label="Step"
                     sliderMax={20}
+                    sliderMin={-20}
+                    labelStepSize={10}
                 />
 
                 <Field
                     name="shape.rotateSpeed"
                     component={Slider}
-                    label="rotateSpeed"
-                    sliderMax={5}
+                    label="Rotation"
+                    sliderMax={10}
+                    sliderMin={-10}
+                    labelStepSize={5}
                 />
 
                 <Field
-                    name="shape.frequency"
+                    name="shape.boldRate"
                     component={Slider}
-                    label="frequency"
+                    label="Boldness"
                     sliderMax={20}
+                    sliderMin={-20}
+                    labelStepSize={10}
                 />
 
                 <Field
                     name="shape.friction"
                     component={Slider}
-                    label="friction"
+                    label="Friction"
                     sliderMax={1}
+                    sliderMin={-1}
+                    labelStepSize={0.5}
                 />
 
                 <Field
                     name="shape.rotatePointSpeed"
                     component={Slider}
-                    label="rotatePointSpeed"
+                    label="Point rotation speed"
                     sliderMax={10}
+                    sliderMin={-10}
+                    labelStepSize={5}
                 />
 
                 <Field
                     name="point.pointSize"
                     component={Slider}
-                    label="pointSize"
-                    sliderMax={20}
+                    label="Point size"
+                    sliderMax={500}
+                    sliderMin={1}
+                    labelStepSize={125}
                 />
 
                 <Field
                     name="point.pointOpacity"
                     component={Slider}
-                    label="pointOpacity"
+                    label="Point opacity"
                     sliderMax={1}
+                    labelStepSize={0.1}
                 />
 
-                <div className="blade-input-group">
+                {/* <div className="blade-input-group">
                     <Field
                         name="title"
                         component={Textarea}
@@ -115,15 +129,15 @@ class VizSettingsForm extends Component {
                         ref="title"
                         title="Title"
                     />
-                </div>
+                </div> */}
 
-                <Field
+                {/* <Field
                     name="main"
                     type="checkbox"
                     component={Checkbox}
                     label="Main"
                     inline={true}
-                />
+                /> */}
 
                 {this.props.user &&  <Button
                     className={"submit-button theme-" + this.props.theme}

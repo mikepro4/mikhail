@@ -127,10 +127,10 @@ class SliderComponent extends Component {
                 </div>
 
               <Slider
-                    min={0}
+                    min={this.props.sliderMin}
                     max={this.props.sliderMax}
                     stepSize={0.1}
-                    labelStepSize={10}
+                    labelStepSize={this.props.labelStepSize}
                     value={Number(this.props.input.value)}
                     onChange={(value) => this.changeValue(value)}
                 />
