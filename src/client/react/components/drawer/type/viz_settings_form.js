@@ -110,6 +110,7 @@ class VizSettingsForm extends Component {
                     label="Point size"
                     sliderMax={500}
                     sliderMin={1}
+                    resetValue={1.3}
                     labelStepSize={125}
                 />
 
@@ -117,6 +118,7 @@ class VizSettingsForm extends Component {
                     name="point.pointOpacity"
                     component={Slider}
                     label="Point opacity"
+                    resetValue={1}
                     sliderMax={1}
                     labelStepSize={0.1}
                 />
