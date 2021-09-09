@@ -89,8 +89,11 @@ class VizSettings extends Component {
 
                     <Button 
                             className={"control button-update theme-"+ this.props.theme}
+                            loading={this.state.loading}
                             onClick={() =>  {
-
+                                this.setState({
+                                    loading: true
+                                })
                                 let user
 
                                 if(this.props.user && this.props.user._id ) {
@@ -111,6 +114,9 @@ class VizSettings extends Component {
                                     console.log(data)
                                     this.props.history.push("/?shape="+data._id)
                                     this.props.hideDrawer()
+                                    this.setState({
+                                        loading: false
+                                    })
                                 })
                                 }
                             }

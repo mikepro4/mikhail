@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { change } from "redux-form";
-import { H5, Slider, Switch } from "@blueprintjs/core";
+import { H5, Slider, Switch, Icon } from "@blueprintjs/core";
 
 class SliderComponent extends Component {
   state = {
@@ -126,27 +126,33 @@ class SliderComponent extends Component {
                     <input {...this.props.input}   />
                 </div>
 
-              <Slider
-                    min={this.props.sliderMin}
-                    max={this.props.sliderMax}
-                    stepSize={0.1}
-                    labelStepSize={this.props.labelStepSize}
-                    value={Number(this.props.input.value)}
-                    onChange={(value) => this.changeValue(value)}
-                />
+                <Slider
+                        min={this.props.sliderMin}
+                        max={this.props.sliderMax}
+                        stepSize={0.1}
+                        labelStepSize={this.props.labelStepSize}
+                        value={Number(this.props.input.value)}
+                        onChange={(value) => this.changeValue(value)}
+                    />
 
-            <div className="action-container">
-            <ul className="action-list">
-             
-              <li className="action-item">
-                <a className="input-action-button" onClick={() => this.add()}>+</a>
-              </li>
+                <div className="action-container">
+                    <ul className="action-list">
+                    
+                   
+                        <li className="action-item">
+                            <a className="input-action-button" onClick={() => this.subtract()}>
+                                <Icon icon="minus"/>
+                            </a>
+                        </li>
 
-              <li className="action-item">
-                <a className="input-action-button" onClick={() => this.subtract()}>-</a>
-              </li>
-            </ul>
-          </div>
+                        <li className="action-item">
+                            <a className="input-action-button" onClick={() => this.add()}>
+                                <Icon icon="plus"/>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
           </div>
 

@@ -66,36 +66,31 @@
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
-    width: 100px;
+    margin-left: 20px;
 
      ul {
        display: flex;
 
        li {
-         a {
-           border: none;
-           color: $white;
-           height: 30px;
-           margin: 0 0 0 2px;
-           font-size: 10px;
-           color: rgba($white,0.5);
-           font-weight: 300;
-           transition: all 0.2s;
-           display: flex;
-           align-items: center;
-           padding: 0 10px;
+            a {
+                border: none;
+                color: $white;
+                height: 28px;
+                margin: 0 0 0 5px;
+                font-size: 10px;
+                font-weight: 300;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                background: rgba($white, 0.1);
+                border-radius: 3px;
+                transition: all .2s ease;
 
-
-           &:hover {
-             background: $blue1;
-             color: $white
-           }
-
-           &:active {
-             background: rgba($blue1, 0.5);
-             color: $white
-           }
-         }
+                &:active {
+                    background: rgba($white, 0.5);
+                }
+            }
        }
      }
   }
