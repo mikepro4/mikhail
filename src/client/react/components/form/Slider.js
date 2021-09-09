@@ -135,13 +135,19 @@ class SliderComponent extends Component {
                             </div>
 
                             <Slider
-                                    min={this.props.sliderMin}
-                                    max={this.props.sliderMax}
-                                    stepSize={0.1}
-                                    labelStepSize={this.props.labelStepSize}
-                                    value={Number(this.props.input.value)}
-                                    onChange={(value) => this.changeValue(value)}
-                                />
+                                min={this.props.sliderMin}
+                                max={this.props.sliderMax}
+                                stepSize={0.1}
+                                labelStepSize={this.props.labelStepSize}
+                                value={Number(this.props.input.value)}
+                                onChange={(value) => this.changeValue(value)}
+                                onRelease={(value) => {
+                                    // console.log(value)
+                                    // setTimeout(() => {
+                                    //     this.changeValue(value)
+                                    // }, 1)
+                                }}
+                            />
 
                             <div className="action-container">
                                 <ul className="action-list">

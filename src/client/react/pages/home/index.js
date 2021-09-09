@@ -575,13 +575,7 @@ class HomePage extends Component {
                 >
                     <div className="touch-zones">
                         <div className="touch-zones-row touch-zones-row-1">
-                            <div 
-                                className={classNames({
-                                    "touch-zone-active": this.state.activeZone == 1
-                                }, "touch-zone touch-zone-1")}
-                                onTouchStart={(event) => this.handleZone1TouchStart(event)}
-                                onTouchEnd={(event) => this.handleZone1TouchEnd(event)}
-                            ></div>
+
                             <div 
                                 className={classNames({
                                     "touch-zone-active": this.state.activeZone == 2
@@ -589,16 +583,19 @@ class HomePage extends Component {
                                 onTouchStart={(event) => this.handleZone2TouchStart(event)}
                                 onTouchEnd={(event) => this.handleZone2TouchEnd(event)}
                             ></div>
+
+                            <div 
+                                className={classNames({
+                                    "touch-zone-active": this.state.activeZone == 1
+                                }, "touch-zone touch-zone-1")}
+                                onTouchStart={(event) => this.handleZone1TouchStart(event)}
+                                onTouchEnd={(event) => this.handleZone1TouchEnd(event)}
+                            ></div>
+                           
                         </div>
 
                         <div className="touch-zones-row touch-zones-row-2">
-                            <div 
-                                className={classNames({
-                                    "touch-zone-active": this.state.activeZone == 3
-                                }, "touch-zone touch-zone-3")}
-                                onTouchStart={(event) => this.handleZone3TouchStart(event)}
-                                onTouchEnd={(event) => this.handleZone3TouchEnd(event)}
-                            ></div>
+                            
                             <div 
                                 className={classNames({
                                     "touch-zone-active": this.state.activeZone == 4
@@ -606,16 +603,18 @@ class HomePage extends Component {
                                 onTouchStart={(event) => this.handleZone4TouchStart(event)}
                                 onTouchEnd={(event) => this.handleZone4TouchEnd(event)}
                             ></div>
+
+                            <div 
+                                className={classNames({
+                                    "touch-zone-active": this.state.activeZone == 3
+                                }, "touch-zone touch-zone-3")}
+                                onTouchStart={(event) => this.handleZone3TouchStart(event)}
+                                onTouchEnd={(event) => this.handleZone3TouchEnd(event)}
+                            ></div>
                         </div>
 
                         <div className="touch-zones-row touch-zones-row-3">
-                            <div 
-                                className={classNames({
-                                    "touch-zone-active": this.state.activeZone == 7
-                                }, "touch-zone touch-zone-7")}
-                                onTouchStart={(event) => this.handleZone7TouchStart(event)}
-                                onTouchEnd={(event) => this.handleZone7TouchEnd(event)}
-                            ></div>
+                            
                             <div 
                                 className={classNames({
                                     "touch-zone-active": this.state.activeZone == 8
@@ -623,22 +622,31 @@ class HomePage extends Component {
                                 onTouchStart={(event) => this.handleZone8TouchStart(event)}
                                 onTouchEnd={(event) => this.handleZone8TouchEnd(event)}
                             ></div>
+
+                            <div 
+                                className={classNames({
+                                    "touch-zone-active": this.state.activeZone == 7
+                                }, "touch-zone touch-zone-7")}
+                                onTouchStart={(event) => this.handleZone7TouchStart(event)}
+                                onTouchEnd={(event) => this.handleZone7TouchEnd(event)}
+                            ></div>
                         </div>
 
                         <div className="touch-zones-row touch-zones-row-3">
-                            <div 
-                                className={classNames({
-                                    "touch-zone-active": this.state.activeZone == 5
-                                }, "touch-zone touch-zone-5")}
-                                onTouchStart={(event) => this.handleZone5TouchStart(event)}
-                                onTouchEnd={(event) => this.handleZone5TouchEnd(event)}
-                            ></div>
                             <div 
                                 className={classNames({
                                     "touch-zone-active": this.state.activeZone == 6
                                 }, "touch-zone touch-zone-6")}
                                 onTouchStart={(event) => this.handleZone6TouchStart(event)}
                                 onTouchEnd={(event) => this.handleZone6TouchEnd(event)}
+                            ></div>
+
+                            <div 
+                                className={classNames({
+                                    "touch-zone-active": this.state.activeZone == 5
+                                }, "touch-zone touch-zone-5")}
+                                onTouchStart={(event) => this.handleZone5TouchStart(event)}
+                                onTouchEnd={(event) => this.handleZone5TouchEnd(event)}
                             ></div>
                         </div>
                     </div>
