@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import classNames from "classnames"
+import keydown from "react-keydown";
+import moment from "moment"
 
 import qs from "qs";
 import * as _ from "lodash"
@@ -27,7 +29,25 @@ class HomePage extends Component {
         timeInterval: null,
         time: 0,
         originalBoldRate: null,
-        activeZone: null
+        activeZone: null,
+        keys: {
+            e: false,
+            r: {
+                active: false,
+                interval: null,
+                time: 0,
+                waiting: false
+            },
+            v: false, 
+            b: false,
+            a: false,
+            s: false,
+            d: false, 
+            f: false,
+            q: false,
+            w: false
+        },
+        activeKeys: []
 	}
 
 	componentDidMount() {
@@ -41,7 +61,11 @@ class HomePage extends Component {
             this.props.getMainShape()
 
         }
-	}
+    }
+    
+    keyUp() {
+        console.log("keyup")
+    }
 
 	componentDidUpdate(prevprops) {
         
@@ -557,9 +581,137 @@ class HomePage extends Component {
 
 		this.setState({ timeInterval });
     }
+
+    // @keydown("r")
+    boldRateMore(event) {
+        console.log(moment().format())
+
+        if(this.state.keys.r.active) {
+     
+            this.setState({ 
+                keys: {
+                    ...this.state.keys,
+                    r: {
+                        ...this.state.keys.r,
+                        waiting: true
+                    }
+                }
+            });
+
+        } else {
+            const timeInterval = setInterval(() => {
+                this.setState({ 
+                    keys: {
+                        ...this.state.keys,
+                        r: {
+                            ...this.state.keys.r,
+                            time: this.state.keys.r.time + 100,
+                            waiting: true
+                        }
+                    }
+                 });
     
+                this.updateProperty("boldRate", this.state.keys.r.time / 100000)
+                 
+            }, 1);
+    
+            this.setState({
+                keys: {
+                    ...this.state.keys,
+                    r: {
+                        ...this.state.keys.r,
+                        active: true,
+                        interval: timeInterval,
+                        waiting: true,
+                    }
+                }
+            })
+
+           
+        }
+
+        setTimeout(() => {
+            if(this.state.keys.r.waiting) {
+                clearInterval(this.state.keys.r.interval);
+                this.setState({
+                    keys: {
+                        ...this.state.keys,
+                        waiting: false,
+                        active: false
+                    }
+                })
+            }
+        }, 1000)
+
+        
+    }
+
+    // @keydown("r")
+    // boldRateMore() {
+    //     this.setState({
+    //         boldRateMore: true
+    //     })
+        // this.updateProperty("boldRate", 0.5)
+        // if(!this.state.touched) {
+        //     this.setState({
+        //         touched: true,
+        //         activeZone: 8,
+        //         desktop: true
+        //     })
+        //     this.startDesktopZone8TimeInterval()
+        // }
+    // }
+
+    // @keydown("e")
+    // rotateLess() {
+    //     this.updateProperty("boldRate", -0.5)
+    // }
+
+    startDesktopZone8TimeInterval() {
+        clearInterval(this.state.timeInterval);
+
+		const timeInterval = setInterval(() => {
+            this.setState({ 
+                time: this.state.time + 100
+             });
 
 
+            this.updateProperty("boldRate", this.state.time / 100000)
+             
+		}, 1);
+
+		this.setState({ timeInterval });
+    }
+
+
+    updateProperty(property, amount) {
+        let selectedShape
+
+        if(this.props.shape.newShape.defaultViz) {
+            selectedShape = this.props.shape.newShape
+        } else {
+            selectedShape = this.props.shape.currentShape
+        }
+        this.setState({
+            originalBoldRate: selectedShape.defaultViz.shape.boldRate 
+        })
+
+        // console.log(selectedShape)
+        if(selectedShape && selectedShape.defaultViz) {
+            let finalshape = {
+                ...selectedShape,
+                defaultViz: {
+                    ...selectedShape.defaultViz,
+                    shape: {
+                        ...selectedShape.defaultViz.shape,
+                        [property]: selectedShape.defaultViz.shape[property]  + amount
+                    }
+                }
+            }
+            this.props.loadNewShape(finalshape)
+        }
+    }
+    
 
 	render() {
         

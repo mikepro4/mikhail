@@ -336,8 +336,6 @@ class Viz extends Component {
             })
         }
 
-        console.log(finalViz)
-    
         // let vizSource
 
         // if (this.props.shape.newShape.defaultViz) {

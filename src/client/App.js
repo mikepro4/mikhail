@@ -48,8 +48,25 @@ class App extends Component {
 		} else {
 			this.props.toggleTheme("dark")
 			document.body.classList.add("theme-dark");
-		}
+        }
+        
+        document.addEventListener("keydown", this.onKeyDownPressed.bind(this))
+        document.addEventListener("keyup", this.onKeyUpPressed.bind(this))
     }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.onKeyDownPressed.bind(this));
+        document.removeEventListener("keyup", this.onKeyUpPressed.bind(this));
+    }     
+    
+    onKeyDownPressed(e) {
+        console.log("down", e.keyCode);
+    }
+
+    onKeyUpPressed(e) {
+        console.log("up", e.keyCode);
+    }
+    
     
     componentDidUpdate(prevprops) {
 		if(prevprops.user !== this.props.user) {
@@ -89,7 +106,9 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className={"app theme-"+ this.props.theme}>
+            <div 
+                className={"app theme-"+ this.props.theme}
+                >
                 {/* <div className="app-bg"></div> */}
                 {this.props.drawerOpen && <Drawer type={this.props.drawerType} />}
                 <Header/>
