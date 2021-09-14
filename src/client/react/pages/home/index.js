@@ -756,19 +756,22 @@ class HomePage extends Component {
 
             if(!startedItervalKey) {
                 // console.log("stop interval", key)
+                this.launchInterval(key, "stop")
+
                 let newStartedIntervals = update(this.state.startedIntervals, {
                     $splice: [[this.state.startedIntervals[key], 1]] 
                 })
 
                 this.setState({
-                    startedIntervals: newStartedIntervals
+                    startedIntervals: _.pull(this.state.startedIntervals, key)
                 }, () => {
                     // console.log("startedIntervals", this.state.startedIntervals)
-                    this.launchInterval(key, "stop")
                 })
             }
         })
+    
 
+        
         // start appropriate interval
 
         // stop approprite interval
@@ -782,13 +785,17 @@ class HomePage extends Component {
         if(key == 16) {
             if(_.includes(this.state.startedIntervals, 82)) {
                 if(action == "start") {
-                    this.runBoldRate(includesShift, action, "more")
+                    this.runBoldRate(includesShift, "start", "more")
+                } else if(action == "stop") {
+                    this.runBoldRate(false, "start", "more")
                 }
             } 
 
             if(_.includes(this.state.startedIntervals, 69)) {
                 if(action == "start") {
-                    this.runBoldRate(includesShift, action, "less")
+                    this.runBoldRate(includesShift, "start", "less")
+                } else if(action == "stop") {
+                    this.runBoldRate(false, "start", "less")
                 }
             } 
             
@@ -856,7 +863,9 @@ class HomePage extends Component {
             }
 
             if(direction == "less") {
-                clearInterval(this.state.boldRateLess);
+                setTimeout(() => {
+                    clearInterval(this.state.boldRateLess);
+                }, timeoutValue)
             }
 
         }
