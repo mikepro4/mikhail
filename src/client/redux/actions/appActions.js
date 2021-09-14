@@ -8,13 +8,39 @@ import {
     SCROLL_TO_RESET,
     UPDATE_COLLECTION,
     SHOW_DRAWER,
-	HIDE_DRAWER,
+    HIDE_DRAWER,
+    ACTIVATE_KEY,
+    DEACTIVATE_KEY
 } from "./types";
 
 import moment from "moment";
 import * as _ from "lodash";
 import qs from "qs";
 import axios from "axios";
+
+/////////////////////////////////////////////////
+
+export const activateKey = (key, success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+    dispatch({
+        type: ACTIVATE_KEY,
+        payload: key
+    });
+};
+
+export const deactivateKey = (key, success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+    dispatch({
+        type: DEACTIVATE_KEY,
+        payload: key
+    });
+};
 
 /////////////////////////////////////////////////
 

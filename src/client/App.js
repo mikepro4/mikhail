@@ -11,7 +11,9 @@ import { FocusStyleManager } from "@blueprintjs/core";
 import { io } from "./socket"
 
 import { 
-	toggleTheme, 
+    toggleTheme, 
+    activateKey,
+    deactivateKey
 } from "./redux/actions/appActions"
 
 FocusStyleManager.onlyShowFocusOnTabs();
@@ -60,11 +62,13 @@ class App extends Component {
     }     
     
     onKeyDownPressed(e) {
-        console.log("down", e.keyCode);
+        // console.log("down", e.keyCode);
+        this.props.activateKey(e.keyCode)
     }
 
     onKeyUpPressed(e) {
-        console.log("up", e.keyCode);
+        // console.log("up", e.keyCode);
+        this.props.deactivateKey(e.keyCode)
     }
     
     
@@ -146,6 +150,8 @@ export default {
         toggleTheme,
         authUser, 
 		fetchCurrentUser, 
-		clearCurrentUser,
+        clearCurrentUser,
+        activateKey,
+        deactivateKey
 	})(App))
 };

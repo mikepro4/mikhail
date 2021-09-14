@@ -36,15 +36,16 @@ export const LOAD_NEW_SHAPE = "app/LOAD_NEW_SHAPE"
 export const CLEAR_NEW_SHAPE = "app/CLEAR_NEW_SHAPE"
 export const CLEAR_SHAPE = "app/CLEAR_SHAPE"
 
-
 export const SHOW_DRAWER = "app/SHOW_DRAWER"
 export const HIDE_DRAWER = "app/HIDE_DRAWER"
+
+export const ACTIVATE_KEY = "app/ACTIVATE_KEY"
+export const DEACTIVATE_KEY = "app/DEACTIVATE_KEY"
 
 // =============================================================================
 
 
-
-// App
+// Player
 
 export const TRACK_LOAD = "app/TRACK_LOAD"
 export const TRACK_PLAY = "app/TRACK_PLAY"

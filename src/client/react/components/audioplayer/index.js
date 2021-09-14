@@ -175,14 +175,13 @@ class AudioPlayer extends Component {
   }
 
 	render() {
-        // style={{display: "none"}}
 		return (
             <div style={{display: "none"}}> 
                 {this.props.player.trackId ? (
                     <audio
                         id="audio"
                         ref="audio"
-                        preload="auto"
+                        preload="none"
                         controls={true}
                         crossOrigin="anonymous" 
                         src={this.props.player.trackMetadata._id ? this.props.player.trackMetadata.audioUrl : ""}

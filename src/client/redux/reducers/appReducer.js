@@ -1,4 +1,4 @@
-import { assign } from "lodash";
+import * as _ from "lodash";
 import update from "immutability-helper";
 
 import {
@@ -13,7 +13,9 @@ import {
     SCROLL_TO_RESET,
     UPDATE_COLLECTION,
     SHOW_DRAWER,
-	HIDE_DRAWER,
+    HIDE_DRAWER,
+    ACTIVATE_KEY,
+    DEACTIVATE_KEY
 } from "../actions/types";
 
 export const initialState = {
@@ -29,6 +31,8 @@ export const initialState = {
     drawerOpen: false,
     drawerType: null,
     drawerData: {},
+    allKeys: [16, 69, 82],
+    activeKeys: []
 };
 
 export const appReducer = (state = initialState, action) => {
@@ -97,6 +101,38 @@ export const appReducer = (state = initialState, action) => {
                 drawerData: null,
                 suggestions: []
             }
+        case ACTIVATE_KEY:
+            let activeKeys = []
+
+            let keyToActivateIndex = _.findIndex(state.activeKeys, action.payload);
+
+
+            if(keyToActivateIndex < 0) {
+                let newKeys = _.union(state.activeKeys, [action.payload])
+                return {
+                    ...state,
+                    activeKeys: newKeys
+                }
+            } else {
+                return {
+                    ...state
+                }
+            }
+            
+        case DEACTIVATE_KEY:
+
+            let keyToDeactivateIndex = _.findIndex(state.activeKeys, action.payload);
+
+            if(keyToDeactivateIndex) {
+                return update(state, {
+                    activeKeys: { $splice: [[keyToDeactivateIndex, 1]] }
+                });
+            } else {
+                return {
+                    ...state
+                }
+            }
+            
 		default:
 			return state;
 	}
