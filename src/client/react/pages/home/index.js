@@ -780,33 +780,44 @@ class HomePage extends Component {
     launchInterval(key, action) {
         console.log(key, action)
 
+        let changeValues = {
+            boldRate: {
+                standard: 0.01,
+                extended: 0.1
+            },
+            rotateSpeed: {
+                standard: 0.001,
+                extended: 0.01
+            }
+        }
+
         let includesShift = _.includes(this.props.app.activeKeys, 16) 
 
         if(key == 16) {
             if(_.includes(this.state.startedIntervals, 82)) {
                 if(action == "start") {
-                    this.runBoldRate(includesShift, "start", "more")
+                    this.runPropertyChange(includesShift, "start", "more", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
                 } else if(action == "stop") {
-                    this.runBoldRate(false, "start", "more")
+                    this.runPropertyChange(false, "start", "more", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
                 }
             } 
 
             if(_.includes(this.state.startedIntervals, 69)) {
                 if(action == "start") {
-                    this.runBoldRate(includesShift, "start", "less")
+                    this.runPropertyChange(includesShift, "start", "less", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
                 } else if(action == "stop") {
-                    this.runBoldRate(false, "start", "less")
+                    this.runPropertyChange(false, "start", "less", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
                 }
             } 
             
         }
 
         if(key == 82) {
-            this.runPropertyChange(includesShift, action, "more", "frequency", 0.001, 0.1)
+            this.runPropertyChange(includesShift, action, "more", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
         }
 
         if(key == 69) {
-            this.runPropertyChange(includesShift, action, "less", "frequency", 0.001, 0.1)
+            this.runPropertyChange(includesShift, action, "less", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
         }
 
     }
