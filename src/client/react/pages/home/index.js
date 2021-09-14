@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import classNames from "classnames"
 import keydown from "react-keydown";
 import moment from "moment"
+import update from "immutability-helper";
 
 import qs from "qs";
 import * as _ from "lodash"
@@ -47,7 +48,7 @@ class HomePage extends Component {
             q: false,
             w: false
         },
-        activeKeys: []
+        startedIntervals: []
 	}
 
 	componentDidMount() {
@@ -68,7 +69,11 @@ class HomePage extends Component {
     }
 
 	componentDidUpdate(prevprops) {
-        
+        if(!_.isEqual(prevprops.app.activeKeys, this.props.app.activeKeys)) {
+            setTimeout(() => {
+                this.checkIntervals()
+            }, 100)
+        }
     }
 
     componentWillUnmount() {
@@ -711,6 +716,67 @@ class HomePage extends Component {
             this.props.loadNewShape(finalshape)
         }
     }
+
+    checkIntervals () {
+        // console.log("check intervals")
+        // check active intervals
+
+        // this.state.startedIntervals
+
+        // this.props.app.activeKeys
+
+        // let difference = _.difference(this.props.app.activeKeys, this.state.startedIntervals)
+        // console.log("difference", difference)
+        // console.log("aciveKeys", this.props.app.activeKeys)
+
+        // check whether startedIntervals are in ActiveKeys
+
+        // _.map(this.state.startedIntervals, (key) => {
+        //     let startedItervalKey = _.findIndex(this.props.acitveKeys, key);
+        // })
+
+        _.map(this.props.app.activeKeys, (key) => {
+
+            let startedItervalKey = _.includes(this.state.startedIntervals, key);
+            // console.log("startedItervalKey", key, startedItervalKey)
+            if(!startedItervalKey) {
+                // console.log("start interval", key)
+                this.setState({
+                    startedIntervals: _.union(this.state.startedIntervals, [key])
+                }, () => {
+                    // console.log("startedIntervals", this.state.startedIntervals)
+                    this.launchInterval(key, "start")
+                })
+            }
+        })
+
+        _.map(this.state.startedIntervals, (key) => {
+
+            let startedItervalKey = _.includes(this.props.app.activeKeys, key);
+
+            if(!startedItervalKey) {
+                // console.log("stop interval", key)
+                let newStartedIntervals = update(this.state.startedIntervals, {
+                    $splice: [[this.state.startedIntervals[key], 1]] 
+                })
+
+                this.setState({
+                    startedIntervals: newStartedIntervals
+                }, () => {
+                    // console.log("startedIntervals", this.state.startedIntervals)
+                    this.launchInterval(key, "stop")
+                })
+            }
+        })
+
+        // start appropriate interval
+
+        // stop approprite interval
+    }
+
+    launchInterval(key, action) {
+        console.log(key, action)
+    }
     
 
 	render() {
@@ -826,7 +892,8 @@ class HomePage extends Component {
 
 function mapStateToProps(state) {
 	return {
-        shape: state.shape
+        shape: state.shape,
+        app: state.app
 	};
 }
 

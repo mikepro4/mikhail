@@ -23,7 +23,7 @@ class Viz extends Component {
         y: 0,
         paused: false,
         visible: false,
-        timeInterval: null
+        timeInterval: null,
     };
 
 	componentDidMount = () => {
@@ -191,7 +191,6 @@ class Viz extends Component {
 
     
     updateDimensions = (callback) => {
-        console.log("updateDimensions")
         let rect = this.refs.viz_container.getBoundingClientRect();
 
         let scale = 1
