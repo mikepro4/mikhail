@@ -782,68 +782,83 @@ class HomePage extends Component {
         if(key == 16) {
             if(_.includes(this.state.startedIntervals, 82)) {
                 if(action == "start") {
-                    this.runBoldRate(includesShift, action)
+                    this.runBoldRate(includesShift, action, "more")
+                }
+            } 
+
+            if(_.includes(this.state.startedIntervals, 69)) {
+                if(action == "start") {
+                    this.runBoldRate(includesShift, action, "less")
                 }
             } 
             
         }
 
         if(key == 82) {
-            this.runBoldRate(includesShift, action)
+            this.runBoldRate(includesShift, action, "more")
         }
 
         if(key == 69) {
-            if(action == "start") {
-                clearInterval(this.state.boldRateLess);
-                const boldRateLess = setInterval(() => {
-                    this.updateProperty("boldRate", -0.1)
-                    
-                }, 1);
-
-                this.setState({ boldRateLess });
-
-            } else if (action == "stop") {
-                clearInterval(this.state.boldRateLess);
-            }
+            this.runBoldRate(includesShift, action, "less")
         }
 
     }
 
     runBoldRate (includesShift, action, direction) {
         if(action == "start") {
-            clearInterval(this.state.boldRateMore);
-
-            let boldRateMoreAmount
-    
-            if(includesShift) {
-                boldRateMoreAmount = 0.1
-            } else {
-                boldRateMoreAmount = 0.01
+            if(direction == "more") {
+                clearInterval(this.state.boldRateMore);
             }
 
-            const boldRateMore = setInterval(() => {
-                this.updateProperty("boldRate", boldRateMoreAmount)
-            }, 1);
-    
-            this.setState({ boldRateMore });
+            if(direction == "less") {
+                clearInterval(this.state.boldRateLess);
+            }
+
+            let boldRateAmount
+
+            if(includesShift) {
+                boldRateAmount = 0.1
+            } else {
+                boldRateAmount = 0.01
+            }
+
+            if(direction == "less") {
+                boldRateAmount = boldRateAmount * -1
+            } 
+
+            if(direction == "more") {
+                const boldRateMore = setInterval(() => {
+                    this.updateProperty("boldRate", boldRateAmount)
+                }, 1);
+        
+                this.setState({ boldRateMore });
+            } 
+
+            if(direction == "less") {
+                const boldRateLess = setInterval(() => {
+                    this.updateProperty("boldRate", boldRateAmount)
+                }, 1);
+        
+                this.setState({ boldRateLess });
+            } 
 
         } else if (action == "stop") {
             let timeoutValue = 100
             
             if (includesShift) {
-                timeoutValue = 300
+                timeoutValue = 150
             }
 
-            setTimeout(() => {
-                clearInterval(this.state.boldRateMore);
-                console.log("clear")
-            }, timeoutValue)
+            if(direction == "more") {
+                setTimeout(() => {
+                    clearInterval(this.state.boldRateMore);
+                }, timeoutValue)
+            }
 
-            // if(!_.includes(this.state.startedIntervals, 82)) {
-            //     setTimeout(() => {
-            //         clearInterval(this.state.boldRateMore);
-            //     }, 1000)
-            // }
+            if(direction == "less") {
+                clearInterval(this.state.boldRateLess);
+            }
+
         }
     }
     
