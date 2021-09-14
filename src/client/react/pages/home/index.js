@@ -802,11 +802,11 @@ class HomePage extends Component {
         }
 
         if(key == 82) {
-            this.runBoldRate(includesShift, action, "more")
+            this.runPropertyChange(includesShift, action, "more", "frequency", 0.001, 0.1)
         }
 
         if(key == 69) {
-            this.runBoldRate(includesShift, action, "less")
+            this.runPropertyChange(includesShift, action, "less", "frequency", 0.001, 0.1)
         }
 
     }
@@ -821,21 +821,21 @@ class HomePage extends Component {
                 clearInterval(this.state.boldRateLess);
             }
 
-            let boldRateAmount
+            let amount
 
             if(includesShift) {
-                boldRateAmount = 0.1
+                amount = 0.1
             } else {
-                boldRateAmount = 0.01
+                amount = 0.01
             }
 
             if(direction == "less") {
-                boldRateAmount = boldRateAmount * -1
+                amount = amount * -1
             } 
 
             if(direction == "more") {
                 const boldRateMore = setInterval(() => {
-                    this.updateProperty("boldRate", boldRateAmount)
+                    this.updateProperty("boldRate", amount)
                 }, 1);
         
                 this.setState({ boldRateMore });
@@ -843,17 +843,17 @@ class HomePage extends Component {
 
             if(direction == "less") {
                 const boldRateLess = setInterval(() => {
-                    this.updateProperty("boldRate", boldRateAmount)
+                    this.updateProperty("boldRate", amount)
                 }, 1);
         
                 this.setState({ boldRateLess });
             } 
 
         } else if (action == "stop") {
-            let timeoutValue = 100
+            let timeoutValue = 50
             
             if (includesShift) {
-                timeoutValue = 150
+                timeoutValue = 100
             }
 
             if(direction == "more") {
@@ -870,6 +870,71 @@ class HomePage extends Component {
 
         }
     }
+
+    runPropertyChange (includesShift, action, direction, property, standardAmount, extendedAmount) {
+        if(action == "start") {
+            if(direction == "more") {
+                clearInterval(this.state[property+"More"]);
+            }
+
+            if(direction == "less") {
+                clearInterval(this.state[property+"Less"]);
+            }
+
+            let amount
+
+            if(includesShift) {
+                amount = extendedAmount
+            } else {
+                amount = standardAmount
+            }
+
+            if(direction == "less") {
+                amount = amount * -1
+            } 
+
+            if(direction == "more") {
+                const intervalMore = setInterval(() => {
+                    this.updateProperty(property, amount)
+                }, 1);
+        
+                this.setState({ 
+                    [property+"More"]: intervalMore 
+                });
+            } 
+
+            if(direction == "less") {
+                const intervalLess = setInterval(() => {
+                    this.updateProperty(property, amount)
+                }, 1);
+        
+                this.setState({ 
+                    [property+"Less"]: intervalLess 
+                });
+            } 
+
+        } else if (action == "stop") {
+            let timeoutValue = 50
+            
+            if (includesShift) {
+                timeoutValue = 100
+            }
+
+            if(direction == "more") {
+                setTimeout(() => {
+                    clearInterval(this.state[property+"More"]);
+                }, timeoutValue)
+            }
+
+            if(direction == "less") {
+                setTimeout(() => {
+                    clearInterval(this.state[property+"Less"]);
+                }, timeoutValue)
+            }
+
+        }
+    }
+
     
 
 	render() {
