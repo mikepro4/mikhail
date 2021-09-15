@@ -754,33 +754,14 @@ class HomePage extends Component {
     }
 
     checkIntervals () {
-        // console.log("check intervals")
-        // check active intervals
-
-        // this.state.startedIntervals
-
-        // this.props.app.activeKeys
-
-        // let difference = _.difference(this.props.app.activeKeys, this.state.startedIntervals)
-        // console.log("difference", difference)
-        // console.log("aciveKeys", this.props.app.activeKeys)
-
-        // check whether startedIntervals are in ActiveKeys
-
-        // _.map(this.state.startedIntervals, (key) => {
-        //     let startedItervalKey = _.findIndex(this.props.acitveKeys, key);
-        // })
 
         _.map(this.props.app.activeKeys, (key) => {
 
             let startedItervalKey = _.includes(this.state.startedIntervals, key);
-            // console.log("startedItervalKey", key, startedItervalKey)
             if(!startedItervalKey) {
-                // console.log("start interval", key)
                 this.setState({
                     startedIntervals: _.union(this.state.startedIntervals, [key])
                 }, () => {
-                    // console.log("startedIntervals", this.state.startedIntervals)
                     this.launchInterval(key, "start")
                 })
             }
@@ -791,26 +772,15 @@ class HomePage extends Component {
             let startedItervalKey = _.includes(this.props.app.activeKeys, key);
 
             if(!startedItervalKey) {
-                // console.log("stop interval", key)
                 this.launchInterval(key, "stop")
-
-                let newStartedIntervals = update(this.state.startedIntervals, {
-                    $splice: [[this.state.startedIntervals[key], 1]] 
-                })
 
                 this.setState({
                     startedIntervals: _.pull(this.state.startedIntervals, key)
-                }, () => {
-                    // console.log("startedIntervals", this.state.startedIntervals)
                 })
             }
         })
     
 
-        
-        // start appropriate interval
-
-        // stop approprite interval
     }
 
     launchInterval(key, action) {
