@@ -835,7 +835,9 @@ class HomePage extends Component {
             },
             pointSize: {
                 standard: 0.01,
-                extended: 0.1
+                extended: 0.5,
+                minValue: 0,
+                maxValue: 80
             },
             pointOpacity: {
                 standard: 0.01,
@@ -916,6 +918,24 @@ class HomePage extends Component {
                     this.runPropertyChange(false, "start", "less", "step", changeValues.step.standard, changeValues.step.extended)
                 }
             } 
+
+            // pointSize
+            if(_.includes(this.state.startedIntervals, 80)) {
+                if(action == "start") {
+                    this.runPropertyChange(includesShift, "start", "more", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point", changeValues.pointSize.minValue, changeValues.pointSize.maxValue)
+                } else if(action == "stop") {
+                    this.runPropertyChange(false, "start", "more", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point", changeValues.pointSize.minValue, changeValues.pointSize.maxValue)
+                }
+            } 
+
+            if(_.includes(this.state.startedIntervals, 79)) {
+                if(action == "start") {
+                    this.runPropertyChange(includesShift, "start", "less", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point", changeValues.pointSize.minValue, changeValues.pointSize.maxValue)
+                } else if(action == "stop") {
+                    this.runPropertyChange(false, "start", "less", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point", changeValues.pointSize.minValue, changeValues.pointSize.maxValue)
+                }
+            } 
+
             
         }
 
@@ -952,11 +972,11 @@ class HomePage extends Component {
         }
 
         if(key == 80) {
-            this.runPropertyChange(includesShift, action, "more", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point")
+            this.runPropertyChange(includesShift, action, "more", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point", changeValues.pointSize.minValue, changeValues.pointSize.maxValue)
         }
 
         if(key == 79) {
-            this.runPropertyChange(includesShift, action, "less", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point")
+            this.runPropertyChange(includesShift, action, "less", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point", changeValues.pointSize.minValue, changeValues.pointSize.maxValue)
         }
 
         if(key == 76) {
@@ -966,69 +986,7 @@ class HomePage extends Component {
         if(key == 75) {
             this.runPropertyChange(includesShift, action, "less", "pointOpacity", changeValues.pointOpacity.standard, changeValues.pointOpacity.extended, "point", changeValues.pointOpacity.minValue, changeValues.pointOpacity.maxValue)
         }
-        
 
-
-    }
-
-    runBoldRate (includesShift, action, direction) {
-        if(action == "start") {
-            if(direction == "more") {
-                clearInterval(this.state.boldRateMore);
-            }
-
-            if(direction == "less") {
-                clearInterval(this.state.boldRateLess);
-            }
-
-            let amount
-
-            if(includesShift) {
-                amount = 0.1
-            } else {
-                amount = 0.01
-            }
-
-            if(direction == "less") {
-                amount = amount * -1
-            } 
-
-            if(direction == "more") {
-                const boldRateMore = setInterval(() => {
-                    this.updateProperty("boldRate", amount)
-                }, 1);
-        
-                this.setState({ boldRateMore });
-            } 
-
-            if(direction == "less") {
-                const boldRateLess = setInterval(() => {
-                    this.updateProperty("boldRate", amount)
-                }, 1);
-        
-                this.setState({ boldRateLess });
-            } 
-
-        } else if (action == "stop") {
-            let timeoutValue = 50
-            
-            if (includesShift) {
-                timeoutValue = 100
-            }
-
-            if(direction == "more") {
-                setTimeout(() => {
-                    clearInterval(this.state.boldRateMore);
-                }, timeoutValue)
-            }
-
-            if(direction == "less") {
-                setTimeout(() => {
-                    clearInterval(this.state.boldRateLess);
-                }, timeoutValue)
-            }
-
-        }
     }
 
     runPropertyChange (includesShift, action, direction, property, standardAmount, extendedAmount, destination, minValue, maxValue) {
@@ -1094,8 +1052,6 @@ class HomePage extends Component {
 
         }
     }
-
-    
 
 	render() {
         
