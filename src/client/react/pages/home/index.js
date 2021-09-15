@@ -689,7 +689,7 @@ class HomePage extends Component {
     }
 
 
-    updateProperty(property, amount, destination) {
+    updateProperty(property, amount, destination, minValue, maxValue) {
         let selectedShape
 
         if(this.props.shape.newShape.defaultViz) {
@@ -719,11 +719,23 @@ class HomePage extends Component {
                 let finalAmount
                 let pointAmount = selectedShape.defaultViz.point[property]  + amount
 
-                if(pointAmount < 0) {
-                    finalAmount = 0
+                if(maxValue) {
+                    if(pointAmount < minValue) {
+                        finalAmount = minValue
+                    } else if(pointAmount > maxValue) {
+                        finalAmount = maxValue
+                    } else if(pointAmount >= minValue && pointAmount <= maxValue) {
+                        finalAmount = pointAmount
+                    }
                 } else {
-                    finalAmount = pointAmount
+                    if(pointAmount < 0) {
+                        finalAmount = 0
+                    } else {
+                        finalAmount = pointAmount
+                    }
                 }
+
+                
 
                 finalshape = {
                     ...selectedShape,
@@ -824,6 +836,12 @@ class HomePage extends Component {
             pointSize: {
                 standard: 0.01,
                 extended: 0.1
+            },
+            pointOpacity: {
+                standard: 0.01,
+                extended: 0.1,
+                minValue: 0,
+                maxValue: 1
             }
         }
 
@@ -941,6 +959,15 @@ class HomePage extends Component {
             this.runPropertyChange(includesShift, action, "less", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point")
         }
 
+        if(key == 76) {
+            this.runPropertyChange(includesShift, action, "more", "pointOpacity", changeValues.pointOpacity.standard, changeValues.pointOpacity.extended, "point", changeValues.pointOpacity.minValue, changeValues.pointOpacity.maxValue)
+        }
+
+        if(key == 75) {
+            this.runPropertyChange(includesShift, action, "less", "pointOpacity", changeValues.pointOpacity.standard, changeValues.pointOpacity.extended, "point", changeValues.pointOpacity.minValue, changeValues.pointOpacity.maxValue)
+        }
+        
+
 
     }
 
@@ -1004,7 +1031,7 @@ class HomePage extends Component {
         }
     }
 
-    runPropertyChange (includesShift, action, direction, property, standardAmount, extendedAmount, destination) {
+    runPropertyChange (includesShift, action, direction, property, standardAmount, extendedAmount, destination, minValue, maxValue) {
         if(action == "start") {
             if(direction == "more") {
                 clearInterval(this.state[property+"More"]);
@@ -1028,7 +1055,7 @@ class HomePage extends Component {
 
             if(direction == "more") {
                 const intervalMore = setInterval(() => {
-                    this.updateProperty(property, amount, destination)
+                    this.updateProperty(property, amount, destination, minValue, maxValue)
                 }, 1);
         
                 this.setState({ 
@@ -1038,7 +1065,7 @@ class HomePage extends Component {
 
             if(direction == "less") {
                 const intervalLess = setInterval(() => {
-                    this.updateProperty(property, amount, destination)
+                    this.updateProperty(property, amount, destination, minValue, maxValue)
                 }, 1);
         
                 this.setState({ 
