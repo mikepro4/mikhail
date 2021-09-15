@@ -311,6 +311,14 @@ class Viz extends Component {
                 pointCount,
                 pointColor
             } = this.props.shape[vizSource].defaultViz.point
+
+            let finalPointSize
+
+            if(this.props.app.clientWidth < 500) {
+                finalPointSize = 1.3
+            } else {
+                finalPointSize = pointSize
+            }
             
             this.setState({
                 rotate_speed: rotateSpeed * 0.1 + 0.001,
@@ -320,7 +328,7 @@ class Viz extends Component {
                 freq: frequency * 0.09 + 0.01,
                 bold_rate: boldRate * 0.3 + 0.1,
                 math: math,
-                pointSize: pointSize,
+                pointSize: finalPointSize,
                 pointCount: 1024,
                 pointOpacity: pointOpacity,
                 pointColor: "#ffffff",
