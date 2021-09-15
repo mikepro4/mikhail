@@ -31,24 +31,8 @@ class HomePage extends Component {
         time: 0,
         originalBoldRate: null,
         activeZone: null,
-        keys: {
-            e: false,
-            r: {
-                active: false,
-                interval: null,
-                time: 0,
-                waiting: false
-            },
-            v: false, 
-            b: false,
-            a: false,
-            s: false,
-            d: false, 
-            f: false,
-            q: false,
-            w: false
-        },
-        startedIntervals: []
+        startedIntervals: [],
+        mathValues: ["sin", "cos", "tan", "atan", "log"]
 	}
 
 	componentDidMount() {
@@ -587,91 +571,6 @@ class HomePage extends Component {
 		this.setState({ timeInterval });
     }
 
-    // @keydown("r")
-    boldRateMore(event) {
-        console.log(moment().format())
-
-        if(this.state.keys.r.active) {
-     
-            this.setState({ 
-                keys: {
-                    ...this.state.keys,
-                    r: {
-                        ...this.state.keys.r,
-                        waiting: true
-                    }
-                }
-            });
-
-        } else {
-            const timeInterval = setInterval(() => {
-                this.setState({ 
-                    keys: {
-                        ...this.state.keys,
-                        r: {
-                            ...this.state.keys.r,
-                            time: this.state.keys.r.time + 100,
-                            waiting: true
-                        }
-                    }
-                 });
-    
-                this.updateProperty("boldRate", this.state.keys.r.time / 100000)
-                 
-            }, 1);
-    
-            this.setState({
-                keys: {
-                    ...this.state.keys,
-                    r: {
-                        ...this.state.keys.r,
-                        active: true,
-                        interval: timeInterval,
-                        waiting: true,
-                    }
-                }
-            })
-
-           
-        }
-
-        setTimeout(() => {
-            if(this.state.keys.r.waiting) {
-                clearInterval(this.state.keys.r.interval);
-                this.setState({
-                    keys: {
-                        ...this.state.keys,
-                        waiting: false,
-                        active: false
-                    }
-                })
-            }
-        }, 1000)
-
-        
-    }
-
-    // @keydown("r")
-    // boldRateMore() {
-    //     this.setState({
-    //         boldRateMore: true
-    //     })
-        // this.updateProperty("boldRate", 0.5)
-        // if(!this.state.touched) {
-        //     this.setState({
-        //         touched: true,
-        //         activeZone: 8,
-        //         desktop: true
-        //     })
-        //     this.startDesktopZone8TimeInterval()
-        // }
-    // }
-
-    // @keydown("e")
-    // rotateLess() {
-    //     this.updateProperty("boldRate", -0.5)
-    // }
-
     startDesktopZone8TimeInterval() {
         clearInterval(this.state.timeInterval);
 
@@ -735,8 +634,6 @@ class HomePage extends Component {
                     }
                 }
 
-                
-
                 finalshape = {
                     ...selectedShape,
                     defaultViz: {
@@ -751,6 +648,66 @@ class HomePage extends Component {
             
             this.props.loadNewShape(finalshape)
         }
+    }
+
+    updateMath(direction) {
+        let selectedShape
+
+        if(this.props.shape.newShape.defaultViz) {
+            selectedShape = this.props.shape.newShape
+        } else {
+            selectedShape = this.props.shape.currentShape
+        }
+
+        if(selectedShape && selectedShape.defaultViz) {
+            
+            let indexOfCurrent = _.indexOf(this.state.mathValues, selectedShape.defaultViz.shape.math)
+            let finalIndex
+
+            if(direction == "next") {
+                if((indexOfCurrent + 1) > this.state.mathValues.length -1) {
+                    finalIndex = 0
+                } else {
+                    finalIndex = indexOfCurrent + 1
+                }
+
+                let finalshape = {
+                    ...selectedShape,
+                    defaultViz: {
+                        ...selectedShape.defaultViz,
+                        shape: {
+                            ...selectedShape.defaultViz.shape,
+                            math: this.state.mathValues[finalIndex]
+                        }
+                    }
+                }
+
+                this.props.loadNewShape(finalshape)
+            } else if (direction == "prev") {
+
+                if((indexOfCurrent - 1) < 0) {
+                    finalIndex = this.state.mathValues.length - 1
+                } else {
+                    finalIndex = indexOfCurrent - 1
+                }
+
+                let finalshape = {
+                    ...selectedShape,
+                    defaultViz: {
+                        ...selectedShape.defaultViz,
+                        shape: {
+                            ...selectedShape.defaultViz.shape,
+                            math: this.state.mathValues[finalIndex]
+                        }
+                    }
+                }
+
+                this.props.loadNewShape(finalshape)
+            }
+
+        }
+
+
     }
 
     checkIntervals () {
@@ -955,6 +912,18 @@ class HomePage extends Component {
 
         if(key == 75) {
             this.runPropertyChange(includesShift, action, "less", "pointOpacity", changeValues.pointOpacity.standard, changeValues.pointOpacity.extended, "point", changeValues.pointOpacity.minValue, changeValues.pointOpacity.maxValue)
+        }
+
+        if(key == 87) {
+            if(action == "start") {
+                this.updateMath("next")
+            }
+        }
+
+        if(key == 81) {
+            if(action == "start") {
+                this.updateMath("prev")
+            }
         }
 
     }
