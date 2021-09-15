@@ -788,12 +788,22 @@ class HomePage extends Component {
             rotateSpeed: {
                 standard: 0.001,
                 extended: 0.01
+            },
+            frequency: {
+                standard: 0.00005,
+                extended: 0.0001
+            },
+            step: {
+                standard: 0.00001,
+                extended: 0.0001
             }
         }
 
         let includesShift = _.includes(this.props.app.activeKeys, 16) 
 
         if(key == 16) {
+
+            // rotate speed
             if(_.includes(this.state.startedIntervals, 82)) {
                 if(action == "start") {
                     this.runPropertyChange(includesShift, "start", "more", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
@@ -809,6 +819,57 @@ class HomePage extends Component {
                     this.runPropertyChange(false, "start", "less", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
                 }
             } 
+
+            // bold rate
+            if(_.includes(this.state.startedIntervals, 66)) {
+                if(action == "start") {
+                    this.runPropertyChange(includesShift, "start", "more", "boldRate", changeValues.boldRate.standard, changeValues.boldRate.extended)
+                } else if(action == "stop") {
+                    this.runPropertyChange(false, "start", "more", "boldRate", changeValues.boldRate.standard, changeValues.boldRate.extended)
+                }
+            } 
+
+            if(_.includes(this.state.startedIntervals, 86)) {
+                if(action == "start") {
+                    this.runPropertyChange(includesShift, "start", "less", "boldRate", changeValues.boldRate.standard, changeValues.boldRate.extended)
+                } else if(action == "stop") {
+                    this.runPropertyChange(false, "start", "less", "boldRate", changeValues.boldRate.standard, changeValues.boldRate.extended)
+                }
+            } 
+
+            // frequency
+            if(_.includes(this.state.startedIntervals, 70)) {
+                if(action == "start") {
+                    this.runPropertyChange(includesShift, "start", "more", "frequency", changeValues.frequency.standard, changeValues.frequency.extended)
+                } else if(action == "stop") {
+                    this.runPropertyChange(false, "start", "more", "frequency", changeValues.frequency.standard, changeValues.frequency.extended)
+                }
+            } 
+
+            if(_.includes(this.state.startedIntervals, 86)) {
+                if(action == "start") {
+                    this.runPropertyChange(includesShift, "start", "less", "frequency", changeValues.frequency.standard, changeValues.frequency.extended)
+                } else if(action == "stop") {
+                    this.runPropertyChange(false, "start", "less", "frequency", changeValues.frequency.standard, changeValues.frequency.extended)
+                }
+            } 
+
+            // step
+            if(_.includes(this.state.startedIntervals, 83)) {
+                if(action == "start") {
+                    this.runPropertyChange(includesShift, "start", "more", "step", changeValues.step.standard, changeValues.step.extended)
+                } else if(action == "stop") {
+                    this.runPropertyChange(false, "start", "more", "step", changeValues.step.standard, changeValues.step.extended)
+                }
+            } 
+
+            if(_.includes(this.state.startedIntervals, 65)) {
+                if(action == "start") {
+                    this.runPropertyChange(includesShift, "start", "less", "step", changeValues.step.standard, changeValues.step.extended)
+                } else if(action == "stop") {
+                    this.runPropertyChange(false, "start", "less", "step", changeValues.step.standard, changeValues.step.extended)
+                }
+            } 
             
         }
 
@@ -818,6 +879,30 @@ class HomePage extends Component {
 
         if(key == 69) {
             this.runPropertyChange(includesShift, action, "less", "rotateSpeed", changeValues.rotateSpeed.standard, changeValues.rotateSpeed.extended)
+        }
+
+        if(key == 66) {
+            this.runPropertyChange(includesShift, action, "more", "boldRate", changeValues.boldRate.standard, changeValues.boldRate.extended)
+        }
+
+        if(key == 86) {
+            this.runPropertyChange(includesShift, action, "less", "boldRate", changeValues.boldRate.standard, changeValues.boldRate.extended)
+        }
+
+        if(key == 70) {
+            this.runPropertyChange(includesShift, action, "more", "frequency", changeValues.frequency.standard, changeValues.frequency.extended)
+        }
+
+        if(key == 68) {
+            this.runPropertyChange(includesShift, action, "less", "frequency", changeValues.frequency.standard, changeValues.frequency.extended)
+        }
+
+        if(key == 83) {
+            this.runPropertyChange(includesShift, action, "more", "step", changeValues.step.standard, changeValues.step.extended)
+        }
+
+        if(key == 65) {
+            this.runPropertyChange(includesShift, action, "less", "step", changeValues.step.standard, changeValues.step.extended)
         }
 
     }
