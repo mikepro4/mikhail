@@ -689,7 +689,7 @@ class HomePage extends Component {
     }
 
 
-    updateProperty(property, amount) {
+    updateProperty(property, amount, destination) {
         let selectedShape
 
         if(this.props.shape.newShape.defaultViz) {
@@ -697,22 +697,46 @@ class HomePage extends Component {
         } else {
             selectedShape = this.props.shape.currentShape
         }
-        this.setState({
-            originalBoldRate: selectedShape.defaultViz.shape.boldRate 
-        })
 
         // console.log(selectedShape)
         if(selectedShape && selectedShape.defaultViz) {
-            let finalshape = {
-                ...selectedShape,
-                defaultViz: {
-                    ...selectedShape.defaultViz,
-                    shape: {
-                        ...selectedShape.defaultViz.shape,
-                        [property]: selectedShape.defaultViz.shape[property]  + amount
+            let finalshape
+
+            if(!destination || destination == "shape") {
+                finalshape = {
+                    ...selectedShape,
+                    defaultViz: {
+                        ...selectedShape.defaultViz,
+                        shape: {
+                            ...selectedShape.defaultViz.shape,
+                            [property]: selectedShape.defaultViz.shape[property]  + amount
+                        }
                     }
                 }
             }
+
+            if(destination == "point") {
+                let finalAmount
+                let pointAmount = selectedShape.defaultViz.point[property]  + amount
+
+                if(pointAmount < 0) {
+                    finalAmount = 0
+                } else {
+                    finalAmount = pointAmount
+                }
+
+                finalshape = {
+                    ...selectedShape,
+                    defaultViz: {
+                        ...selectedShape.defaultViz,
+                        point: {
+                            ...selectedShape.defaultViz.point,
+                            [property]: finalAmount
+                        }
+                    }
+                }
+            }
+            
             this.props.loadNewShape(finalshape)
         }
     }
@@ -796,6 +820,10 @@ class HomePage extends Component {
             step: {
                 standard: 0.00001,
                 extended: 0.0001
+            },
+            pointSize: {
+                standard: 0.01,
+                extended: 0.1
             }
         }
 
@@ -905,6 +933,15 @@ class HomePage extends Component {
             this.runPropertyChange(includesShift, action, "less", "step", changeValues.step.standard, changeValues.step.extended)
         }
 
+        if(key == 80) {
+            this.runPropertyChange(includesShift, action, "more", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point")
+        }
+
+        if(key == 79) {
+            this.runPropertyChange(includesShift, action, "less", "pointSize", changeValues.pointSize.standard, changeValues.pointSize.extended, "point")
+        }
+
+
     }
 
     runBoldRate (includesShift, action, direction) {
@@ -967,7 +1004,7 @@ class HomePage extends Component {
         }
     }
 
-    runPropertyChange (includesShift, action, direction, property, standardAmount, extendedAmount) {
+    runPropertyChange (includesShift, action, direction, property, standardAmount, extendedAmount, destination) {
         if(action == "start") {
             if(direction == "more") {
                 clearInterval(this.state[property+"More"]);
@@ -991,7 +1028,7 @@ class HomePage extends Component {
 
             if(direction == "more") {
                 const intervalMore = setInterval(() => {
-                    this.updateProperty(property, amount)
+                    this.updateProperty(property, amount, destination)
                 }, 1);
         
                 this.setState({ 
@@ -1001,7 +1038,7 @@ class HomePage extends Component {
 
             if(direction == "less") {
                 const intervalLess = setInterval(() => {
-                    this.updateProperty(property, amount)
+                    this.updateProperty(property, amount, destination)
                 }, 1);
         
                 this.setState({ 
