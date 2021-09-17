@@ -18,6 +18,9 @@ export const AUTH_CLEAR = "app/AUTH_CLEAR"
 
 // App
 
+export const DEMO_ON = "app/DEMO_ON"
+export const DEMO_OFF = "app/DEMO_OFF"
+
 export const SHOW_APP_MENU = "app/SHOW_APP_MENU"
 export const HIDE_APP_MENU = "app/HIDE_APP_MENU"
 

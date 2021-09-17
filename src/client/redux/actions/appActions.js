@@ -1,4 +1,6 @@
 import {
+    DEMO_ON,
+    DEMO_OFF,
 	SHOW_APP_MENU,
 	HIDE_APP_MENU,
     TOGGLE_THEME,
@@ -17,6 +19,29 @@ import moment from "moment";
 import * as _ from "lodash";
 import qs from "qs";
 import axios from "axios";
+
+/////////////////////////////////////////////////
+
+export const demoOn = (key, success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+    dispatch({
+        type: DEMO_ON,
+    });
+};
+
+export const demoOff= (key, success) => async (
+    dispatch,
+	getState,
+	api
+) => {
+    dispatch({
+        type: DEMO_OFF,
+    });
+};
+
 
 /////////////////////////////////////////////////
 

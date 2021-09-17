@@ -5,6 +5,8 @@ import Login from "../react/pages/auth/login"
 import Signup from "../react/pages/auth/signup"
 import Logout from "../react/pages/auth/logout"
 import Shapes from "../react/pages/shapes";
+import Projects from "../react/pages/projects/";
+import HasanaLogo from "../react/pages/projects/hasana/logo";
 
 export default [
 	{
@@ -44,6 +46,19 @@ export default [
 				path: "/shapes",
 				params: {
 					name: "shapes"
+				}
+			},
+			{
+				...Projects,
+                path: "/projects",
+                exact: true
+			},
+			{
+				...HasanaLogo,
+                path: "/projects/demo/hasana/logo",
+                exact: true,
+                params: {
+					name: "project"
 				}
 			}
 		]

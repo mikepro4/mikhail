@@ -7,6 +7,10 @@
     z-index: 1000;
     display: flex;
     justify-content: space-between;
+
+    &.demo-mode {
+        display: none;
+    }
   
     .app-header-wrapper {
       width: 100%;

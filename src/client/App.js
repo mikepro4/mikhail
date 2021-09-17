@@ -117,12 +117,15 @@ class App extends Component {
                 {this.props.drawerOpen && <Drawer type={this.props.drawerType} />}
                 <Header/>
                 <div className="main-section">
-                    <div className={"app-route-container theme-" + this.props.theme}>
+                    <div 
+                        className={classNames({
+                            "app-route-container": !this.props.demoMode
+                        }, "theme-" + this.props.theme)}
+                    >
                         {renderRoutes(this.props.route.routes)}
                     </div>
-                    <Player/>
                     <div className="new-player">
-                        <Timeline/>
+                        {!this.props.demoMode &&<Timeline/> }
                         <AudioPlayer/>
                         
                     </div>
@@ -141,7 +144,8 @@ function mapStateToProps(state) {
         theme: state.app.theme,
         user: state.app.user,
         drawerOpen: state.app.drawerOpen,
-        drawerType: state.app.drawerType
+        drawerType: state.app.drawerType,
+        demoMode: state.app.demoMode
 	};
 }
 

@@ -490,7 +490,12 @@ class Header extends Component {
 			return (<div></div>)
 		} else {
 			return (
-				<div className="app-header">
+                <div 
+                    className={classNames({
+                        "app-header": true,
+                        "demo-mode": this.props.demoMode
+                    })}
+                >
 					<div className="app-header-wrapper">
 	
                         <div 
@@ -544,7 +549,8 @@ class Header extends Component {
 function mapStateToProps(state) {
 	return {
 		user: state.app.user,
-		location: state.router.location
+        location: state.router.location,
+        demoMode: state.app.demoMode
 	};
 }
 

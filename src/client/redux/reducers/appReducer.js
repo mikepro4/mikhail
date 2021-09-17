@@ -2,6 +2,8 @@ import * as _ from "lodash";
 import update from "immutability-helper";
 
 import {
+    DEMO_ON,
+    DEMO_OFF,
 	SHOW_APP_MENU,
 	HIDE_APP_MENU,
     TOGGLE_THEME,
@@ -19,6 +21,7 @@ import {
 } from "../actions/types";
 
 export const initialState = {
+    demoMode: false,
     totalPixels: 0,
 	clientWidth: 0,
 	clientHeight: 0,
@@ -37,6 +40,16 @@ export const initialState = {
 
 export const appReducer = (state = initialState, action) => {
 	switch (action.type) {
+        case DEMO_ON:
+			return {
+				...state,
+				demoMode: true
+            }
+        case DEMO_OFF:
+            return {
+                ...state,
+                demoMode: false
+            }
         case FETCH_AUTH:
 			return {
 				...state,
