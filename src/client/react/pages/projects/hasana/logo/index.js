@@ -26,7 +26,7 @@ class HasanaLogo extends Component {
     componentWillUnmount() {
         console.log("unmount")
         document.body.classList.remove("theme-hasana-logo");
-        // this.props.demoOff()
+        this.props.demoOff()
     }
 
     

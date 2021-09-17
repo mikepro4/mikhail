@@ -41,11 +41,11 @@ class Projects extends Component {
 
                         <ul>
                             <li>
-                                <Link to="/projects/demo/hasana/logo">Hasana Logo</Link>
+                                <Link to="/projects/hasana/logo">Hasana Logo</Link>
                             </li>
 
                             <li>
-                                <Link to="/projects/demo/hasana/home">Hasana Home</Link>
+                                <Link to="/projects/hasana/home">Hasana Home</Link>
                             </li>
 
                         </ul>

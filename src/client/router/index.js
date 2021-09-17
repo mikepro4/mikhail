@@ -55,7 +55,7 @@ export default [
 			},
 			{
 				...HasanaLogo,
-                path: "/projects/demo/hasana/logo",
+                path: "/projects/hasana/logo",
                 exact: true,
                 params: {
 					name: "project"
