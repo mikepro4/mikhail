@@ -77,6 +77,7 @@ class HomePage extends Component {
     )
 
     handleZone1TouchStart = (event) => {
+        event.preventDefault()
         if(!this.state.touched) {
             console.log(event)
             this.setState({
@@ -88,6 +89,7 @@ class HomePage extends Component {
     }
 
     handleZone1TouchEnd= (event) => {
+        event.preventDefault()
         clearInterval(this.state.timeInterval);
 
         this.setState({
@@ -98,6 +100,7 @@ class HomePage extends Component {
     }
 
     handleZone2TouchStart = (event) => {
+        event.preventDefault()
         if(!this.state.touched) {
             console.log(event)
             this.setState({
@@ -109,6 +112,7 @@ class HomePage extends Component {
     }
 
     handleZone2TouchEnd= (event) => {
+        event.preventDefault()
         clearInterval(this.state.timeInterval);
 
         this.setState({
@@ -119,6 +123,7 @@ class HomePage extends Component {
     }
 
     handleZone4TouchStart = (event) => {
+        event.preventDefault()
         if(!this.state.touched) {
             console.log(event)
             this.setState({
@@ -130,6 +135,7 @@ class HomePage extends Component {
     }
 
     handleZone4TouchEnd= (event) => {
+        event.preventDefault()
         clearInterval(this.state.timeInterval);
 
         this.setState({
@@ -140,6 +146,7 @@ class HomePage extends Component {
     }
 
     handleZone3TouchStart = (event) => {
+        event.preventDefault()
         if(!this.state.touched) {
             console.log(event)
             this.setState({
@@ -151,6 +158,7 @@ class HomePage extends Component {
     }
 
     handleZone3TouchEnd= (event) => {
+        event.preventDefault()
         clearInterval(this.state.timeInterval);
 
         this.setState({
@@ -161,6 +169,7 @@ class HomePage extends Component {
     }
 
     handleZone6TouchStart = (event) => {
+        event.preventDefault()
         if(!this.state.touched) {
             console.log(event)
             this.setState({
@@ -172,6 +181,7 @@ class HomePage extends Component {
     }
 
     handleZone6TouchEnd= (event) => {
+        event.preventDefault()
         clearInterval(this.state.timeInterval);
 
         this.setState({
@@ -182,6 +192,7 @@ class HomePage extends Component {
     }
 
     handleZone7TouchStart = (event) => {
+        event.preventDefault()
         if(!this.state.touched) {
             console.log(event)
             this.setState({
@@ -193,6 +204,7 @@ class HomePage extends Component {
     }
 
     handleZone7TouchEnd= (event) => {
+        event.preventDefault()
         clearInterval(this.state.timeInterval);
 
         this.setState({
@@ -203,6 +215,7 @@ class HomePage extends Component {
     }
 
     handleZone8TouchStart = (event) => {
+        event.preventDefault()
         if(!this.state.touched) {
             console.log(event)
             this.setState({
@@ -214,6 +227,7 @@ class HomePage extends Component {
     }
 
     handleZone8TouchEnd= (event) => {
+        event.preventDefault()
         clearInterval(this.state.timeInterval);
 
         this.setState({
@@ -224,6 +238,7 @@ class HomePage extends Component {
     }
 
     handleZone5TouchStart = (event) => {
+        event.preventDefault()
         if(!this.state.touched) {
             console.log(event)
             this.setState({
@@ -235,6 +250,7 @@ class HomePage extends Component {
     }
 
     handleZone5TouchEnd= (event) => {
+        event.preventDefault()
         clearInterval(this.state.timeInterval);
 
         this.setState({

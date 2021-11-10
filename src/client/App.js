@@ -31,6 +31,12 @@ import Play from "./react/components/icons/play"
 import Timeline from "./react/components/timeline"
 import AudioPlayer from "./react/components/audioplayer"
 
+import {
+    trackPlay,
+    trackPause,
+    trackSeek
+} from './redux/actions/playerActions'
+
 export let socket
 
 class App extends Component {
@@ -87,6 +93,26 @@ class App extends Component {
 	toggleTheme() {
 		this.props.toggleTheme()
     }
+
+    @keydown("space")
+    playTrack() {
+        console.log("play")
+        // this.props.trackPlay(this.props.player.trackMetadata)
+
+        switch (this.props.player.status) {
+            case "stop":
+                this.props.trackPlay(this.props.player.trackMetadata)
+                return 
+            case "pause":
+                this.props.trackPlay(this.props.player.trackMetadata)
+                return 
+            case "play":
+                this.props.trackPause(this.props.player.trackMetadata)
+                return
+            default:
+                return
+        }
+    }
     
     auth() {
 		const token = localStorage.getItem('token');
@@ -131,7 +157,6 @@ class App extends Component {
                     </div>
 
                 </div>
-				
                 <Scroll />
 
 			</div>
@@ -145,7 +170,8 @@ function mapStateToProps(state) {
         user: state.app.user,
         drawerOpen: state.app.drawerOpen,
         drawerType: state.app.drawerType,
-        demoMode: state.app.demoMode
+        demoMode: state.app.demoMode,
+        player: state.player
 	};
 }
 
@@ -156,6 +182,9 @@ export default {
 		fetchCurrentUser, 
         clearCurrentUser,
         activateKey,
-        deactivateKey
+        deactivateKey,
+        trackPlay,
+        trackPause,
+        trackSeek
 	})(App))
 };
