@@ -1111,7 +1111,7 @@ class HomePage extends Component {
                 </div>
                 
                 <div className="main-settings" onClick={() =>  this.props.showDrawer("viz-settings")}>
-                    <SettingsIcon />
+                    {this.props.app.demoMode ? "" : <SettingsIcon />}
                 </div>
 			</div>
 				

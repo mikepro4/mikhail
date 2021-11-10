@@ -11,6 +11,8 @@ import { FocusStyleManager } from "@blueprintjs/core";
 import { io } from "./socket"
 
 import { 
+    demoOn,
+    demoOff,
     toggleTheme, 
     activateKey,
     deactivateKey
@@ -113,6 +115,32 @@ class App extends Component {
                 return
         }
     }
+
+    @keydown("h")
+    demoMode() {
+        console.log("demo mode")
+
+        if(this.props.demoMode) {
+            this.props.demoOff()
+        } else {
+            this.props.demoOn()
+        }
+        // this.props.trackPlay(this.props.player.trackMetadata)
+
+        // switch (this.props.player.status) {
+        //     case "stop":
+        //         this.props.trackPlay(this.props.player.trackMetadata)
+        //         return 
+        //     case "pause":
+        //         this.props.trackPlay(this.props.player.trackMetadata)
+        //         return 
+        //     case "play":
+        //         this.props.trackPause(this.props.player.trackMetadata)
+        //         return
+        //     default:
+        //         return
+        // }
+    }
     
     auth() {
 		const token = localStorage.getItem('token');
@@ -185,6 +213,8 @@ export default {
         deactivateKey,
         trackPlay,
         trackPause,
-        trackSeek
+        trackSeek,
+        demoOn,
+        demoOff
 	})(App))
 };
