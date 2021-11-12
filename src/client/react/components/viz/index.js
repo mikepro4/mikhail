@@ -100,11 +100,11 @@ class Viz extends Component {
                 pointCount: this.props.shape.newShape.defaultViz.point.pointCount
             })
 
-            // if(this.props.shape.newShape && this.props.shape.newShape.defaultViz) {
-                // if(!_.isEqual(prevprops.shape.newShape.defaultViz.colors, this.props.shape.newShape.defaultViz.colors)) {
-                    // this.updateColors()
-                // }
-            // }
+            if(prevprops.shape.newShape.defaultViz && this.props.shape.newShape.defaultViz) {
+                if(!_.isEqual(prevprops.shape.newShape.defaultViz.colors, this.props.shape.newShape.defaultViz.colors)) {
+                    this.updateColors()
+                }
+            }
         }
 
         
