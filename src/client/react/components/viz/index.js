@@ -24,17 +24,24 @@ class Viz extends Component {
         paused: false,
         visible: false,
         timeInterval: null,
+        totalPointCount: 1024,
+        points: []
     };
 
 	componentDidMount = () => {
         if(this.props.shape.defaultViz || this.props.defaultViz) {
-            this.startViz()
+            if( this.props.defaultViz &&  this.props.defaultViz.point &&  this.props.defaultViz.point.pointCount) {
+                this.startViz() 
+                this.setState({
+                    pointCount: this.props.defaultViz.point.pointCount
+                })
+            }
         }
         window.addEventListener("resize", this.handleResize);
 
         if(this.props.defaultViz) {
             this.setState({
-                paused: true
+                paused: true,
             })
         }
 
@@ -74,15 +81,25 @@ class Viz extends Component {
 		    this.updateDimensions()
     }
 
-    componentDidUpdate = (prevprops) => {
+    componentDidUpdate = (prevprops, prevState) => {
         if(this.props.shape.currentShape ) {
             if(prevprops.shape.currentShape._id !== this.props.shape.currentShape._id) {
                 this.startViz() 
+                this.setState({
+                    pointCount: this.props.shape.currentShape.defaultViz.point.pointCount
+                })
             }
         }
 
         if(!_.isEqual(prevprops.shape.newShape.defaultViz, this.props.shape.newShape.defaultViz)) {
             this.updateViz()
+            this.setState({
+                pointCount: this.props.shape.newShape.defaultViz.point.pointCount
+            })
+        }
+
+        if(prevState.pointCount !== this.state.pointCount) {
+            this.generatePoints()
         }
 
         let rect = this.refs.viz_container.getBoundingClientRect();
@@ -94,6 +111,7 @@ class Viz extends Component {
         // } 
 
         if(this.props.defaultViz) {
+           
             // console.log(this.props.app.totalScrolledPixels, rect.y, rect.height)
             if((rect.y + rect.height) < 700) {
                 // console.log("paused")
@@ -186,6 +204,7 @@ class Viz extends Component {
 
 
 	startViz = () => {
+        this.generatePoints()
         this.updateDimensions(this.updateViz)
     }
 
@@ -274,7 +293,6 @@ class Viz extends Component {
                 bold_rate: boldRate * 0.3 + 0.1,
                 math: math,
                 pointSize: pointSize,
-                pointCount: 1024,
                 pointOpacity: pointOpacity,
                 pointColor: "#ffffff",
                 backgroundColor: "",
@@ -312,13 +330,13 @@ class Viz extends Component {
                 pointColor
             } = this.props.shape[vizSource].defaultViz.point
 
-            let finalPointSize
+            // let finalPointSize
 
-            if(this.props.app.clientWidth < 500) {
-                finalPointSize = 1.3
-            } else {
-                finalPointSize = pointSize
-            }
+            // if(this.props.app.clientWidth < 500) {
+            //     finalPointSize = 1.3
+            // } else {
+            //     finalPointSize = pointSize
+            // }
             
             this.setState({
                 rotate_speed: rotateSpeed * 0.1 + 0.001,
@@ -328,8 +346,7 @@ class Viz extends Component {
                 freq: frequency * 0.09 + 0.01,
                 bold_rate: boldRate * 0.3 + 0.1,
                 math: math,
-                pointSize: finalPointSize,
-                pointCount: 1024,
+                pointSize: pointSize,
                 pointOpacity: pointOpacity,
                 pointColor: "#ffffff",
                 backgroundColor: "",
@@ -401,24 +418,41 @@ class Viz extends Component {
     }
 
     generatePoints = () => {
+        let vizSource
+
         let points = []
-        for (var i = 0; i < this.state.pointCount; i++) {
+        for (var i = 0; i < this.state.totalPointCount; i++) {
           var pt = this.createPoint(
             Math.random(1) * this.state.width,
-            Math.random(1) * this.state.height
+            Math.random(1) * this.state.height,
+            i
           );
           points.push(pt)
         }
+
+        this.setState({
+            points: points
+        })
     
         return points
     }
 
-    createPoint(x, y) {
+    createPoint(x, y, i) {
+
+        let finalHidden = false
+
+        if(i < Math.floor(this.state.pointCount)) {
+            finalHidden = false
+        } else {
+            finalHidden = true
+        }
+
         let point = {
           x: x,
           y: y,
           vx: 0,
-          vy: 0
+          vy: 0,
+          hidden: finalHidden
         }
         return point
     }
@@ -431,7 +465,9 @@ class Viz extends Component {
         // }, 1000)
     }
 
-    renderOnce = (ctx, points) => {
+    renderOnce = (ctx) => {
+
+        let points = this.state.points
 		ctx.clearRect(0, 0, this.state.width, this.state.height);
 
         this.setState({
@@ -475,15 +511,29 @@ class Viz extends Component {
             point.vy *= this.state.friction;
 
             if (point.x >= 0 && point.x <= this.state.width && point.y >= 0 && point.y <= this.state.height) {
-                ctx.beginPath();
-                ctx.arc(point.x,point.y,this.state.pointSize,0,2*Math.PI);
-                ctx.fillStyle = `rgba(
-                    ${this.hexToRgb(this.state.pointColor).r},
-                    ${this.hexToRgb(this.state.pointColor).g},
-                    ${this.hexToRgb(this.state.pointColor).b},
-                    ${this.getPointOpacity(freqData[this.getPointIterator(i)])}
-                )`;
-                ctx.fill();
+
+                if(point.hidden) {
+                    ctx.beginPath();
+                    ctx.arc(point.x,point.y,0,0,2*Math.PI);
+                    ctx.fillStyle = `rgba(
+                        ${this.hexToRgb(this.state.pointColor).r},
+                        ${this.hexToRgb(this.state.pointColor).g},
+                        ${this.hexToRgb(this.state.pointColor).b},
+                        0}
+                    )`;
+                    ctx.fill(); 
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(point.x,point.y,this.state.pointSize,0,2*Math.PI);
+                    ctx.fillStyle = `rgba(
+                        ${this.hexToRgb(this.state.pointColor).r},
+                        ${this.hexToRgb(this.state.pointColor).g},
+                        ${this.hexToRgb(this.state.pointColor).b},
+                        ${this.getPointOpacity(freqData[this.getPointIterator(i)])}
+                    )`;
+                    ctx.fill();
+                }
+                
             }
         }
 
@@ -506,10 +556,10 @@ class Viz extends Component {
     }
 
     getPointIterator = (i) => {
-        if (i <= this.state.pointCount) {
+        if (i <= this.state.totalPointCount) {
             return i
         } else {
-            return i-this.state.pointCount
+            return i-this.state.totalPointCount
         }
     }
 
@@ -546,20 +596,54 @@ class Viz extends Component {
 
     renderOverlay = () => {
         let vizSource
+        let finalViz
+        let finalBlur
 
-        if (this.props.shape.newShape.defaultViz) {
-            vizSource = 'newShape'
+       
+
+        if(this.props.defaultViz) {
+            finalViz = this.props.defaultViz
         } else {
-            vizSource = 'currentShape'
+            if (this.props.shape.newShape.defaultViz) {
+                vizSource = 'newShape'
+            } else {
+                vizSource = 'currentShape'
+            }
+            finalViz = this.props.shape[vizSource].defaultViz
         }
-        const {
-            visible,
-            blur,
-            color,
-            colorOpacity,
-        } = this.props.shape[vizSource].defaultViz.overlay
+
+        if(finalViz && finalViz.overlay) {
+            const {
+                visible,
+                blur,
+                color,
+                colorOpacity,
+            } = finalViz.overlay
+            if(visible) {
+                finalBlur = blur
+            } else {
+                finalBlur = 0
+            }
+
+        } else {
+            finalBlur = 0
+        }
+
+
+        return(
+            <div 
+                className="glass"
+                style={{
+                    backdropFilter: "blur(" + finalBlur + "px)",
+                    WebkitBackdropFilter: "blur(" + finalBlur + "px)"
+                }}
+            >
+
+            </div>
+        )
         
     }
+
         
 	render() {
 		return (
@@ -579,6 +663,7 @@ class Viz extends Component {
                 />
                 <div id="centered" style={{display: "none"}}></div>
                 {/* {this.state.visible ? <div>visible</div> : <div>hidden</div>} */}
+                {this.renderOverlay()}
             </div>
 		);
 	}

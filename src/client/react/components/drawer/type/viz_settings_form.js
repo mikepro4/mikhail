@@ -183,6 +183,12 @@ class VizSettingsForm extends Component {
                 />
 
                 <Field
+                    name="shape.backgroundColor"
+                    component={ColorPicker}
+                    label="Background Color"
+                />
+
+                <Field
                     name="overlay.visible"
                     type="checkbox"
                     component={Checkbox}
@@ -202,7 +208,7 @@ class VizSettingsForm extends Component {
                 <Field
                     name="overlay.color"
                     component={ColorPicker}
-                    label="overlayColor"
+                    label="Overlay Color"
                 />
 
                 <FieldArray name="colors" component={this.renderColors} />
