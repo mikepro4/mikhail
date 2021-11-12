@@ -97,6 +97,7 @@ export default (
       </head>
       <body id="body">
         <div id="app">${content}</div>
+        
         <script>window.INITIAL_STATE= ${serialize(
 					reduxStore.getState()
 				)}

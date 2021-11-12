@@ -114,7 +114,9 @@ class VizSettings extends Component {
                                     },
                                     defaultViz: {
                                         shape: shape,
-                                        point: point
+                                        point: point,
+                                        overlay: overlay,
+                                        colors: colors
                                     }
                                 }, (data) => {
                                     console.log(data)

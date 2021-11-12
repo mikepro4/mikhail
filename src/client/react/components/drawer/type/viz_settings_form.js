@@ -201,8 +201,17 @@ class VizSettingsForm extends Component {
                     component={Slider}
                     label="Overlay blur"
                     resetValue={222}
-                    sliderMax={1000}
-                    labelStepSize={250}
+                    sliderMax={350}
+                    labelStepSize={50}
+                />
+
+                <Field
+                    name="overlay.colorOpacity"
+                    component={Slider}
+                    label="Overlay opacity"
+                    resetValue={0}
+                    sliderMax={1}
+                    labelStepSize={0.1}
                 />
 
                 <Field

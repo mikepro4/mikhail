@@ -533,7 +533,7 @@ class Viz extends Component {
                     )`;
                     ctx.fill();
                 }
-                
+
             }
         }
 
@@ -597,6 +597,8 @@ class Viz extends Component {
     renderOverlay = () => {
         let vizSource
         let finalViz
+        let finalColor
+        let finalOpacity
         let finalBlur
 
        
@@ -621,24 +623,35 @@ class Viz extends Component {
             } = finalViz.overlay
             if(visible) {
                 finalBlur = blur
+                finalColor = color
+                finalOpacity =colorOpacity
             } else {
                 finalBlur = 0
+                finalColor = "#000000"
+                finalOpacity = 0
             }
 
         } else {
-            finalBlur = 0
+            finalBlur = 0,
+            finalColor = "#000000"
+            finalOpacity = 0
         }
 
-
+        console.log(`rgba(${this.hexToRgb(finalColor).r}, ${this.hexToRgb(finalColor).g}, ${this.hexToRgb(finalColor).b}, 0.6)`)
         return(
-            <div 
-                className="glass"
-                style={{
-                    backdropFilter: "blur(" + finalBlur + "px)",
-                    WebkitBackdropFilter: "blur(" + finalBlur + "px)"
-                }}
-            >
+            <div>
 
+                <div className="goo"></div>
+                <div 
+                    className="glass"
+                    style={{
+                        background: `rgba(${this.hexToRgb(finalColor).r}, ${this.hexToRgb(finalColor).g}, ${this.hexToRgb(finalColor).b}, ${finalOpacity})`,
+                        backdropFilter: "blur(" + finalBlur + "px)",
+                        WebkitBackdropFilter: "blur(" + finalBlur + "px)",
+                    }}
+                >
+
+                </div>
             </div>
         )
         
@@ -646,12 +659,27 @@ class Viz extends Component {
 
         
 	render() {
+
+        let finalViz
+        let vizSource
+
+        if(this.props.defaultViz) {
+            finalViz = this.props.defaultViz
+        } else {
+            if (this.props.shape.newShape.defaultViz) {
+                vizSource = 'newShape'
+            } else {
+                vizSource = 'currentShape'
+            }
+            finalViz = this.props.shape[vizSource].defaultViz
+        }
+
 		return (
             <div 
                 className={classNames({"full": this.props.app.fullScreen}, "viz-container")}
                 ref="viz_container" 
                 style={{
-                    backgroundColor: this.state.backgroundColor
+                    backgroundColor: finalViz && finalViz.shape && finalViz.shape.backgroundColor
                 }}
             >
                 <canvas
