@@ -222,88 +222,74 @@ class Viz extends Component {
         let pointCount =  this.state.pointCount
         let ranges = []
 
-        let newRanges = _.map(colors, (point, i) => {
-            return({
-                count: point.amount * pointCount / 100
+        if(colors.length > 0) {
+            let newRanges = _.map(colors, (point, i) => {
+                return({
+                    count: point.amount * pointCount / 100
+                })
             })
-        })
-        console.log(newRanges)
-
-        let points = []
-
-        _.map(newRanges, (range, colorCount) => {
-            let filteredPoints = _.filter(this.state.points, (point, i) => {
-                if(i < range.count) {
+    
+            let points = []
+    
+            _.map(newRanges, (range, colorCount) => {
+                let filteredPoints = _.filter(this.state.points, (point, i) => {
+                    if(i < range.count) {
+                        return true 
+                    } 
+                })
+                let coloredPoints = _.map(filteredPoints, (point, i) => {
+                    if(i < range.count) {
+                        return ({
+                            ...point,
+                            color: colors[colorCount].hex,
+                            opacity: colors[colorCount].opacity
+                        })
+                    }
+                })
+                points = _.concat(points, coloredPoints)
+                return
+            })
+    
+            let difference = this.state.pointCount - points.length
+    
+            let filteredDifference = _.filter(this.state.points, (point, i) => {
+                if(i >= (this.state.pointCount - difference)) {
                     return true 
                 } 
             })
-            let coloredPoints = _.map(filteredPoints, (point, i) => {
-                if(i < range.count) {
-                    return ({
-                        ...point,
-                        color: colors[colorCount].hex,
-                        opacity: colors[colorCount].opacity
-                    })
-                }
+    
+            let remainingPoints = _.map(filteredDifference, (point, i) => {
+                return ({
+                    ...point,
+                    hidden: true
+                })
             })
-            points = _.concat(points, coloredPoints)
-            return
-        })
-
-        let difference = this.state.pointCount - points.length
-        console.log("difference", difference)
-        // console.log(difference)
-
-        let filteredDifference = _.filter(this.state.points, (point, i) => {
-            if(i >= (this.state.pointCount - difference)) {
-                return true 
-            } 
-        })
-
-        console.log("filtered difference", filteredDifference.length)
-        let remainingPoints = _.map(filteredDifference, (point, i) => {
-            return ({
-                ...point,
-                hidden: true
-            })
-        })
-        console.log("remainingPoints", remainingPoints.length)
-        points = _.concat(points, remainingPoints)
-        console.log(points.length)
-        console.log(points)
-
-        this.setState({
-            points: points
-        })
-
-        if(points.length == this.state.totalPointCount) {
+            points = _.concat(points, remainingPoints)
+    
             this.setState({
                 points: points
             })
+    
+            if(points.length == this.state.totalPointCount) {
+                this.setState({
+                    points: points
+                })
+            } else {
+    
+            }
         } else {
-            // let difference = this.state.totalPointCount - points.length
-            // let remainingPoints = _.map(this.state.points, (point, i) => {
-            //     if(i > difference -1) {
-            //         return ({
-            //             ...point,
-            //             color: "#ffffff"
-            //         })
-            //     }
-            // })
-            // console.log(difference)
-            // console.log(remainingPoints)
-            // points = _.concat(points, remainingPoints)
-            // this.setState({
-            //     points: points
-            // })
-        }
+            let allWhitePoints = _.map(this.state.points, (point, i) => {
+                return ({
+                    ...point,
+                    color: "#ffffff",
+                    opacity: 100
+                })
+            })
 
-        // let newPoints = _.map(this.state.points, (point, i) => {
-        //     return ({
-        //         ...point,
-        //         color: "#ffffff"
-        //     })
-        // })
+            this.setState({
+                points: allWhitePoints
+            })
+        }
 
         
     }
