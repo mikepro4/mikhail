@@ -681,9 +681,9 @@ class Viz extends Component {
 
     getPointOpacity = (value, point) => {
         if(value > 0) {
-            return value/256*10
+            return value/256*100
         } else {
-            return point.opacity / 100
+            return point.opacity / 50
         }
     }
 
