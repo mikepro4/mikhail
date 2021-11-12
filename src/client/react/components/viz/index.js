@@ -543,6 +543,23 @@ class Viz extends Component {
         container.appendChild(svgkitContext.svg.svgElement);
         this.renderOnce(svgkitContext, points)
     }
+
+    renderOverlay = () => {
+        let vizSource
+
+        if (this.props.shape.newShape.defaultViz) {
+            vizSource = 'newShape'
+        } else {
+            vizSource = 'currentShape'
+        }
+        const {
+            visible,
+            blur,
+            color,
+            colorOpacity,
+        } = this.props.shape[vizSource].defaultViz.overlay
+        
+    }
         
 	render() {
 		return (

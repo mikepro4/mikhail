@@ -11,6 +11,7 @@ import Textarea from "../../form/BladeTextarea";
 import Slider from "../../form/Slider";
 import TabGroup from "../../form/TabGroup";
 import Checkbox from "../../form/Checkbox";
+import ColorPicker from "../../form/ColorPicker";
 
 
 class VizSettingsForm extends Component {
@@ -123,6 +124,29 @@ class VizSettingsForm extends Component {
                     labelStepSize={0.1}
                 />
 
+                <Field
+                    name="overlay.visible"
+                    type="checkbox"
+                    component={Checkbox}
+                    label="Overlay viible"
+                    inline={true}
+                />              
+
+                <Field
+                    name="overlay.blur"
+                    component={Slider}
+                    label="Overlay blur"
+                    resetValue={222}
+                    sliderMax={1000}
+                    labelStepSize={250}
+                />
+
+                <Field
+                    name="overlay.color"
+                    component={ColorPicker}
+                    label="overlayColor"
+                />
+
                 {/* <div className="blade-input-group">
                     <Field
                         name="title"
@@ -133,13 +157,7 @@ class VizSettingsForm extends Component {
                     />
                 </div> */}
 
-                {/* <Field
-                    name="main"
-                    type="checkbox"
-                    component={Checkbox}
-                    label="Main"
-                    inline={true}
-                /> */}
+               
 
                 {this.props.user &&  <Button
                     className={"submit-button theme-" + this.props.theme}

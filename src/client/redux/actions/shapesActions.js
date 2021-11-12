@@ -192,13 +192,17 @@ export const updateShape = (shape, data, success) => async (
 
     let newSHape = _.merge({}, shape.defaultViz.shape, data.shape)
     let newPoint = _.merge({}, shape.defaultViz.point, data.point)
+    let newOverlay = _.merge({}, shape.defaultViz.point, data.overlay)
+    let newColors = _.merge({}, shape.defaultViz.point, data.colors)
 
     let newShape = {
         ...shape,
         metadata: newMetadata,
         defaultViz: {
             shape: newSHape,
-            point: newPoint
+            point: newPoint,
+            overlay: newOverlay,
+            colors: newColors
         }
     }
 

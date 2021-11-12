@@ -1097,7 +1097,7 @@ class HomePage extends Component {
                             ></div>
                         </div>
                     </div>
-                    <div className="headline-container">
+                    {/* <div className="headline-container">
 
                         {this.props.shape && this.props.shape.currentShape && this.props.shape.currentShape.metadata && <div>
                             <div className="headline-single-line">{this.props.shape.currentShape.metadata.title}</div>
@@ -1105,7 +1105,7 @@ class HomePage extends Component {
                         }
                         {this.props.shape && this.props.shape.currentShape && this.props.shape.currentShape.metadata && this.props.shape.currentShape.metadata.title.length > 0 && <div className="underline"></div>}
 
-                    </div>
+                    </div> */}
                     {/* {this.state.touched ? <div className="touched">{this.state.time}</div> : ""} */}
                     <Viz />
                 </div>

@@ -55,6 +55,8 @@ class VizSettings extends Component {
 	render() {
         let shape = this.props.newShape && this.props.newShape.defaultViz ? this.props.newShape.defaultViz.shape : this.props.shape.defaultViz.shape
         let point = this.props.newShape && this.props.newShape.defaultViz ? this.props.newShape.defaultViz.point : this.props.shape.defaultViz.point
+        let overlay = this.props.newShape && this.props.newShape.defaultViz ? this.props.newShape.defaultViz.overlay : this.props.shape.defaultViz.overlay
+        let colors = this.props.newShape && this.props.newShape.defaultViz ? this.props.newShape.defaultViz.colors : this.props.shape.defaultViz.colors
         return (
             <div className={"app-drawer-content-container standard-drawer viz-settings-drawer theme-" + this.props.theme}>
                 
@@ -68,6 +70,8 @@ class VizSettings extends Component {
                                     title: this.props.shape.metadata.title,
                                     shape: shape,
                                     point: point,
+                                    overlay: overlay,
+                                    colors: colors,
                                     main: this.props.shape.metadata.main
                                 }
                             }
@@ -78,7 +82,9 @@ class VizSettings extends Component {
                                 this.props.loadNewShape({
                                     defaultViz: {
                                         shape: values.shape,
-                                        point: values.point
+                                        point: values.point,
+                                        overlay: values.overlay,
+                                        colors: values.colors
                                     }
                                 })
                             }}

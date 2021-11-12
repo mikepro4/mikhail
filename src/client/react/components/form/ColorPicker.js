@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import { change } from "redux-form";
-import { SketchPicker } from 'react-color';
+// import { SketchPicker } from 'react-color';
+import { HexColorPicker } from "react-colorful";
 
 class ColorPicker extends Component {
   state = {
@@ -37,7 +38,7 @@ class ColorPicker extends Component {
   }
 
   changeValue = (value) => {
-    this.props.meta.dispatch(change(this.props.meta.form, this.props.input.name, value.hex))
+    this.props.meta.dispatch(change(this.props.meta.form, this.props.input.name, value))
   }
 
 	render() {
@@ -53,14 +54,23 @@ class ColorPicker extends Component {
               className="control-color-picker-container"
               ref="colorPicker"
             >
-              {this.state.currentValue && <SketchPicker
+              {/* {this.state.currentValue && <SketchPicker
                 color={ this.state.currentValue }
                 onChangeComplete={ (value) =>  this.changeValue(value) }
+              />} */}
+
+            {this.state.currentValue && <HexColorPicker
+                color={ this.state.currentValue }
+                onChange={ (value) =>  {
+                    console.log(value)
+                    this.changeValue(value) 
+                }}
               />}
+
 
             </div>
 
-            <div className="control-input">
+            <div className="control-input" style={{ display: "none"}}>
               <input {...this.props.input}   />
             </div>
           </div>
