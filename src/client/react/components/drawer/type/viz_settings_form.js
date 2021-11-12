@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Field, reduxForm, formValueSelector } from "redux-form";
+import { Field, reduxForm, FieldArray, formValueSelector } from "redux-form";
 import classnames from "classnames";
 import { Form } from "redux-form";
 import { connect } from "react-redux";
@@ -15,6 +15,54 @@ import ColorPicker from "../../form/ColorPicker";
 
 
 class VizSettingsForm extends Component {
+    renderColors({ fields, meta: { error, submitFailed } }) {
+        return(
+            <ul>
+                
+                {fields.map((color, index) => (
+                <li key={index}>
+                    <button
+                        type="button"
+                        title="Remove Member"
+                        onClick={() => fields.remove(index)}
+                    >delete</button>
+                    <h4>Color #{index + 1}</h4>
+                    <Field
+                        name={`${color}.hex`}
+                        component={ColorPicker}
+                        label="Color"
+                    />
+
+                    <Field
+                        name={`${color}.amount`}
+                        component={Slider}
+                        label="Point opacity"
+                        resetValue={0}
+                        sliderMax={100}
+                        labelStepSize={20}
+                    />
+
+                    <Field
+                        name={`${color}.opacity`}
+                        component={Slider}
+                        label="Point opacity"
+                        resetValue={1}
+                        sliderMax={100}
+                        labelStepSize={20}
+                    />
+                </li>
+                ))}
+
+            <li>
+                <button type="button" onClick={() => fields.push({
+                    hex: "#ffffff"
+                })}>
+                    Add color
+                </button>
+                </li>
+            </ul>
+        )
+    }
 	render() {
         const { handleSubmit } = this.props;
         
@@ -116,6 +164,16 @@ class VizSettingsForm extends Component {
                 />
 
                 <Field
+                    name="point.pointCount"
+                    component={Slider}
+                    label="Point count"
+                    sliderMax={1024}
+                    sliderMin={1}
+                    resetValue={1024}
+                    labelStepSize={205}
+                />
+
+                <Field
                     name="point.pointOpacity"
                     component={Slider}
                     label="Point opacity"
@@ -146,6 +204,8 @@ class VizSettingsForm extends Component {
                     component={ColorPicker}
                     label="overlayColor"
                 />
+
+                <FieldArray name="colors" component={this.renderColors} />
 
                 {/* <div className="blade-input-group">
                     <Field
