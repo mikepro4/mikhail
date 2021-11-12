@@ -241,7 +241,8 @@ class Viz extends Component {
                 if(i < range.count) {
                     return ({
                         ...point,
-                        color: colors[colorCount].hex
+                        color: colors[colorCount].hex,
+                        opacity: colors[colorCount].opacity
                     })
                 }
             })
@@ -640,7 +641,7 @@ class Viz extends Component {
                                 ${this.hexToRgb(point.color).r},
                                 ${this.hexToRgb(point.color).g},
                                 ${this.hexToRgb(point.color).b},
-                                ${this.getPointOpacity(freqData[this.getPointIterator(i)])}
+                                ${this.getPointOpacity(freqData[this.getPointIterator(i)], point)}
                             )`;
                             ctx.fill();
                         }
@@ -678,11 +679,11 @@ class Viz extends Component {
         }
     }
 
-    getPointOpacity = (value) => {
+    getPointOpacity = (value, point) => {
         if(value > 0) {
             return value/256*10
         } else {
-            return this.state.pointOpacity
+            return point.opacity / 100
         }
     }
 
