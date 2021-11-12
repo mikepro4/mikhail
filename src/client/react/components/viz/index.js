@@ -102,7 +102,7 @@ class Viz extends Component {
 
             // if(this.props.shape.newShape && this.props.shape.newShape.defaultViz) {
                 // if(!_.isEqual(prevprops.shape.newShape.defaultViz.colors, this.props.shape.newShape.defaultViz.colors)) {
-                    this.updateColors()
+                    // this.updateColors()
                 // }
             // }
         }
