@@ -36,7 +36,7 @@ class VizSettingsForm extends Component {
                     <Field
                         name={`${color}.amount`}
                         component={Slider}
-                        label="Point opacity"
+                        label="Point amount"
                         resetValue={0}
                         sliderMax={100}
                         labelStepSize={20}
@@ -55,7 +55,9 @@ class VizSettingsForm extends Component {
 
             <li>
                 <button type="button" onClick={() => fields.push({
-                    hex: "#ffffff"
+                    hex: "#ffffff",
+                    opacity: "100",
+                    amount: "20"
                 })}>
                     Add color
                 </button>

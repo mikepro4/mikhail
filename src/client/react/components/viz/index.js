@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import classNames from "classnames"
 import * as _ from "lodash";
+import update from "immutability-helper";
 
 class Viz extends Component {
 	state = {
@@ -35,6 +36,7 @@ class Viz extends Component {
                 this.setState({
                     pointCount: this.props.defaultViz.point.pointCount
                 })
+                this.updateColors()
             }
         }
         window.addEventListener("resize", this.handleResize);
@@ -88,6 +90,7 @@ class Viz extends Component {
                 this.setState({
                     pointCount: this.props.shape.currentShape.defaultViz.point.pointCount
                 })
+                this.updateColors()
             }
         }
 
@@ -96,10 +99,21 @@ class Viz extends Component {
             this.setState({
                 pointCount: this.props.shape.newShape.defaultViz.point.pointCount
             })
+
+            // if(this.props.shape.newShape && this.props.shape.newShape.defaultViz) {
+                // if(!_.isEqual(prevprops.shape.newShape.defaultViz.colors, this.props.shape.newShape.defaultViz.colors)) {
+                    this.updateColors()
+                // }
+            // }
         }
+
+        
 
         if(prevState.pointCount !== this.state.pointCount) {
             this.generatePoints()
+            setTimeout(() => {
+                this.updateColors()
+            }, 1)
         }
 
         let rect = this.refs.viz_container.getBoundingClientRect();
@@ -200,6 +214,97 @@ class Viz extends Component {
         //     })
         // } 
 
+    }
+
+    updateColors = () => {
+        console.log("update colors")
+        let colors = this.getViz().colors
+        let pointCount =  this.state.pointCount
+        let ranges = []
+
+        let newRanges = _.map(colors, (point, i) => {
+            return({
+                count: point.amount * pointCount / 100
+            })
+        })
+        console.log(newRanges)
+
+        let points = []
+
+        _.map(newRanges, (range, colorCount) => {
+            let filteredPoints = _.filter(this.state.points, (point, i) => {
+                if(i < range.count) {
+                    return true 
+                } 
+            })
+            let coloredPoints = _.map(filteredPoints, (point, i) => {
+                if(i < range.count) {
+                    return ({
+                        ...point,
+                        color: colors[colorCount].hex
+                    })
+                }
+            })
+            points = _.concat(points, coloredPoints)
+            return
+        })
+
+        let difference = this.state.pointCount - points.length
+        console.log("difference", difference)
+        // console.log(difference)
+
+        let filteredDifference = _.filter(this.state.points, (point, i) => {
+            if(i >= (this.state.pointCount - difference)) {
+                return true 
+            } 
+        })
+
+        console.log("filtered difference", filteredDifference.length)
+        let remainingPoints = _.map(filteredDifference, (point, i) => {
+            return ({
+                ...point,
+                hidden: true
+            })
+        })
+        console.log("remainingPoints", remainingPoints.length)
+        points = _.concat(points, remainingPoints)
+        console.log(points.length)
+        console.log(points)
+
+        this.setState({
+            points: points
+        })
+
+        if(points.length == this.state.totalPointCount) {
+            this.setState({
+                points: points
+            })
+        } else {
+            // let difference = this.state.totalPointCount - points.length
+            // let remainingPoints = _.map(this.state.points, (point, i) => {
+            //     if(i > difference -1) {
+            //         return ({
+            //             ...point,
+            //             color: "#ffffff"
+            //         })
+            //     }
+            // })
+            // console.log(difference)
+            // console.log(remainingPoints)
+            // points = _.concat(points, remainingPoints)
+            // this.setState({
+            //     points: points
+            // })
+        }
+
+        // let newPoints = _.map(this.state.points, (point, i) => {
+        //     return ({
+        //         ...point,
+        //         color: "#ffffff"
+        //     })
+        // })
+
+        
     }
 
 
@@ -447,12 +552,16 @@ class Viz extends Component {
             finalHidden = true
         }
 
+        let vizSource
+        let finalViz
+
         let point = {
           x: x,
           y: y,
           vx: 0,
           vy: 0,
-          hidden: finalHidden
+          hidden: finalHidden,
+          color:"#000000"
         }
         return point
     }
@@ -468,72 +577,78 @@ class Viz extends Component {
     renderOnce = (ctx) => {
 
         let points = this.state.points
-		ctx.clearRect(0, 0, this.state.width, this.state.height);
+        if(points.length > 0)  {
+            ctx.clearRect(0, 0, this.state.width, this.state.height);
 
-        this.setState({
-          rotate: this.state.rotate + this.state.rotate_speed
-        })
-
-        let freqData = []
-        let soundModifier = 1
-
-        if(this.props.player.analyser) {
-            freqData = new Uint8Array(this.props.player.analyser.frequencyBinCount)
-            this.props.player.analyser.getByteFrequencyData(freqData)
-        }
-
-        
-
-        for (let i = 0; i < points.length; i++) {
-
-            if(this.props.player.analyser && soundModifier) {
-                soundModifier = freqData[this.getPointIterator(i)]/1000
-        
-                if(soundModifier == 0) {
-                  soundModifier = 1
-                }
+            this.setState({
+              rotate: this.state.rotate + this.state.rotate_speed
+            })
+    
+            let freqData = []
+            let soundModifier = 1
+    
+            if(this.props.player.analyser) {
+                freqData = new Uint8Array(this.props.player.analyser.frequencyBinCount)
+                this.props.player.analyser.getByteFrequencyData(freqData)
             }
-
-            let point = points[i];
-
-            let t_radius = this.calculateRadius(soundModifier, i)
-
-            let tx = this.state.x + Math.cos(this.state.rotate + this.state.step * i  + soundModifier) * t_radius;
-            let ty = this.state.y + Math.sin(this.state.rotate + this.state.step * i  + soundModifier) * t_radius;
-
-            point.vx += (tx - point.x) * this.state.rotate_point_speed  ;
-            point.vy += (ty - point.y) * this.state.rotate_point_speed ;
-
-            point.x += point.vx;
-            point.y += point.vy;
-
-            point.vx *= this.state.friction;
-            point.vy *= this.state.friction;
-
-            if (point.x >= 0 && point.x <= this.state.width && point.y >= 0 && point.y <= this.state.height) {
-
-                if(point.hidden) {
-                    ctx.beginPath();
-                    ctx.arc(point.x,point.y,0,0,2*Math.PI);
-                    ctx.fillStyle = `rgba(
-                        ${this.hexToRgb(this.state.pointColor).r},
-                        ${this.hexToRgb(this.state.pointColor).g},
-                        ${this.hexToRgb(this.state.pointColor).b},
-                        0}
-                    )`;
-                    ctx.fill(); 
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(point.x,point.y,this.state.pointSize,0,2*Math.PI);
-                    ctx.fillStyle = `rgba(
-                        ${this.hexToRgb(this.state.pointColor).r},
-                        ${this.hexToRgb(this.state.pointColor).g},
-                        ${this.hexToRgb(this.state.pointColor).b},
-                        ${this.getPointOpacity(freqData[this.getPointIterator(i)])}
-                    )`;
-                    ctx.fill();
+    
+            
+    
+            for (let i = 0; i < points.length; i++) {
+    
+                if(this.props.player.analyser && soundModifier) {
+                    soundModifier = freqData[this.getPointIterator(i)]/1000
+            
+                    if(soundModifier == 0) {
+                      soundModifier = 1
+                    }
                 }
+    
+                let point = points[i];
 
+                if(point) {
+                    let t_radius = this.calculateRadius(soundModifier, i)
+    
+                    let tx = this.state.x + Math.cos(this.state.rotate + this.state.step * i  + soundModifier) * t_radius;
+                    let ty = this.state.y + Math.sin(this.state.rotate + this.state.step * i  + soundModifier) * t_radius;
+        
+                    point.vx += (tx - point.x) * this.state.rotate_point_speed  ;
+                    point.vy += (ty - point.y) * this.state.rotate_point_speed ;
+        
+                    point.x += point.vx;
+                    point.y += point.vy;
+        
+                    point.vx *= this.state.friction;
+                    point.vy *= this.state.friction;
+        
+                    if (point.x >= 0 && point.x <= this.state.width && point.y >= 0 && point.y <= this.state.height) {
+        
+                        if(point.hidden) {
+                            ctx.beginPath();
+                            ctx.arc(point.x,point.y,0,0,2*Math.PI);
+                            ctx.fillStyle = `rgba(
+                                ${this.hexToRgb(this.state.pointColor).r},
+                                ${this.hexToRgb(this.state.pointColor).g},
+                                ${this.hexToRgb(this.state.pointColor).b},
+                                0}
+                            )`;
+                            ctx.fill(); 
+                        } else {
+                            ctx.beginPath();
+                            ctx.arc(point.x,point.y,this.state.pointSize,0,2*Math.PI);
+                            ctx.fillStyle = `rgba(
+                                ${this.hexToRgb(point.color).r},
+                                ${this.hexToRgb(point.color).g},
+                                ${this.hexToRgb(point.color).b},
+                                ${this.getPointOpacity(freqData[this.getPointIterator(i)])}
+                            )`;
+                            ctx.fill();
+                        }
+        
+                    }
+                }
+    
+                
             }
         }
 
@@ -637,7 +752,7 @@ class Viz extends Component {
             finalOpacity = 0
         }
 
-        console.log(`rgba(${this.hexToRgb(finalColor).r}, ${this.hexToRgb(finalColor).g}, ${this.hexToRgb(finalColor).b}, 0.6)`)
+        // console.log(`rgba(${this.hexToRgb(finalColor).r}, ${this.hexToRgb(finalColor).g}, ${this.hexToRgb(finalColor).b}, 0.6)`)
         return(
             <div>
 
@@ -655,6 +770,23 @@ class Viz extends Component {
             </div>
         )
         
+    }
+
+    getViz = () => {
+        let finalViz
+        let vizSource
+
+        if(this.props.defaultViz) {
+            finalViz = this.props.defaultViz
+        } else {
+            if (this.props.shape.newShape.defaultViz) {
+                vizSource = 'newShape'
+            } else {
+                vizSource = 'currentShape'
+            }
+            finalViz = this.props.shape[vizSource].defaultViz
+        }
+        return finalViz
     }
 
         
