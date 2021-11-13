@@ -36,7 +36,7 @@ class VizSettingsForm extends Component {
                     <Field
                         name={`${color}.amount`}
                         component={Slider}
-                        label="Point amount"
+                        label="Color amount"
                         resetValue={0}
                         sliderMax={100}
                         labelStepSize={20}
@@ -45,7 +45,7 @@ class VizSettingsForm extends Component {
                     <Field
                         name={`${color}.opacity`}
                         component={Slider}
-                        label="Point opacity"
+                        label="Color opacity"
                         resetValue={1}
                         sliderMax={100}
                         labelStepSize={20}
@@ -171,7 +171,8 @@ class VizSettingsForm extends Component {
                     label="Point count"
                     sliderMax={1024}
                     sliderMin={1}
-                    resetValue={1024}
+                    resetValue={1}
+                    incrementStep={1}
                     labelStepSize={205}
                 />
 

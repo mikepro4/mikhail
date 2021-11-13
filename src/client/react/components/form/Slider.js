@@ -90,11 +90,18 @@ class SliderComponent extends Component {
     }
 
     add = () => {
-        this.changeValue(Number(this.props.input.value) + 0.01)
+        let inc 
+
+        if(this.props.incrementStep) {
+            inc = this.props.incrementStep
+        } else {
+            inc = 0.01
         }
+            this.changeValue(Number(this.props.input.value) + inc)
+    }
 
     subtract = () => {
-        this.changeValue(Number(this.props.input.value) - 0.01)
+        this.changeValue(Number(this.props.input.value) - inc)
     }
 
     setMid = () => {
