@@ -127,7 +127,7 @@ class Viz extends Component {
         if(this.props.defaultViz) {
            
             // console.log(this.props.app.totalScrolledPixels, rect.y, rect.height)
-            if((rect.y + rect.height) < 700) {
+            if((rect.y + rect.height) < 2000) {
                 // console.log("paused")
                 if(!this.state.visible) {
                     this.setState({
@@ -139,7 +139,7 @@ class Viz extends Component {
                 }
             }
     
-            if(rect.y < 0) {
+            if(rect.y < -350) {
                   if(!this.state.paused) {
                     this.setState({
                         paused: true
@@ -678,6 +678,10 @@ class Viz extends Component {
             this.renderOnce(ctx, points);
             this.setState({
                 requestAnimationFrame: requestAnimationFrame(() => this.renderFrame(ctx, points))
+            });
+        } else {
+            this.setState({
+                requestAnimationFrame: null
             });
         }
     }

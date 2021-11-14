@@ -22,9 +22,8 @@
     }
 
     canvas {
-        // filter: blur(20px) contrast(20);
-        // -webkit-filter: blur(20) contrast(20);
-        // filter: blur(20) contrast(20);
+        // -webkit-filter: url("#goo");
+        // filter: url("#goo");
     }
   }
   
@@ -48,7 +47,7 @@
     bottom: 0;
     z-index: 3;
     transition: all 0.2s linear;
-  
+
     
     // animation: fadeIn forwards 2s 0 ease-in-out; 
 }
@@ -60,7 +59,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-   
     z-index: 3;
 }
   
